@@ -137,6 +137,8 @@ export default function Home() {
       />
     </section>
 
+    <WebinarPreview />
+
       {/* Who We Are */}
       <section className="overflow-hidden bg-[var(--color-background)] py-20 sm:py-24 lg:py-28">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
