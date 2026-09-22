@@ -638,7 +638,7 @@ export const testimonials = [
 ];
 
 export const webinar = {
-  eyebrow: "Ready to perform at your full potential",
+  eyebrow: "Upcoming Webinar",
   title: "Peak Performance Webinar",
   description:
     "A focused learning experience for professionals, managers, entrepreneurs and corporate teans who want to optimize their capabilities and achieve their fullest potential.",
@@ -664,6 +664,7 @@ export const webinar = {
       "Everyone who registers for the webinar receives a complimentary image session.",
   },
 
+  ctaTitle: "Ready to perform at your full potential",
   cta: "Register for the Webinar",
   link: "/webinar",
 };

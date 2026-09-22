@@ -9,6 +9,7 @@ import HumanPotentialVisualV2 from "../components/ui/HumanPotentialVisualV2";
 import ProgramsPreview from "../components/sections/ProgramsPreview";
 import TrainerPreview from "../components/sections/TrainerPreview";
 import TestimonialSection from "../components/sections/TestimonialSection";
+import WebinarPreview from "../components/common/WebinarPreview";
 
 
 export default function Home() {

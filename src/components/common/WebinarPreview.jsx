@@ -88,6 +88,10 @@ export default function WebinarPreview() {
               </div>
             )}
 
+            <h3 className="mt-5 text-xl font-bold text-[var(--color-primary)]">
+                  {webinar.ctaTitle}
+            </h3>
+
             {/* CTA */}
             <div className="mt-8">
               <CTAButton
