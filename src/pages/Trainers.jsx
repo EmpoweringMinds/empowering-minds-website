@@ -1,4 +1,3 @@
-import { trainers } from "../data/siteContent";
 import TrainerCard from "../components/common/TrainerCard";
 import FadeIn from "../components/ui/FadeIn";
 import TrainerModal from "../components/common/TrainerModal";
@@ -8,11 +7,41 @@ import CTASection from "../components/ui/CTASection";
 import TestimonialSection from "../components/sections/TestimonialSection";
 import { aboutContent } from "../data/siteContent";
 
+import { getTrainers } from "../cms/trainers";
+import { useTrainers } from "../cms/useTrainers";
 
-import { useState } from "react";
+
+import { useState, useEffect } from "react";
 
 export default function Trainers() {
     const [selectedTrainer, setSelectedTrainer] = useState(null);
+    const [cmsTrainers, setCmsTrainers] = useState([]);
+
+    const {
+      trainers,
+      loading,
+      error,
+    } = useTrainers();
+
+    useEffect(() => {
+        getTrainers()
+        .then(setCmsTrainers)
+        .catch((error) => {
+          console.error("Failed to load trainers from Sanity:", error);
+        });
+    }, []);
+    
+    if (loading) {
+      return <div>Loading trainers...</div>;
+    }
+
+    if (error) {
+      return (
+        <div>
+          Unable to load trainers right now.
+        </div>
+      );
+    }
 
   return (
     <main className="bg-[var(--color-background)] text-[var(--color-text)]">
@@ -73,6 +102,7 @@ export default function Trainers() {
           </FadeIn>
         </div>
       </section>  
+
       {/* Trainers */}
       <section className="py-16 sm:py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

@@ -1,11 +1,41 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
-import { trainers } from "../../data/siteContent";
 import TrainerCard from "../common/TrainerCard";
 import FadeIn from "../ui/FadeIn";
 
+import { getTrainers } from "../../cms/trainers";
+import { useTrainers } from "../../cms/useTrainers";
+
+import { useState, useEffect } from "react";
+
 export default function TrainerPreview() {
+  const [cmsTrainers, setCmsTrainers] = useState([]);
+  
+  const {
+    trainers,
+    loading,
+    error,
+  } = useTrainers();
   const featuredTrainers = trainers.slice(0, 3);
+  useEffect(() => {
+    getTrainers()
+    .then(setCmsTrainers)
+    .catch((error) => {
+      console.error("Failed to load trainers from Sanity:", error);
+    });
+  }, []);
+      
+  if (loading) {
+    return <div>Loading trainers...</div>;
+  }
+
+  if (error) {
+    return (
+      <div>
+        Unable to load trainers right now.
+      </div>
+    );
+  }
 
   return (
     <section className="py-16 sm:py-20 lg:py-24">

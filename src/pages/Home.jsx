@@ -415,7 +415,6 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Programs remain untouched for now */}
       <ProgramsPreview />
 
       {/* Trainers */}
