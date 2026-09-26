@@ -641,11 +641,13 @@ export const webinar = {
   eyebrow: "Upcoming Webinar",
   title: "Peak Performance Webinar",
   description:
-    "A focused learning experience for professionals, managers, entrepreneurs and corporate teans who want to optimize their capabilities and achieve their fullest potential.",
+    "A focused learning experience for professionals, managers, entrepreneurs and corporate teams who want to optimize their capabilities and achieve their fullest potential.",
 
   date: "11 & 12 October 2026",
   time: "6:00 PM IST",
   format: "Live on Zoom",
+
+  price: '₹299',
 
   image: "/images/webinar.jpg",
   imageAlt: "Participants attending a professional webinar",

@@ -23,6 +23,10 @@ export default function WebinarPreview() {
               {webinar.description}
             </p>
 
+            <p className="mt-5 text-3xl font-black tracking-tight text-[var(--color-primary)] sm:text-4xl lg:text-5xl">
+              {webinar.price}
+            </p>
+
             {/* Event details */}
             <div className="mt-8 grid grid-cols-2 gap-6 border-y border-[var(--color-border)] py-6">
               <div>
