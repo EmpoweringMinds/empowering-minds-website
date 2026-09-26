@@ -16,6 +16,7 @@ export const navLinks = [
   { label: "Programs", to: "/programs" },
   { label: "Trainers", to: "/trainers" },
   { label: "Contact", to: "/contact" },
+  { label: "Workshops", to: "/workshops" },
   {
     label: "Empowering U",
     href: "https://empoweringu.theempoweringminds.com",

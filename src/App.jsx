@@ -9,6 +9,7 @@ import Home from "./pages/Home";
 import Programs from "./pages/Programs";
 import Services from "./pages/Services";
 import Trainers from "./pages/Trainers";
+import Workshops from "./pages/Workshops";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
         <Route path="/programs" element={<Programs />} />
         <Route path="/trainers" element={<Trainers />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/workshops" element={<Workshops />} />
       </Routes>
       <WhatsAppFloat />
       <Footer />
