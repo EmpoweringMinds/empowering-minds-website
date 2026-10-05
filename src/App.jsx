@@ -10,6 +10,8 @@ import Programs from "./pages/Programs";
 import Services from "./pages/Services";
 import Trainers from "./pages/Trainers";
 import Workshops from "./pages/Workshops";
+import WorkshopDetails from "./components/sections/WorkshopDetails";
+import WorkshopRegistration from "./pages/WorkshopRegistration";
 
 function App() {
   return (
@@ -24,6 +26,8 @@ function App() {
         <Route path="/trainers" element={<Trainers />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/workshops" element={<Workshops />} />
+        <Route path="/workshops/:slug" element={<WorkshopDetails />} />
+        <Route path="/workshops/:slug/register" element={<WorkshopRegistration />}/>
       </Routes>
       <WhatsAppFloat />
       <Footer />

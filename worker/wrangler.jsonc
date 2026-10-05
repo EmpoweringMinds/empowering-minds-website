@@ -1,0 +1,17 @@
+{
+	"$schema": "node_modules/wrangler/config-schema.json",
+	"name": "empowering-minds-api",
+	"main": "src/index.js",
+	"compatibility_date": "2026-09-30",
+	"d1_databases": [
+		{
+			"binding": "DB",
+			"database_name": "empowering-minds-db",
+			"database_id": "df293c41-cd3f-4303-bf29-af95d962489c",
+		}
+	],
+    "vars": {
+    "SANITY_PROJECT_ID": "nb9kk4a8",
+    "SANITY_DATASET": "production"
+  }
+}

@@ -130,6 +130,36 @@ export const workshop = defineType({
                             ],
                         }),
                     ],
+                    preview: {
+                        select: {
+                            type: 'type',
+                            trainerName: 'trainer.name',
+                            guestName: 'guest.name',
+                            trainerImage: 'trainer.image',
+                            guestImage: 'guest.image',
+                        },
+
+                        prepare({ type, trainerName, guestName, trainerImage, guestImage }) {
+                            const name =
+                                type === 'trainer'
+                                    ? trainerName
+                                    : guestName;
+
+                            const image =
+                                type === 'trainer'
+                                    ? trainerImage
+                                    : guestImage;
+
+                            return {
+                                title: name || 'Unnamed Speaker',
+                                subtitle:
+                                    type === 'trainer'
+                                        ? 'Trainer'
+                                        : 'Guest Speaker',
+                                media: image,
+                            };
+                        },
+                    },
                 },
             ],
         }),
@@ -279,46 +309,334 @@ export const workshop = defineType({
             title: 'Content',
             type: 'object',
             fields: [
+
+                // ─────────────────────────────
+                // HIGHLIGHTS
+                // ─────────────────────────────
+
                 defineField({
                     name: 'highlights',
                     title: 'Highlights',
                     type: 'array',
-                    of: [{type: 'string'}],
+                    of: [{ type: 'string' }],
                 }),
+
+
+                // ─────────────────────────────
+                // AUDIENCE
+                // ─────────────────────────────
+
+                defineField({
+                    name: 'audience',
+                    title: 'Audience',
+                    type: 'object',
+                    fields: [
+
+                        defineField({
+                            name: 'sectionTitle',
+                            title: 'Section Title',
+                            type: 'string',
+                        }),
+
+                        defineField({
+                            name: 'intro',
+                            title: 'Intro',
+                            type: 'text',
+                            rows: 3,
+                        }),
+
+                        defineField({
+                            name: 'items',
+                            title: 'Audience Items',
+                            type: 'array',
+                            of: [{ type: 'string' }],
+                        }),
+
+                    ],
+                }),
+
+
+                // ─────────────────────────────
+                // LEARNING OUTCOMES
+                // ─────────────────────────────
+
+                defineField({
+                    name: 'learningOutcomes',
+                    title: 'Learning Outcomes',
+                    type: 'object',
+                    fields: [
+
+                        defineField({
+                            name: 'sectionTitle',
+                            title: 'Section Title',
+                            type: 'string',
+                        }),
+
+                        defineField({
+                            name: 'items',
+                            title: 'Learning Outcomes',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+
+                                        defineField({
+                                            name: 'title',
+                                            title: 'Title',
+                                            type: 'string',
+                                            validation: (rule) => rule.required(),
+                                        }),
+
+                                        defineField({
+                                            name: 'description',
+                                            title: 'Description',
+                                            type: 'text',
+                                            rows: 3,
+                                        }),
+
+                                        defineField({
+                                            name: 'image',
+                                            title: 'Image',
+                                            type: 'image',
+                                            options: {
+                                                hotspot: true,
+                                            },
+                                        }),
+
+                                    ],
+                                    preview: {
+                                        select: {
+                                            title: 'title',
+                                            media: 'image',
+                                        },
+                                    },
+                                }),
+                            ],
+                        }),
+
+                    ],
+                }),
+
+
+                // ─────────────────────────────
+                // WHO SHOULD ATTEND
+                // ─────────────────────────────
+
+                defineField({
+                    name: 'whoShouldAttend',
+                    title: 'Who Should Attend',
+                    type: 'object',
+                    fields: [
+
+                        defineField({
+                            name: 'sectionTitle',
+                            title: 'Section Title',
+                            type: 'string',
+                        }),
+
+                        defineField({
+                            name: 'items',
+                            title: 'Audience Groups',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+
+                                        defineField({
+                                            name: 'title',
+                                            title: 'Title',
+                                            type: 'string',
+                                            validation: (rule) => rule.required(),
+                                        }),
+
+                                        defineField({
+                                            name: 'description',
+                                            title: 'Description',
+                                            type: 'text',
+                                            rows: 3,
+                                        }),
+
+                                        defineField({
+                                            name: 'image',
+                                            title: 'Image',
+                                            type: 'image',
+                                            options: {
+                                                hotspot: true,
+                                            },
+                                        }),
+
+                                    ],
+                                    preview: {
+                                        select: {
+                                            title: 'title',
+                                            media: 'image',
+                                        },
+                                    },
+                                }),
+                            ],
+                        }),
+
+                    ],
+                }),
+
+
+                // ─────────────────────────────
+                // BONUS
+                // ─────────────────────────────
+
                 defineField({
                     name: 'bonus',
                     title: 'Registration Benefit',
                     type: 'object',
-
                     fields: [
+
                         defineField({
                             name: 'enabled',
                             title: 'Enabled',
                             type: 'boolean',
                         }),
+
                         defineField({
                             name: 'eyebrow',
                             title: 'Eyebrow',
                             type: 'string',
                         }),
+
                         defineField({
                             name: 'title',
                             title: 'Title',
                             type: 'string',
                             validation: (rule) => rule.required(),
                         }),
+
                         defineField({
                             name: 'description',
                             title: 'Description',
-                            type: 'string',
+                            type: 'text',
+                            rows: 3,
                         }),
+
                         defineField({
                             name: 'bonusImage',
                             title: 'Image',
                             type: 'image',
+                            options: {
+                                hotspot: true,
+                            },
                         }),
+
                     ],
                 }),
+
+
+                // ─────────────────────────────
+                // FAQ
+                // ─────────────────────────────
+
+                defineField({
+                    name: 'faq',
+                    title: 'FAQ',
+                    type: 'object',
+                    fields: [
+
+                        defineField({
+                            name: 'sectionTitle',
+                            title: 'Section Title',
+                            type: 'string',
+                        }),
+
+                        defineField({
+                            name: 'items',
+                            title: 'Questions',
+                            type: 'array',
+                            of: [
+                                defineArrayMember({
+                                    type: 'object',
+                                    fields: [
+
+                                        defineField({
+                                            name: 'question',
+                                            title: 'Question',
+                                            type: 'string',
+                                            validation: (rule) => rule.required(),
+                                        }),
+
+                                        defineField({
+                                            name: 'answer',
+                                            title: 'Answer',
+                                            type: 'text',
+                                            rows: 4,
+                                            validation: (rule) => rule.required(),
+                                        }),
+
+                                    ],
+                                    preview: {
+                                        select: {
+                                            title: 'question',
+                                        },
+                                    },
+                                }),
+                            ],
+                        }),
+
+                    ],
+                }),
+
+
+                // ─────────────────────────────
+                // FINAL CTA
+                // ─────────────────────────────
+
+                defineField({
+                    name: 'finalCta',
+                    title: 'Final CTA',
+                    type: 'object',
+                    fields: [
+
+                        defineField({
+                            name: 'headline',
+                            title: 'Headline',
+                            type: 'string',
+                        }),
+
+                        defineField({
+                            name: 'subheadline',
+                            title: 'Subheadline',
+                            type: 'string',
+                        }),
+
+                        defineField({
+                            name: 'supportingText',
+                            title: 'Supporting Text',
+                            type: 'string',
+                        }),
+
+                        defineField({
+                            name: 'button',
+                            title: 'Button',
+                            type: 'object',
+                            fields: [
+
+                                defineField({
+                                    name: 'label',
+                                    title: 'Label',
+                                    type: 'string',
+                                }),
+
+                                defineField({
+                                    name: 'url',
+                                    title: 'URL',
+                                    type: 'url',
+                                }),
+
+                            ],
+                        }),
+
+                    ],
+                }),
+
             ],
         }),
         defineField({
