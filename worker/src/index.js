@@ -1,7 +1,6 @@
-
 const ALLOWED_ORIGINS = new Set([
   "http://localhost:5173",
-  "https://www.thempoweringminds.com",
+  "https://www.theempoweringminds.com",
 ]);
 
 function getCorsHeaders(request) {
