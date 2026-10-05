@@ -40,6 +40,9 @@ jobs:
           VITE_API_BASE_URL: https://empowering-minds-api.empoweringminds02.workers.dev
           VITE_SANITY_PROJECT_ID: nb9kk4a8
           VITE_SANITY_DATASET: production
+      
+      - name: Configure SPA fallback
+        run: cp dist/index.html dist/404.html
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
