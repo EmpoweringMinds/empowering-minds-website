@@ -31,6 +31,7 @@ export default function WorkshopRegistration() {
 
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [registrationStatus, setRegistrationStatus] = useState("idle");
 
   const workshop = workshops.find(
     (item) => item.slug === slug
@@ -45,10 +46,51 @@ export default function WorkshopRegistration() {
     }));
   }
 
+  async function checkRegistrationStatus(registrationId) {
+    const maxAttempts = 10;
+    const delay = 2000;
+
+    for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+      const response = await fetch(
+        `${API_BASE_URL}/api/registration-status?id=${encodeURIComponent(
+          registrationId
+        )}`
+      );
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(
+          data.error || "Unable to confirm registration."
+        );
+      }
+
+      if (data.registration.status === "REGISTERED") {
+        setRegistrationStatus("success");
+        return;
+      }
+
+      if (data.registration.status === "SYSTEM_ERROR") {
+        throw new Error(
+          "We could not complete your registration. Please contact us."
+        );
+      }
+
+      await new Promise((resolve) => {
+        setTimeout(resolve, delay);
+      });
+    }
+
+    throw new Error(
+      "Your payment was received, but registration confirmation is taking longer than expected. Please contact us if you do not receive confirmation."
+    );
+  }
+
   async function handleSubmit(event) {
     event.preventDefault();
 
     setSubmitError("");
+    setRegistrationStatus("idle");
     setSubmitting(true);
 
     try {
@@ -76,9 +118,9 @@ export default function WorkshopRegistration() {
         );
       }
 
-        console.log("Registration created:", data);
+      console.log("Registration created:", data);
 
-        const options = {
+      const options = {
         key: data.payment.keyId,
         amount: data.payment.amount,
         currency: data.payment.currency,
@@ -87,25 +129,48 @@ export default function WorkshopRegistration() {
         order_id: data.payment.orderId,
 
         prefill: {
-            name: form.name,
-            email: form.email,
-            contact: form.phone,
+          name: form.name,
+          email: form.email,
+          contact: form.phone,
         },
 
-        handler: function (paymentResponse) {
-            console.log("Razorpay payment response:", paymentResponse);
+        handler: async function (paymentResponse) {
+          console.log(
+            "Razorpay payment response:",
+            paymentResponse
+          );
+
+          setRegistrationStatus("confirming");
+
+          try {
+            await checkRegistrationStatus(
+              data.registration.id
+            );
+          } catch (error) {
+            console.error(
+              "Registration confirmation failed:",
+              error
+            );
+
+            setSubmitError(
+              error.message ||
+                "Payment was received, but we could not confirm your registration."
+            );
+
+            setRegistrationStatus("error");
+          }
         },
 
         modal: {
-            ondismiss: function () {
+          ondismiss: function () {
             console.log("Razorpay Checkout closed.");
-            },
+          },
         },
-        };
+      };
 
-        const razorpay = new window.Razorpay(options);
+      const razorpay = new window.Razorpay(options);
 
-        razorpay.open();
+      razorpay.open();
     } catch (error) {
       console.error("Registration failed:", error);
 
@@ -161,6 +226,68 @@ export default function WorkshopRegistration() {
     );
   }
 
+  if (registrationStatus === "success") {
+    return (
+      <main className="min-h-screen bg-[var(--color-background)] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+        <div className="mx-auto max-w-3xl">
+          <section className="rounded-2xl border border-black/10 bg-white p-8 shadow-sm sm:p-12">
+            <p className="text-sm font-medium uppercase tracking-[0.12em] text-[var(--color-text-secondary)]">
+              Registration confirmed
+            </p>
+
+            <h1 className="mt-4 text-4xl font-semibold">
+              Registration successful
+            </h1>
+
+            <p className="mt-6 text-base leading-7 text-[var(--color-text-secondary)]">
+              Your payment has been received and your
+              registration for {workshop.name} is confirmed.
+            </p>
+
+            <p className="mt-4 text-base leading-7 text-[var(--color-text-secondary)]">
+              We’ll send the workshop information and Zoom
+              link to the email address you provided.
+            </p>
+
+            <Link
+              to="/workshops"
+              className="mt-8 inline-block rounded-lg bg-[var(--color-text-primary)] px-6 py-3.5 text-sm font-medium text-white transition hover:opacity-90"
+            >
+              Back to workshops
+            </Link>
+          </section>
+        </div>
+      </main>
+    );
+  }
+
+  if (registrationStatus === "confirming") {
+    return (
+      <main className="min-h-screen bg-[var(--color-background)] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+        <div className="mx-auto max-w-3xl">
+          <section className="rounded-2xl border border-black/10 bg-white p-8 shadow-sm sm:p-12">
+            <p className="text-sm font-medium uppercase tracking-[0.12em] text-[var(--color-text-secondary)]">
+              Payment received
+            </p>
+
+            <h1 className="mt-4 text-4xl font-semibold">
+              Confirming your registration...
+            </h1>
+
+            <p className="mt-6 text-base leading-7 text-[var(--color-text-secondary)]">
+              Your payment was successful. We’re confirming
+              your registration now.
+            </p>
+
+            <p className="mt-4 text-sm leading-6 text-[var(--color-text-secondary)]">
+              Please keep this page open for a moment.
+            </p>
+          </section>
+        </div>
+      </main>
+    );
+  }
+
   return (
     <main className="min-h-screen bg-[var(--color-background)] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
       <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-start">
@@ -192,7 +319,8 @@ export default function WorkshopRegistration() {
                       <div key={session._key || index}>
                         {session.date
                           ? formatDate(session.date)
-                          : session.title || `Session ${index + 1}`}
+                          : session.title ||
+                            `Session ${index + 1}`}
                       </div>
                     )
                   )}

@@ -346,6 +346,82 @@ export default {
     }
     }
 
+    if (
+      request.method === "GET" &&
+      url.pathname === "/api/registration-status"
+    ) {
+      const registrationId = url.searchParams.get("id");
+
+      if (!registrationId) {
+        return Response.json(
+          {
+            success: false,
+            error: "Registration ID is required",
+          },
+          {
+            status: 400,
+            headers: corsHeaders,
+          }
+        );
+      }
+
+      try {
+        const registration = await env.DB
+          .prepare(`
+            SELECT
+              id,
+              status
+            FROM registrations
+            WHERE id = ?
+            LIMIT 1
+          `)
+          .bind(registrationId)
+          .first();
+
+        if (!registration) {
+          return Response.json(
+            {
+              success: false,
+              error: "Registration not found",
+            },
+            {
+              status: 404,
+              headers: corsHeaders,
+            }
+          );
+        }
+
+        return Response.json(
+          {
+            success: true,
+            registration: {
+              id: registration.id,
+              status: registration.status,
+            },
+          },
+          {
+            headers: corsHeaders,
+          }
+        );
+      } catch (error) {
+        console.error(
+          "Registration status lookup failed:",
+          error
+        );
+
+        return Response.json(
+          {
+            success: false,
+            error: "Unable to check registration status",
+          },
+          {
+            status: 500,
+            headers: corsHeaders,
+          }
+        );
+      }
+    }
+
 
     if (
     request.method === "GET" &&
