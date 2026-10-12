@@ -1,6 +1,5 @@
 import { Mail, MapPin, Phone } from "lucide-react";
 import { useMemo, useState } from "react";
-import { supabase } from "../lib/supabase";
 import { serviceGroups, contactDetails, faqs } from "../data/siteContent";
 import CTASection from "../components/ui/CTASection";
 import FadeIn from "../components/ui/FadeIn";
@@ -83,19 +82,20 @@ export default function Contact() {
     };
 
     try {
-      const { data, error: submitError } =
-        await supabase.functions.invoke("submit-callback", {
-          body: leadData,
-        });
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL || "http://127.0.0.1:8787"}/api/contact`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(leadData),
+        }
+      );
 
-      if (submitError) {
-        console.error("Contact submission error:", submitError);
-        throw new Error(
-          "We couldn't submit your request. Please try again."
-        );
-      }
+      const data = await response.json();
 
-      if (!data?.success) {
+      if (!response.ok || !data?.success) {
         throw new Error(
           data?.error ||
             "We couldn't submit your request. Please try again."

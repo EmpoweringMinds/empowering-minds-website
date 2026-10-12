@@ -9,7 +9,7 @@ import HumanPotentialVisualV2 from "../components/ui/HumanPotentialVisualV2";
 import ProgramsPreview from "../components/sections/ProgramsPreview";
 import TrainerPreview from "../components/sections/TrainerPreview";
 import TestimonialSection from "../components/sections/TestimonialSection";
-import WebinarPreview from "../components/common/WebinarPreview";
+import WorkshopPreview from "../components/common/WorkshopPreview";
 
 
 export default function Home() {
@@ -138,7 +138,7 @@ export default function Home() {
       />
     </section>
 
-    <WebinarPreview />
+    <WorkshopPreview />
 
       {/* Who We Are */}
       <section className="overflow-hidden bg-[var(--color-background)] py-20 sm:py-24 lg:py-28">

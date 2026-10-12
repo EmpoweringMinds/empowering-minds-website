@@ -1152,6 +1152,171 @@ if (
     }
     }
 
+    
+    // -------------------------
+    // CONTACT FORM / LEAD CREATION
+    // -------------------------
+    if (
+      request.method === "POST" &&
+      url.pathname === "/api/contact"
+    ) {
+      let body;
+
+      try {
+        body = await request.json();
+      } catch {
+        return Response.json(
+          { success: false, error: "Invalid JSON request body" },
+          { status: 400, headers: corsHeaders }
+        );
+      }
+
+      if (
+        !body ||
+        typeof body !== "object" ||
+        Array.isArray(body)
+      ) {
+        return Response.json(
+          { success: false, error: "Invalid request body" },
+          { status: 400, headers: corsHeaders }
+        );
+      }
+
+      const name =
+        typeof body.name === "string" ? body.name.trim() : "";
+
+      const email =
+        typeof body.email === "string"
+          ? body.email.trim().toLowerCase()
+          : "";
+
+      const phone =
+        typeof body.phone === "string" ? body.phone.trim() : "";
+
+      const organization =
+        typeof body.organization === "string"
+          ? body.organization.trim()
+          : "";
+
+      const serviceGroup =
+        typeof body.serviceGroup === "string"
+          ? body.serviceGroup.trim()
+          : "";
+
+      const serviceId =
+        typeof body.serviceId === "string"
+          ? body.serviceId.trim()
+          : "";
+
+      const serviceTitle =
+        typeof body.serviceTitle === "string"
+          ? body.serviceTitle.trim()
+          : "";
+
+      const message =
+        typeof body.message === "string"
+          ? body.message.trim()
+          : "";
+
+      const intent = body.intent;
+
+      if (
+        !name ||
+        !email ||
+        !phone ||
+        !serviceGroup ||
+        !serviceId ||
+        !serviceTitle ||
+        (intent !== "callback" && intent !== "demo")
+      ) {
+        return Response.json(
+          {
+            success: false,
+            error:
+              "Name, email, phone, service information, and a valid request type are required.",
+          },
+          { status: 400, headers: corsHeaders }
+        );
+      }
+
+      if (
+        name.length > 150 ||
+        email.length > 254 ||
+        phone.length > 40 ||
+        organization.length > 200 ||
+        serviceGroup.length > 150 ||
+        serviceId.length > 150 ||
+        serviceTitle.length > 200 ||
+        message.length > 5000 ||
+        !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+      ) {
+        return Response.json(
+          {
+            success: false,
+            error: "Please check your submitted details.",
+          },
+          { status: 400, headers: corsHeaders }
+        );
+      }
+
+      const enquiryId = crypto.randomUUID();
+
+      try {
+        await env.DB
+          .prepare(`
+            INSERT INTO callback_requests (
+              id,
+              name,
+              email,
+              phone,
+              organization,
+              service_group,
+              service_id,
+              service_title,
+              message,
+              intent
+            )
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          `)
+          .bind(
+            enquiryId,
+            name,
+            email,
+            phone,
+            organization || null,
+            serviceGroup,
+            serviceId,
+            serviceTitle,
+            message || null,
+            intent
+          )
+          .run();
+
+        return Response.json(
+          {
+            success: true,
+            message:
+              intent === "demo"
+                ? "Your demo request has been received."
+                : "Your callback request has been received.",
+            enquiryId,
+          },
+          { status: 201, headers: corsHeaders }
+        );
+      } catch (error) {
+        console.error("Contact enquiry insertion failed:", error);
+
+        return Response.json(
+          {
+            success: false,
+            error: "We couldn't save your request. Please try again.",
+          },
+          { status: 500, headers: corsHeaders }
+        );
+      }
+    }
+
+
     return Response.json(
       {
         success: false,
