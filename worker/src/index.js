@@ -588,7 +588,9 @@ if (
           SELECT
             id,
             registration_id,
-            status
+            status,
+            amount,
+            currency
           FROM payments
           WHERE provider = 'razorpay'
             AND provider_order_id = ?
@@ -624,6 +626,30 @@ if (
             success: true,
             message: "Payment already processed",
           });
+        }
+
+        const webhookAmount = Number(paymentEntity.amount);
+        const webhookCurrency = paymentEntity.currency;
+
+        if (
+          webhookAmount !== Number(payment.amount) ||
+          webhookCurrency !== payment.currency
+        ) {
+          console.error("Razorpay payment amount/currency mismatch:", {
+            expectedAmount: payment.amount,
+            expectedCurrency: payment.currency,
+            receivedAmount: webhookAmount,
+            receivedCurrency: webhookCurrency,
+            paymentId: payment.id,
+          });
+
+          return Response.json(
+            {
+              success: false,
+              error: "Payment amount or currency mismatch",
+            },
+            { status: 400 }
+          );
         }
 
         await env.DB
@@ -911,30 +937,50 @@ if (
           registrationId = crypto.randomUUID();
           isNewRegistration = true;
 
-          await env.DB
-            .prepare(`
-              INSERT INTO registrations (
-                id,
-                workshop_id,
-                attendee_name,
-                attendee_email,
-                attendee_phone,
-                status,
-                amount,
-                currency
+          try {
+            await env.DB
+              .prepare(`
+                INSERT INTO registrations (
+                  id,
+                  workshop_id,
+                  attendee_name,
+                  attendee_email,
+                  attendee_phone,
+                  status,
+                  amount,
+                  currency
+                )
+                VALUES (?, ?, ?, ?, ?, 'PENDING_PAYMENT', ?, ?)
+              `)
+              .bind(
+                registrationId,
+                workshop._id,
+                attendeeName,
+                attendeeEmail,
+                attendeePhone,
+                pricing.amountPaise,
+                pricing.currency
               )
-              VALUES (?, ?, ?, ?, ?, 'PENDING_PAYMENT', ?, ?)
-            `)
-            .bind(
-              registrationId,
-              workshop._id,
-              attendeeName,
-              attendeeEmail,
-              attendeePhone,
-              pricing.amountPaise,
-              pricing.currency
-            )
-            .run();
+              .run();
+          } catch (error) {
+            // The unique database index is the final protection
+            // against two simultaneous registration requests.
+            if (
+              error?.message?.includes(
+                "UNIQUE constraint failed: registrations.workshop_id, registrations.attendee_email"
+              )
+            ) {
+              return Response.json(
+                {
+                  success: false,
+                  error: "You are already registered for this workshop",
+                },
+                { status: 409 }
+              );
+            }
+
+            throw error;
+          }
         }
 
         // 6. Create a payment attempt.
@@ -972,7 +1018,7 @@ if (
             await env.DB
               .prepare(`
                 UPDATE registrations
-                SET status = 'SYSTEM_ERROR',
+                SET status = 'CANCELLED',
                     updated_at = datetime('now')
                 WHERE id = ?
               `)
@@ -1018,7 +1064,7 @@ if (
             await env.DB
               .prepare(`
                 UPDATE registrations
-                SET status = 'SYSTEM_ERROR',
+                SET status = 'CANCELLED',
                     updated_at = datetime('now')
                 WHERE id = ?
               `)
@@ -1060,7 +1106,7 @@ if (
             await env.DB
               .prepare(`
                 UPDATE registrations
-                SET status = 'SYSTEM_ERROR',
+                SET status = 'CANCELLED',
                     updated_at = datetime('now')
                 WHERE id = ?
               `)

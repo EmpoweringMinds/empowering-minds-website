@@ -185,7 +185,7 @@ export default function WorkshopRegistration() {
 
   if (loading) {
     return (
-      <main className="min-h-screen px-4 py-24">
+      <main className="min-h-screen bg-[var(--color-background)] px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
           <p className="text-[var(--color-text-secondary)]">
             Loading workshop...
@@ -197,9 +197,9 @@ export default function WorkshopRegistration() {
 
   if (error) {
     return (
-      <main className="min-h-screen px-4 py-24">
+      <main className="min-h-screen bg-[var(--color-background)] px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <p className="text-red-600">
+          <p className="text-red-700">
             Unable to load workshop details.
           </p>
         </div>
@@ -209,15 +209,15 @@ export default function WorkshopRegistration() {
 
   if (!workshop) {
     return (
-      <main className="min-h-screen px-4 py-24">
+      <main className="min-h-screen bg-[var(--color-background)] px-4 py-24 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl">
-          <h1 className="text-3xl font-semibold">
+          <h1 className="text-3xl font-bold tracking-tight text-[var(--color-primary)] sm:text-4xl">
             Workshop not found
           </h1>
 
           <Link
             to="/workshops"
-            className="mt-6 inline-block underline"
+            className="mt-6 inline-flex items-center rounded-full border border-[var(--color-border)] px-5 py-3 text-sm font-semibold text-[var(--color-primary)] transition hover:bg-white"
           >
             Back to workshops
           </Link>
@@ -230,12 +230,12 @@ export default function WorkshopRegistration() {
     return (
       <main className="min-h-screen bg-[var(--color-background)] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-3xl">
-          <section className="rounded-2xl border border-black/10 bg-white p-8 shadow-sm sm:p-12">
-            <p className="text-sm font-medium uppercase tracking-[0.12em] text-[var(--color-text-secondary)]">
+          <section className="rounded-3xl border border-[var(--color-border)] bg-white p-8 shadow-[0_20px_60px_rgba(35,66,78,0.08)] sm:p-12">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-secondary)]">
               Registration confirmed
             </p>
 
-            <h1 className="mt-4 text-4xl font-semibold">
+            <h1 className="mt-4 text-4xl font-bold leading-tight tracking-[-0.03em] text-[var(--color-primary)] sm:text-5xl">
               Registration successful
             </h1>
 
@@ -251,7 +251,7 @@ export default function WorkshopRegistration() {
 
             <Link
               to="/workshops"
-              className="mt-8 inline-block rounded-lg bg-[var(--color-text-primary)] px-6 py-3.5 text-sm font-medium text-white transition hover:opacity-90"
+              className="mt-8 inline-flex items-center justify-center rounded-full bg-[var(--color-primary)] px-6 py-3.5 text-sm font-semibold text-white transition duration-300 hover:bg-[var(--color-secondary)]"
             >
               Back to workshops
             </Link>
@@ -265,12 +265,12 @@ export default function WorkshopRegistration() {
     return (
       <main className="min-h-screen bg-[var(--color-background)] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div className="mx-auto max-w-3xl">
-          <section className="rounded-2xl border border-black/10 bg-white p-8 shadow-sm sm:p-12">
-            <p className="text-sm font-medium uppercase tracking-[0.12em] text-[var(--color-text-secondary)]">
+          <section className="rounded-3xl border border-[var(--color-border)] bg-white p-8 shadow-[0_20px_60px_rgba(35,66,78,0.08)] sm:p-12">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-secondary)]">
               Payment received
             </p>
 
-            <h1 className="mt-4 text-4xl font-semibold">
+            <h1 className="mt-4 text-4xl font-bold leading-tight tracking-[-0.03em] text-[var(--color-primary)] sm:text-5xl">
               Confirming your registration...
             </h1>
 
@@ -290,26 +290,28 @@ export default function WorkshopRegistration() {
 
   return (
     <main className="min-h-screen bg-[var(--color-background)] px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-      <div className="mx-auto grid max-w-6xl gap-12 lg:grid-cols-2 lg:items-start">
-        <section>
-          <p className="text-sm font-medium uppercase tracking-[0.16em] text-[var(--color-text-secondary)]">
+      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-start lg:gap-16">
+        <section className="relative overflow-hidden rounded-3xl bg-[var(--color-surface-warm)] p-6 sm:p-9 lg:p-10">
+          <div aria-hidden="true" className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full border border-[var(--color-secondary)]/10" />
+          <div className="relative">
+          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[var(--color-primary)] sm:text-sm">
             {workshop.hero.eyebrow || "Workshop registration"}
           </p>
 
-          <h1 className="mt-4 font-[var(--font-display)] text-4xl leading-tight sm:text-5xl">
+          <h1 className="mt-5 font-[var(--font-display)] text-4xl font-bold leading-[1.05] tracking-[-0.035em] text-[var(--color-secondary)] sm:text-5xl lg:text-6xl">
             {workshop.hero.title || workshop.name}
           </h1>
 
           {workshop.hero.description && (
-            <p className="mt-6 max-w-xl text-base leading-7 text-[var(--color-text-secondary)]">
+            <p className="mt-6 max-w-xl text-base leading-8 text-[var(--color-text-secondary)] sm:text-lg">
               {workshop.hero.description}
             </p>
           )}
 
-          <div className="mt-8 space-y-4 border-t border-black/10 pt-6">
+          <div className="mt-8 space-y-6 border-t border-[var(--color-border)] pt-7">
             {workshop.schedule.sessions?.length > 0 && (
               <div>
-                <p className="text-sm font-medium">
+                <p className="text-sm font-semibold text-[var(--color-primary)]">
                   Schedule
                 </p>
 
@@ -329,14 +331,14 @@ export default function WorkshopRegistration() {
             )}
 
             {workshop.schedule.timezone && (
-              <p className="text-sm text-[var(--color-text-secondary)]">
+              <p className="text-sm leading-6 text-[var(--color-text-secondary)]">
                 Timezone: {workshop.schedule.timezone}
               </p>
             )}
 
             {workshop.pricing.regularPrice != null && (
               <div>
-                <p className="text-sm font-medium">
+                <p className="text-sm font-semibold text-[var(--color-primary)]">
                   Workshop fee
                 </p>
 
@@ -347,15 +349,16 @@ export default function WorkshopRegistration() {
               </div>
             )}
           </div>
+          </div>
         </section>
 
-        <section className="rounded-2xl border border-black/10 bg-white p-6 shadow-sm sm:p-8">
+        <section className="rounded-3xl border border-[var(--color-border)] bg-white p-6 shadow-[0_24px_70px_rgba(35,66,78,0.09)] sm:p-8 lg:p-9">
           <div>
-            <p className="text-sm font-medium uppercase tracking-[0.12em] text-[var(--color-text-secondary)]">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[var(--color-secondary)]">
               Your details
             </p>
 
-            <h2 className="mt-2 text-2xl font-semibold">
+            <h2 className="mt-3 text-2xl font-bold tracking-tight text-[var(--color-primary)] sm:text-3xl">
               Register for this workshop
             </h2>
 
@@ -366,12 +369,12 @@ export default function WorkshopRegistration() {
 
           <form
             onSubmit={handleSubmit}
-            className="mt-8 space-y-5"
+            className="mt-8 space-y-6"
           >
             <div>
               <label
                 htmlFor="name"
-                className="block text-sm font-medium"
+                className="mb-2 block text-sm font-semibold text-[var(--color-primary)]"
               >
                 Full name
               </label>
@@ -385,14 +388,14 @@ export default function WorkshopRegistration() {
                 required
                 maxLength={150}
                 autoComplete="name"
-                className="mt-2 w-full rounded-lg border border-black/15 bg-transparent px-4 py-3 outline-none transition focus:border-black"
+                className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-3.5 text-[var(--color-primary)] outline-none transition placeholder:text-[var(--color-text-secondary)]/60 focus:border-[var(--color-secondary)] focus:ring-2 focus:ring-[var(--color-secondary)]/15"
               />
             </div>
 
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium"
+                className="mb-2 block text-sm font-semibold text-[var(--color-primary)]"
               >
                 Email address
               </label>
@@ -406,14 +409,14 @@ export default function WorkshopRegistration() {
                 required
                 maxLength={254}
                 autoComplete="email"
-                className="mt-2 w-full rounded-lg border border-black/15 bg-transparent px-4 py-3 outline-none transition focus:border-black"
+                className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-3.5 text-[var(--color-primary)] outline-none transition placeholder:text-[var(--color-text-secondary)]/60 focus:border-[var(--color-secondary)] focus:ring-2 focus:ring-[var(--color-secondary)]/15"
               />
             </div>
 
             <div>
               <label
                 htmlFor="phone"
-                className="block text-sm font-medium"
+                className="mb-2 block text-sm font-semibold text-[var(--color-primary)]"
               >
                 Phone number
               </label>
@@ -426,12 +429,12 @@ export default function WorkshopRegistration() {
                 onChange={handleChange}
                 maxLength={30}
                 autoComplete="tel"
-                className="mt-2 w-full rounded-lg border border-black/15 bg-transparent px-4 py-3 outline-none transition focus:border-black"
+                className="w-full rounded-xl border border-[var(--color-border)] bg-[var(--color-background)] px-4 py-3.5 text-[var(--color-primary)] outline-none transition placeholder:text-[var(--color-text-secondary)]/60 focus:border-[var(--color-secondary)] focus:ring-2 focus:ring-[var(--color-secondary)]/15"
               />
             </div>
 
             {submitError && (
-              <div className="rounded-lg bg-red-50 px-4 py-3 text-sm text-red-700">
+              <div className="rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-sm leading-6 text-red-700">
                 {submitError}
               </div>
             )}
@@ -439,7 +442,7 @@ export default function WorkshopRegistration() {
             <button
               type="submit"
               disabled={submitting}
-              className="w-full rounded-lg bg-[var(--color-text-primary)] px-6 py-3.5 text-sm font-medium text-white transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
+              className="w-full rounded-full bg-[var(--color-primary)] px-6 py-4 text-sm font-semibold text-white shadow-sm transition duration-300 hover:bg-[var(--color-secondary)] focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-secondary)] focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
             >
               {submitting
                 ? "Starting registration..."
