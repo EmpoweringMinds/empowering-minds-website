@@ -182,7 +182,7 @@ export const serviceGroups = [
           "Corporate Readiness",
           "Leap to Success Framework",
         ],
-        ctaLabel: "Request a Callback",
+        ctaLabel: "Enquire Now",
       },
 
       {
@@ -207,7 +207,7 @@ export const serviceGroups = [
           "Engaging & Interactive Learning Techniques",
           "AI Tools in Lead Generation for Business",
         ],
-        ctaLabel: "Request a Callback",
+        ctaLabel: "Enquire Now",
       },
     ],
   },
@@ -244,7 +244,7 @@ export const serviceGroups = [
           "Workplace Behavioural Alignment",
           "Engaging & Interactive Learning Techniques",
         ],
-        ctaLabel: "Request a Callback",
+        ctaLabel: "Enquire Now",
       },
 
       {
@@ -269,7 +269,7 @@ export const serviceGroups = [
           "POSH Training",
           "Industry-Specific Workshops",
         ],
-        ctaLabel: "Request a Callback",
+        ctaLabel: "Enquire Now",
       },
     ],
   },
@@ -302,7 +302,7 @@ export const serviceGroups = [
           "Decision-Making Skills",
           "Leadership Skills",
         ],
-        ctaLabel: "Request a Callback",
+        ctaLabel: "Enquire Now",
       },
 
       {
@@ -325,7 +325,7 @@ export const serviceGroups = [
           "Career Readiness",
           "Image Management",
         ],
-        ctaLabel: "Request a Callback",
+        ctaLabel: "Enquire Now",
       },
     ],
   },
@@ -359,7 +359,7 @@ export const serviceGroups = [
           "Engaging & Interactive Learning Techniques",
           "Classroom Management",
         ],
-        ctaLabel: "Request a Callback",
+        ctaLabel: "Enquire Now",
       },
 
       {
@@ -382,7 +382,7 @@ export const serviceGroups = [
           "Managing Difficult Participants",
           "Training Delivery Practice",
         ],
-        ctaLabel: "Request a Callback",
+        ctaLabel: "Enquire Now",
       },
     ],
   },
@@ -502,37 +502,3 @@ export const testimonials = [
     programme: "The Leap to Success",
   },
 ];
-
-export const webinar = {
-  eyebrow: "Upcoming Webinar",
-  title: "Peak Performance Webinar",
-  description:
-    "A focused learning experience for professionals, managers, entrepreneurs and corporate teams who want to optimize their capabilities and achieve their fullest potential.",
-
-  date: "11 & 12 October 2026",
-  time: "6:00 PM IST",
-  format: "Live on Zoom",
-
-  price: '₹299',
-
-  image: "/images/webinar.jpg",
-  imageAlt: "Participants attending a professional webinar",
-
-  highlights: [
-    "Real knowledge",
-    "Practical insights",
-    "Real change",
-    "Real time transformation",
-  ],
-
-  bonus: {
-    eyebrow: "Registration Benefit",
-    title: "A Complimentary Image & Executive Presence Session",
-    description:
-      "Everyone who registers for the webinar receives a complimentary image session.",
-  },
-
-  ctaTitle: "Ready to perform at your full potential",
-  cta: "Register for the Webinar",
-  link: "/webinar",
-};

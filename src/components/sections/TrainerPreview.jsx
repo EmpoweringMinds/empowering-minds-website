@@ -9,7 +9,7 @@ import { useTrainers } from "../../cms/useTrainers";
 import { useState, useEffect } from "react";
 
 export default function TrainerPreview() {
-  const [cmsTrainers, setCmsTrainers] = useState([]);
+  const [, setCmsTrainers] = useState([]);
   
   const {
     trainers,

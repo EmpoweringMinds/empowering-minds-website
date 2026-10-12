@@ -1,4 +1,3 @@
-import { Children } from "react";
 import { defineArrayMember, defineField, defineType } from "sanity";
 
 export const workshop = defineType({

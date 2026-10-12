@@ -15,7 +15,7 @@ import { useState, useEffect } from "react";
 
 export default function Trainers() {
     const [selectedTrainer, setSelectedTrainer] = useState(null);
-    const [cmsTrainers, setCmsTrainers] = useState([]);
+    const [, setCmsTrainers] = useState([]);
 
     const {
       trainers,

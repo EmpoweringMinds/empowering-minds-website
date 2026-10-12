@@ -205,7 +205,7 @@ async function verifyRazorpayWebhookSignature(
 
 
 export default {
-  async fetch(request, env, ctx) {
+  async fetch(request, env) {
     const url = new URL(request.url);
     const corsHeaders = getCorsHeaders(request);
 
@@ -232,7 +232,7 @@ export default {
                 ? "connected"
                 : "unavailable",
             });
-        } catch (error) {
+        } catch {
             return Response.json(
             {
                 success: false,
@@ -338,7 +338,7 @@ export default {
             isOpen: registrationState === "open",
         },
         });
-    } catch (error) {
+    } catch {
         return Response.json(
         { success: false, error: "Unable to fetch workshop" },
         { status: 502 }
@@ -464,7 +464,7 @@ export default {
             pricing.verifiedEarlyBirdPayments,
         },
         });
-    } catch (error) {
+    } catch {
         return Response.json(
         {
             success: false,

@@ -1,6 +1,5 @@
 import { Check, Loader2, X } from "lucide-react";
 import { useEffect, useState } from "react";
-import { supabase } from "../../lib/supabase";
 
 export default function ProgramModal({ program, onClose }) {
   const [showForm, setShowForm] = useState(false);
@@ -8,6 +7,21 @@ export default function ProgramModal({ program, onClose }) {
   const [submitError, setSubmitError] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [intent, setIntent] = useState("");
+
+  const resetModal = () => {
+    setShowForm(false);
+    setIsSubmitting(false);
+    setSubmitError("");
+    setSubmitted(false);
+    setIntent("");
+  };
+
+  const handleClose = () => {
+  if (isSubmitting) return;
+
+  resetModal();
+  onClose();
+  };
 
   useEffect(() => {
     if (!program) {
@@ -89,36 +103,36 @@ export default function ProgramModal({ program, onClose }) {
       .trim();
     const message = formData.get("message")?.toString().trim();
 
+
+
     try {
-      const { data, error } =
-        await supabase.functions.invoke("submit-callback", {
-          body: {
+      const response = await fetch(
+        `${
+          import.meta.env.VITE_API_BASE_URL ||
+          "http://127.0.0.1:8787"
+        }/api/contact`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
             name,
             email,
             phone,
-            organisation,
+            organization: organisation,
             message,
-
-            // Identify exactly which service was requested.
             serviceGroup,
             serviceId: program.id,
             serviceTitle: title,
             intent,
-          },
-        });
+          }),
+        }
+      );
 
-      if (error) {
-        console.error(
-          "Callback submission error:",
-          error
-        );
+      const data = await response.json();
 
-        throw new Error(
-          "We couldn't submit your request. Please try again."
-        );
-      }
-
-      if (!data?.success) {
+      if (!response.ok || !data?.success) {
         throw new Error(
           data?.error ||
             "We couldn't submit your request. Please try again."
@@ -137,12 +151,13 @@ export default function ProgramModal({ program, onClose }) {
     } finally {
       setIsSubmitting(false);
     }
-  };
+
+      };
 
   return (
     <div
       className="fixed inset-0 z-[70] flex items-center justify-center bg-[var(--color-primary)]/35 px-3 py-4 backdrop-blur-[3px] sm:px-4 sm:py-8"
-      onClick={onClose}
+      onClick={handleClose}
       role="presentation"
     >
       <div
@@ -155,7 +170,7 @@ export default function ProgramModal({ program, onClose }) {
         {/* Close */}
         <button
           type="button"
-          onClick={onClose}
+          onClick={handleClose}
           disabled={isSubmitting}
           className="absolute right-4 top-4 z-10 flex h-10 w-10 items-center justify-center rounded-full border border-[var(--color-border)] bg-white text-[var(--color-primary)] transition hover:bg-[var(--color-background)] disabled:cursor-not-allowed disabled:opacity-50 sm:right-5 sm:top-5 sm:h-11 sm:w-11"
           aria-label="Close"
@@ -468,7 +483,7 @@ export default function ProgramModal({ program, onClose }) {
 
               <button
                 type="button"
-                onClick={onClose}
+                onClick={handleClose}
                 className="mt-8 rounded-full bg-[var(--color-secondary)] px-7 py-3.5 text-sm font-semibold text-white transition hover:opacity-90"
               >
                 Done
