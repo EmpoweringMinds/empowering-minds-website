@@ -71,6 +71,7 @@ export default function WorkshopDetails() {
   }
 
   const dateState = getWorkshopDateState(workshop);
+  const registrationClosed = dateState.status !== "upcoming";
 
   return (
     <main>
@@ -122,7 +123,21 @@ export default function WorkshopDetails() {
                   {dateState.status === "upcoming" ? "Upcoming" : "Past"}
                 </span>
               </div>
-              <CTAButton to={`/workshops/${workshop.slug}/register`} variant="primary">{workshop.content.finalCta.button.label}</CTAButton>
+              {registrationClosed ? (
+                <span
+                  aria-disabled="true"
+                  className="inline-flex cursor-not-allowed items-center justify-center rounded-full bg-gray-300 px-5 py-3 text-center text-sm font-semibold text-gray-600 opacity-80 sm:px-6"
+                >
+                  Registration Closed
+                </span>
+              ) : (
+                <CTAButton
+                  to={`/workshops/${workshop.slug}/register`}
+                  variant="primary"
+                >
+                  {workshop.content.finalCta.button.label}
+                </CTAButton>
+              )}
             </div>
           </div>
         </FadeIn>
@@ -533,9 +548,21 @@ export default function WorkshopDetails() {
               <h2 className="text-3xl font-bold tracking-tight text-[var(--color-text-primary)] sm:text-4xl lg:text-5xl mb-16">
                 Ready to take the next step
               </h2>
-              <CTAButton to={`/workshops/${workshop.slug}/register`} variant="primary">
-                {workshop.content.finalCta.button.label}
-              </CTAButton>
+              {registrationClosed ? (
+                <span
+                  aria-disabled="true"
+                  className="inline-flex cursor-not-allowed items-center justify-center rounded-full bg-gray-300 px-5 py-3 text-center text-sm font-semibold text-gray-600 opacity-80 sm:px-6"
+                >
+                  Registration Closed
+                </span>
+              ) : (
+                <CTAButton
+                  to={`/workshops/${workshop.slug}/register`}
+                  variant="primary"
+                >
+                  {workshop.content.finalCta.button.label}
+                </CTAButton>
+              )}
             </div>
           </FadeIn>
         </section>

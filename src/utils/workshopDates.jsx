@@ -25,13 +25,13 @@ export function getWorkshopDateState(workshop) {
     };
   }
 
-  const start = new Date(Math.min(...starts.map((date) => date.getTime())));
+  const start = new Date(Math.max(...starts.map((date) => date.getTime())));
   const end = new Date(Math.max(...ends.map((date) => date.getTime())));
 
   const now = new Date();
 
   return {
-    status: end > now ? "upcoming" : "past",
+    status: start > now ? "upcoming" : "past",
     start,
     end,
   };
