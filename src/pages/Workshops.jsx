@@ -1,5 +1,6 @@
 import { useWorkshops } from "../cms/useWorkshops";
 import CTAButton from "../components/ui/CTAButton";
+import FadeIn from "../components/ui/FadeIn";
 import { getWorkshopDateState } from "../utils/workshopDates";
 
 export default function Workshops() {
@@ -58,36 +59,38 @@ export default function Workshops() {
             {workshops.map((workshop) => {
               const dateState = getWorkshopDateState(workshop);
               return (
-                <article key={workshop.id} className="group flex h-full flex-col overflow-hidden rounded-3xl border-[2px] border-[var(--color-rust-light)]/80 bg-white shadow-[0_12px_40px_rgba(35,66,78,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(35,66,78,0.12)]">
-                  <div className="flex flex-1 flex-col p-6 sm:p-8 lg:p-9">
-                    <div className="flex flex-wrap items-center justify-between gap-3">
-                      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)]">{dateState.status === "upcoming" ? "Upcoming" : "Past"}</p>
-                      <span className="rounded-full border border-[var(--color-border)] px-3 py-1.5 text-xs font-medium text-[var(--color-text-secondary)]">{workshop.format}</span>
-                    </div>
+                <FadeIn>
+                  <article key={workshop.id} className="group flex h-full flex-col overflow-hidden rounded-3xl border-[2px] border-[var(--color-rust-light)]/80 bg-white shadow-[0_12px_40px_rgba(35,66,78,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(35,66,78,0.12)]">
+                    <div className="flex flex-1 flex-col p-6 sm:p-8 lg:p-9">
+                      <div className="flex flex-wrap items-center justify-between gap-3">
+                        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[var(--color-primary)]">{dateState.status === "upcoming" ? "Upcoming" : "Past"}</p>
+                        <span className="rounded-full border border-[var(--color-border)] px-3 py-1.5 text-xs font-medium text-[var(--color-text-secondary)]">{workshop.format}</span>
+                      </div>
 
-                    <h2 className="mt-6 text-2xl font-bold leading-tight tracking-tight text-[var(--color-primary)] transition-colors duration-300 group-hover:text-[var(--color-secondary)] sm:text-3xl">{workshop.name}</h2>
-                    <p className="mt-4 text-lg font-semibold leading-snug text-[var(--color-secondary)] sm:text-xl">{workshop.hero.title}</p>
-                    <p className="mt-4 leading-7 text-[var(--color-text-secondary)]">{workshop.hero.subtitle}</p>
+                      <h2 className="mt-6 text-2xl font-bold leading-tight tracking-tight text-[var(--color-primary)] transition-colors duration-300 group-hover:text-[var(--color-secondary)] sm:text-3xl">{workshop.name}</h2>
+                      <p className="mt-4 text-lg font-semibold leading-snug text-[var(--color-secondary)] sm:text-xl">{workshop.hero.title}</p>
+                      <p className="mt-4 leading-7 text-[var(--color-text-secondary)]">{workshop.hero.subtitle}</p>
 
-                    {dateState.start && (
-                      <div className="mt-6 flex items-start gap-3 border-t border-[var(--color-border)] pt-5">
-                        <span aria-hidden="true" className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--color-secondary)]" />
-                        <div>
-                          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-text-secondary)]">{dateState.status === "upcoming" ? "Next session" : "Workshop date"}</p>
-                          <p className="mt-1 font-semibold text-[var(--color-primary)]">{dateState.start.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}</p>
+                      {dateState.start && (
+                        <div className="mt-6 flex items-start gap-3 border-t border-[var(--color-border)] pt-5">
+                          <span aria-hidden="true" className="mt-1 h-2.5 w-2.5 shrink-0 rounded-full bg-[var(--color-secondary)]" />
+                          <div>
+                            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-text-secondary)]">{dateState.status === "upcoming" ? "Next session" : "Workshop date"}</p>
+                            <p className="mt-1 font-semibold text-[var(--color-primary)]">{dateState.start.toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}</p>
+                          </div>
                         </div>
-                      </div>
-                    )}
+                      )}
 
-                    <div className="mt-auto flex flex-col gap-6 border-t border-[var(--color-border)] pt-6 sm:flex-row sm:items-end sm:justify-between sm:gap-4 sm:pt-7">
-                      <div>
-                        <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-text-secondary)]">Investment</p>
-                        <p className="mt-2 text-2xl font-bold tracking-tight text-[var(--color-primary)]">{workshop.pricing.currency} {workshop.pricing.regularPrice}</p>
+                      <div className="mt-auto flex flex-col gap-6 border-t border-[var(--color-border)] pt-6 sm:flex-row sm:items-end sm:justify-between sm:gap-4 sm:pt-7">
+                        <div>
+                          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-text-secondary)]">Investment</p>
+                          <p className="mt-2 text-2xl font-bold tracking-tight text-[var(--color-primary)]">{workshop.pricing.currency} {workshop.pricing.regularPrice}</p>
+                        </div>
+                        <CTAButton to={`/workshops/${workshop.slug}`} variant="primary">View Workshop</CTAButton>
                       </div>
-                      <CTAButton to={`/workshops/${workshop.slug}`} variant="primary">View Workshop</CTAButton>
                     </div>
-                  </div>
-                </article>
+                  </article>
+                </FadeIn>
               );
             })}
           </div>
