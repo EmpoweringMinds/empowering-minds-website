@@ -113,7 +113,7 @@ export default function Workshops() {
                         </div>
                       )}
 
-                      <div className="mt-auto flex flex-col gap-6 border-t border-[var(--color-border)] pt-6 sm:flex-row sm:items-end sm:justify-between sm:gap-4 sm:pt-7"
+                      <div className="mt-auto flex flex-col gap-6 border-t border-[var(--color-border)] pt-6 sm:flex-row sm:items-end sm:justify-between sm:gap-4 sm:pt-7">
                           
 <div>
   <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-text-secondary)]">
