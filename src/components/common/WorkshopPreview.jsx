@@ -13,6 +13,35 @@ function formatWorkshopDate(date) {
   });
 }
 
+
+function getActiveEarlyBird(pricing) {
+  const earlyBird = pricing?.earlyBird;
+
+  if (
+    !earlyBird?.enabled ||
+    earlyBird.price == null ||
+    !Number.isFinite(Number(earlyBird.price)) ||
+    Number(earlyBird.price) < 0 ||
+    !earlyBird.validUntil
+  ) {
+    return null;
+  }
+
+  const now = Date.now();
+  const validFrom = earlyBird.validFrom
+    ? Date.parse(earlyBird.validFrom)
+    : null;
+  const validUntil = Date.parse(earlyBird.validUntil);
+
+  const isWithinPeriod =
+    (validFrom === null ||
+      (Number.isFinite(validFrom) && now >= validFrom)) &&
+    Number.isFinite(validUntil) &&
+    now < validUntil;
+
+  return isWithinPeriod ? earlyBird : null;
+}
+
 export default function WorkshopPreview() {
   const { workshops, loading, error } = useWorkshops();
 
@@ -100,7 +129,9 @@ export default function WorkshopPreview() {
           </div>
         ) : (
           <div className="mt-12 grid gap-6 sm:mt-14 md:grid-cols-2 xl:grid-cols-3">
-            {upcomingWorkshops.map(({ workshop, dateState }) => (
+            {upcomingWorkshops.map(({ workshop, dateState }) => {
+            const earlyBird = getActiveEarlyBird(workshop.pricing);
+            return (
               <article
                 key={workshop.id || workshop.slug}
                 className="group flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white shadow-[0_8px_30px_rgba(35,66,78,0.04)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_20px_45px_rgba(35,66,78,0.10)]"
@@ -154,9 +185,32 @@ export default function WorkshopPreview() {
                         <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[var(--color-text-secondary)]">
                           Workshop fee
                         </p>
-                        <p className="mt-1 text-xl font-bold text-[var(--color-primary)]">
-                          {workshop.pricing.currency} {workshop.pricing.regularPrice}
-                        </p>
+                      
+{earlyBird ? (
+  <>
+    <div className="mt-1 flex flex-wrap items-baseline gap-x-2 gap-y-1">
+      <p className="text-xl font-bold text-[var(--color-primary)]">
+        {workshop.pricing.currency} {earlyBird.price}
+      </p>
+
+      <p className="text-sm text-[var(--color-text-secondary)] line-through">
+        {workshop.pricing.currency} {workshop.pricing.regularPrice}
+      </p>
+    </div>
+
+    <p className="mt-1 text-xs font-semibold text-[var(--color-secondary)]">
+      Early-bird offer
+    </p>
+    <p className="mt-1 text-xs text-[var(--color-text-secondary)]">
+      Ends {formatWorkshopDate(new Date(earlyBird.validUntil))}
+    </p>
+  </>
+) : (
+  <p className="mt-1 text-xl font-bold text-[var(--color-primary)]">
+    {workshop.pricing.currency} {workshop.pricing.regularPrice}
+  </p>
+
+)}
                       </div>
                       {workshop.format && (
                         <span className="max-w-[45%] text-right text-sm text-[var(--color-text-secondary)]">
@@ -177,7 +231,7 @@ export default function WorkshopPreview() {
                   </div>
                 </div>
               </article>
-            ))}
+            );})}
           </div>
         )}
 
@@ -186,7 +240,7 @@ export default function WorkshopPreview() {
             <Link
               to="/workshops"
               className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-primary)] transition-colors hover:text-[var(--color-secondary)]"
-            >
+            >}
               Browse all workshops
               <span aria-hidden="true">→</span>
             </Link>
