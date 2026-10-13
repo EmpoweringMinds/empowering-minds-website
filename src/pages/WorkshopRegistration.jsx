@@ -19,6 +19,37 @@ function formatDate(dateString) {
   }).format(date);
 }
 
+function getActiveEarlyBird(pricing) {
+  const earlyBird = pricing?.earlyBird;
+
+  if (
+    !earlyBird?.enabled ||
+    earlyBird.price == null ||
+    !Number.isFinite(Number(earlyBird.price)) ||
+    Number(earlyBird.price) < 0 ||
+    !earlyBird.validUntil
+  ) {
+    return null;
+  }
+
+  const now = Date.now();
+  const validFrom = earlyBird.validFrom
+    ? new Date(earlyBird.validFrom).getTime()
+    : null;
+  const validUntil = new Date(earlyBird.validUntil).getTime();
+
+  if (
+    (validFrom !== null &&
+      (!Number.isFinite(validFrom) || now < validFrom)) ||
+    !Number.isFinite(validUntil) ||
+    now >= validUntil
+  ) {
+    return null;
+  }
+
+  return earlyBird;
+}
+
 export default function WorkshopRegistration() {
   const { slug } = useParams();
   const { workshops, loading, error } = useWorkshops();
@@ -36,6 +67,7 @@ export default function WorkshopRegistration() {
   const workshop = workshops.find(
     (item) => item.slug === slug
   );
+  const earlyBird = getActiveEarlyBird(workshop?.pricing);
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -336,18 +368,40 @@ export default function WorkshopRegistration() {
               </p>
             )}
 
-            {workshop.pricing.regularPrice != null && (
-              <div>
-                <p className="text-sm font-semibold text-[var(--color-primary)]">
-                  Workshop fee
-                </p>
+{workshop.pricing.regularPrice != null && (
+  <div>
+    <p className="text-sm font-semibold text-[var(--color-primary)]">
+      Workshop fee
+    </p>
 
-                <p className="mt-1 text-2xl font-semibold">
-                  {workshop.pricing.currency}{" "}
-                  {workshop.pricing.regularPrice}
-                </p>
-              </div>
-            )}
+    {earlyBird ? (
+      <>
+        <div className="mt-1 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+          <p className="text-2xl font-bold text-[var(--color-primary)]">
+            {workshop.pricing.currency} {earlyBird.price}
+          </p>
+
+          <p className="text-sm text-[var(--color-text-secondary)] line-through">
+            {workshop.pricing.currency} {workshop.pricing.regularPrice}
+          </p>
+        </div>
+
+        <p className="mt-2 text-sm font-semibold text-[var(--color-secondary)]">
+          Early-bird price
+        </p>
+
+        <p className="mt-1 text-xs text-[var(--color-text-secondary)]">
+          Offer ends{" "}
+          {formatDate(earlyBird.validUntil)}
+        </p>
+      </>
+    ) : (
+      <p className="mt-1 text-2xl font-semibold text-[var(--color-primary)]">
+        {workshop.pricing.currency} {workshop.pricing.regularPrice}
+      </p>
+    )}
+  </div>
+)}
           </div>
           </div>
         </section>
