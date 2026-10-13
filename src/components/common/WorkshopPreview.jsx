@@ -240,7 +240,7 @@ export default function WorkshopPreview() {
             <Link
               to="/workshops"
               className="inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-primary)] transition-colors hover:text-[var(--color-secondary)]"
-            >}
+            >
               Browse all workshops
               <span aria-hidden="true">→</span>
             </Link>
