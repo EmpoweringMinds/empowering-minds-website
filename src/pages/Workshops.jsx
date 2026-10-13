@@ -3,6 +3,37 @@ import CTAButton from "../components/ui/CTAButton";
 import FadeIn from "../components/ui/FadeIn";
 import { getWorkshopDateState } from "../utils/workshopDates";
 
+
+function getActiveEarlyBird(pricing) {
+  const earlyBird = pricing?.earlyBird;
+
+  if (
+    !earlyBird?.enabled ||
+    earlyBird.price == null ||
+    !Number.isFinite(Number(earlyBird.price)) ||
+    Number(earlyBird.price) < 0 ||
+    !earlyBird.validUntil
+  ) {
+    return null;
+  }
+
+  const now = Date.now();
+  const validFrom = earlyBird.validFrom
+    ? new Date(earlyBird.validFrom).getTime()
+    : null;
+  const validUntil = new Date(earlyBird.validUntil).getTime();
+
+  if (
+    (validFrom !== null && (!Number.isFinite(validFrom) || now < validFrom)) ||
+    !Number.isFinite(validUntil) ||
+    now >= validUntil
+  ) {
+    return null;
+  }
+
+  return earlyBird;
+}
+
 export default function Workshops() {
   const { workshops, loading, error } = useWorkshops();
 
@@ -58,6 +89,7 @@ export default function Workshops() {
           <div className="mt-12 grid gap-6 md:mt-16 md:grid-cols-2 md:gap-8">
             {workshops.map((workshop) => {
               const dateState = getWorkshopDateState(workshop);
+              const earlyBird = getActiveEarlyBird(workshop.pricing);
               return (
                 <FadeIn>
                   <article key={workshop.id} className="group flex h-full flex-col overflow-hidden rounded-3xl border-[2px] border-[var(--color-rust-light)]/80 bg-white shadow-[0_12px_40px_rgba(35,66,78,0.05)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(35,66,78,0.12)]">
@@ -81,11 +113,44 @@ export default function Workshops() {
                         </div>
                       )}
 
-                      <div className="mt-auto flex flex-col gap-6 border-t border-[var(--color-border)] pt-6 sm:flex-row sm:items-end sm:justify-between sm:gap-4 sm:pt-7">
-                        <div>
-                          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-text-secondary)]">Investment</p>
-                          <p className="mt-2 text-2xl font-bold tracking-tight text-[var(--color-primary)]">{workshop.pricing.currency} {workshop.pricing.regularPrice}</p>
-                        </div>
+                      <div className="mt-auto flex flex-col gap-6 border-t border-[var(--color-border)] pt-6 sm:flex-row sm:items-end sm:justify-between sm:gap-4 sm:pt-7"
+                          
+<div>
+  <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-text-secondary)]">
+    Investment
+  </p>
+
+  {earlyBird ? (
+    <>
+      <div className="mt-2 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+        <p className="text-2xl font-bold tracking-tight text-[var(--color-primary)]">
+          {workshop.pricing.currency} {earlyBird.price}
+        </p>
+
+        <p className="text-sm text-[var(--color-text-secondary)] line-through">
+          {workshop.pricing.currency} {workshop.pricing.regularPrice}
+        </p>
+      </div>
+
+      <p className="mt-2 text-xs font-semibold text-[var(--color-secondary)]">
+        Early-bird offer
+      </p>
+
+      <p className="mt-1 text-xs text-[var(--color-text-secondary)]">
+        Offer ends{" "}
+        {new Date(earlyBird.validUntil).toLocaleDateString("en-IN", {
+          day: "numeric",
+          month: "short",
+          year: "numeric",
+        })}
+      </p>
+    </>
+  ) : (
+    <p className="mt-2 text-2xl font-bold tracking-tight text-[var(--color-primary)]">
+      {workshop.pricing.currency} {workshop.pricing.regularPrice}
+    </p>
+  )}
+  </div>
                         <CTAButton to={`/workshops/${workshop.slug}`} variant="primary">View Workshop</CTAButton>
                       </div>
                     </div>
