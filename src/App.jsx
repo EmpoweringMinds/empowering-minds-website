@@ -5,13 +5,14 @@ import Navbar from "./components/common/Navbar";
 import WhatsAppFloat from "./components/common/WhatsAppFloat";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
-import Home from "./pages/Home";
+//import Home from "./pages/Home";
 import Programs from "./pages/Programs";
 import Services from "./pages/Services";
 import Trainers from "./pages/Trainers";
 import Workshops from "./pages/Workshops";
 import WorkshopDetails from "./components/sections/WorkshopDetails";
 import WorkshopRegistration from "./pages/WorkshopRegistration";
+import AcademyHomepage from "./pages/AcademyHomepage";
 
 function App() {
   return (
@@ -19,7 +20,7 @@ function App() {
       <Navbar />
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<Home />} />
+        <Route path="/" element={<AcademyHomepage />} />
         <Route path="/about" element={<About />} />
         <Route path="/services" element={<Services />} />
         <Route path="/programs" element={<Programs />} />

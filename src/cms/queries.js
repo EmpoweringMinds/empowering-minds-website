@@ -24,3 +24,21 @@ export const workshopsQuery = `
     }
   }
 `;
+
+
+export const coursesQuery = `
+  *[
+    _type == "course"
+  ]
+  | order(displayOrder asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    description,
+    coverImage,
+    duration,
+    formats,
+    learningOutcomes,
+    displayOrder
+  }
+`;

@@ -1,15 +1,18 @@
 import { Mail, MapPin, Phone } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import { serviceGroups, contactDetails, faqs } from "../data/siteContent";
 import CTASection from "../components/ui/CTASection";
 import FadeIn from "../components/ui/FadeIn";
 import PageHero from "../components/ui/PageHero";
 import SectionHeader from "../components/ui/SectionHeader";
+import { useCourses } from "../cms/useCourses";
 
 export default function Contact() {
   const [serviceGroupId, setServiceGroupId] = useState("");
   const [serviceId, setServiceId] = useState("");
   const [intent, setIntent] = useState("");
+  const [searchParams] = useSearchParams();
 
   const [name, setName] = useState("");
   const [organization, setOrganization] = useState("");
@@ -21,10 +24,38 @@ export default function Contact() {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
+  const { courses, loading: coursesLoading, error: coursesError } = useCourses();
+
+  useEffect(() => {
+    const requestedCourse = searchParams.get("course");
+
+    if (!requestedCourse || courses.length === 0) return;
+
+    const course = courses.find(
+      (item) =>
+        item.slug === requestedCourse || item.id === requestedCourse
+    );
+
+    if (!course) return;
+
+    setInterestType("course");
+    setCourseId(course.id);
+    setIntent("demo");
+  }, [courses, searchParams]);
+
+  const [interestType, setInterestType] = useState("");
+  const [courseId, setCourseId] = useState("");
+
+
   const selectedGroup = useMemo(
     () => serviceGroups.find((group) => group.id === serviceGroupId),
     [serviceGroupId]
   );
+
+  const selectedCourse = useMemo(
+  () => courses.find((course) => course.id === courseId),
+  [courses, courseId]
+);
 
   const availableServices = useMemo(
     () => selectedGroup?.areas ?? [],
@@ -52,13 +83,9 @@ export default function Contact() {
     setSuccess("");
     setError("");
 
-    if (!serviceGroupId) {
-      setError("Please select a service group.");
-      return;
-    }
 
-    if (!serviceId) {
-      setError("Please select a program.");
+    if (!interestType) {
+      setError("Please select whether you're interested in Courses or Programs.");
       return;
     }
 
@@ -75,9 +102,24 @@ export default function Contact() {
       phone: phone.trim(),
       organization: organization.trim(),
       message: message.trim(),
-      serviceGroup: selectedGroup?.title ?? "",
-      serviceId,
-      serviceTitle: selectedService?.title ?? "",
+
+      serviceGroup:
+        interestType === "program" ? selectedGroup?.title ?? "" : "",
+
+      serviceId:
+        interestType === "course"
+          ? selectedCourse?.slug ?? ""
+          : interestType === "program"
+            ? serviceId
+            : "",
+
+      serviceTitle:
+        interestType === "course"
+          ? selectedCourse?.title ?? ""
+          : interestType === "program"
+            ? selectedService?.title ?? ""
+            : "",
+
       intent,
     };
 
@@ -104,7 +146,7 @@ export default function Contact() {
 
       setSuccess(
         intent === "demo"
-          ? "Your demo request has been received. We'll be in touch shortly."
+          ? "Your discovery call request has been received. We'll be in touch shortly."
           : "Your callback request has been received. We'll be in touch shortly."
       );
 
@@ -112,7 +154,9 @@ export default function Contact() {
       setName("");
       setOrganization("");
       setEmail("");
-      setPhone("");
+      setPhone("");    
+      setInterestType("");
+      setCourseId("");
       setMessage("");
       setServiceGroupId("");
       setServiceId("");
@@ -130,13 +174,13 @@ export default function Contact() {
   };
 
   return (
-    <main>
+    <main className="academy-theme">
       <PageHero
         eyebrow="Contact"
-        title="Let's find the right next step."
-        description="Tell us what you're looking for and we'll help you explore the right program, book a 30-minute demo, or request a callback."
-        secondaryCta={{ label: "Explore services", to: "/services" }}
-        primaryCta={{ label: "Get Started", to: "#form" }}
+        title="Let's find the right fit for your goals."
+        description="Whether you're exploring a course, looking for a program for your organisation, or simply need some guidance, we're here to help you take the next step. Book a 15-minute discovery call, or request a callback."
+        primaryCta={{ label: "Talk to An Advisor Now", to: "https://wa.me/917908466757?text=Hello%20Empowering%20Minds%2C%20I%27d%20like%20to%20know%20more%20about%20your%20programs." }}
+        secondaryCta={{ label: "Get Started", to: "#form" }}
       />
 
       {/* Contact details */}
@@ -145,7 +189,7 @@ export default function Contact() {
           <SectionHeader
             eyebrow="Get in Touch"
             title="We're here to help you take the next step."
-            description="Whether you're an educational institution, corporate organisation, trainer, or individual, tell us what you're looking for."
+            description="Whether you're exploring a course for yourself or looking for a development program for your organisation, we're here to help you find the right fit."
           />
 
           <div className="mt-12 rounded-[36px] bg-[var(--color-primary)] px-8 py-10 text-white sm:px-10 lg:px-12">
@@ -221,47 +265,116 @@ export default function Contact() {
           <FadeIn>
             <SectionHeader
               eyebrow="Get Started"
-              title="Let's find the right fit."
+              title="Let's dive in."
               description="Choose the area you're interested in and tell us how you'd like to take the next step."
             />
 
             <div className="mt-10 rounded-[32px] bg-white p-6 shadow-sm sm:p-8 lg:p-10">
               <form onSubmit={handleSubmit}>
                 {/* Service selection */}
-                <div>
-                  <p className="text-sm font-bold uppercase tracking-[0.2em] text-[var(--color-secondary)]">
-                    01 — Your area of interest
-                  </p>
+                {/* Area of Interest */}
+              <div>
+                <p className="text-sm font-bold uppercase tracking-[0.2em] text-[var(--color-secondary)]">
+                  01 — Your area of interest
+                </p>
 
-                  <h3 className="mt-3 text-xl font-bold text-[var(--color-primary)]">
-                    What are you interested in?
-                  </h3>
+                <h3 className="mt-3 text-xl font-bold text-[var(--color-primary)]">
+                  What are you interested in?
+                </h3>
 
-                  <p className="mt-2 text-sm leading-6 text-slate-500">
-                    Choose the area that best describes what you're looking
-                    for.
-                  </p>
+                <p className="mt-2 text-sm leading-6 text-slate-500">
+                  Choose whether you're interested in our courses or programs. You can select a specific option below, or leave it for our team to help you decide.
+                </p>
+              </div>
+
+              <div className="mt-6">
+                <label
+                  htmlFor="interest-type"
+                  className="mb-2 block text-sm font-semibold text-[var(--color-primary)]"
+                >
+                  Area of Interest
+                </label>
+
+                <select
+                  id="interest-type"
+                  value={interestType}
+                  required
+                  onChange={(event) => {
+                    setInterestType(event.target.value);
+                    setCourseId("");
+                    setServiceGroupId("");
+                    setServiceId("");
+                    setSuccess("");
+                    setError("");
+                  }}
+                  disabled={loading}
+                  className="w-full rounded-2xl border border-[var(--color-border)] bg-white px-4 py-3 text-sm text-[var(--color-primary)] outline-none focus:border-[var(--color-secondary)]"
+                >
+                  <option value="">Select an area </option>
+                  <option value="course">Courses</option>
+                  <option value="program">Programs</option>
+                </select>
+              </div>
+
+              {/* Course selection */}
+              {interestType === "course" && (
+                <div className="mt-5">
+                  <label
+                    htmlFor="course"
+                    className="mb-2 block text-sm font-semibold text-[var(--color-primary)]"
+                  >
+                    Select a Course
+                  </label>
+
+                  <select
+                    id="course"
+                    value={courseId}
+                    onChange={(event) => {
+                      setCourseId(event.target.value);
+                      setSuccess("");
+                      setError("");
+                    }}
+                    disabled={loading || coursesLoading}
+                    className="w-full rounded-2xl border border-[var(--color-border)] bg-white px-4 py-3 text-sm text-[var(--color-primary)] outline-none focus:border-[var(--color-secondary)] disabled:bg-slate-50"
+                  >
+                    <option value="">
+                      {coursesLoading
+                        ? "Loading courses..."
+                        : "Select a course (optional)"}
+                    </option>
+
+                    {courses.map((course) => (
+                      <option key={course.id} value={course.id}>
+                        {course.title}
+                      </option>
+                    ))}
+                  </select>
+
+                  {coursesError && (
+                    <p className="mt-2 text-sm text-red-600">
+                      Courses couldn't be loaded. You can still submit your enquiry.
+                    </p>
+                  )}
                 </div>
+              )}
 
-                <div className="mt-6 grid gap-5 sm:grid-cols-2">
-                  {/* Service group */}
+              {/* Program selection */}
+              {interestType === "program" && (
+                <div className="mt-5 grid gap-5 sm:grid-cols-2">
                   <div>
                     <label
                       htmlFor="service-group"
                       className="mb-2 block text-sm font-semibold text-[var(--color-primary)]"
                     >
-                      Service group{" "}
-                      <span className="text-[var(--color-secondary)]">*</span>
+                      Service Group
                     </label>
 
                     <select
                       id="service-group"
-                      name="serviceGroup"
-                      required
                       value={serviceGroupId}
                       onChange={handleServiceGroupChange}
                       disabled={loading}
-                      className="w-full rounded-2xl border border-[var(--color-border)] bg-white px-4 py-3 text-sm text-[var(--color-primary)] outline-none transition focus:border-[var(--color-secondary)] disabled:bg-slate-50"
+                      className="w-full rounded-2xl border border-[var(--color-border)] bg-white px-4 py-3 text-sm text-[var(--color-primary)] outline-none focus:border-[var(--color-secondary)]"
                     >
                       <option value="">Select a service group</option>
 
@@ -273,20 +386,16 @@ export default function Contact() {
                     </select>
                   </div>
 
-                  {/* Service */}
                   <div>
                     <label
                       htmlFor="service"
                       className="mb-2 block text-sm font-semibold text-[var(--color-primary)]"
                     >
-                      Program{" "}
-                      <span className="text-[var(--color-secondary)]">*</span>
+                      Program
                     </label>
 
                     <select
                       id="service"
-                      name="service"
-                      required
                       value={serviceId}
                       onChange={(event) => {
                         setServiceId(event.target.value);
@@ -294,11 +403,11 @@ export default function Contact() {
                         setError("");
                       }}
                       disabled={!serviceGroupId || loading}
-                      className="w-full rounded-2xl border border-[var(--color-border)] bg-white px-4 py-3 text-sm text-[var(--color-primary)] outline-none transition focus:border-[var(--color-secondary)] disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
+                      className="w-full rounded-2xl border border-[var(--color-border)] bg-white px-4 py-3 text-sm text-[var(--color-primary)] outline-none focus:border-[var(--color-secondary)] disabled:cursor-not-allowed disabled:bg-slate-50 disabled:text-slate-400"
                     >
                       <option value="">
                         {serviceGroupId
-                          ? "Select a program"
+                          ? "Select a program (optional)"
                           : "Select a service group first"}
                       </option>
 
@@ -309,7 +418,8 @@ export default function Contact() {
                       ))}
                     </select>
                   </div>
-                </div>
+              </div>
+            )}
 
                 {/* Intent */}
                 <div className="mt-10 border-t border-[var(--color-border)] pt-10">
@@ -337,12 +447,11 @@ export default function Contact() {
                       }`}
                     >
                       <span className="block text-base font-bold text-[var(--color-primary)]">
-                        Book a 30-minute Demo
+                        Book a 15-minute Discovery Call
                       </span>
 
                       <span className="mt-2 block text-sm leading-6 text-slate-500">
-                        Explore the program and discuss whether it's the right
-                        fit for your needs.
+                        Speak with our team to explore the course or program, understand what's involved, and decide whether it's right for your needs.
                       </span>
                     </button>
 
@@ -502,25 +611,25 @@ export default function Contact() {
                   </div>
                 </div>
 
-                {/* Selected service summary */}
-                {selectedService && (
+                
+                {(selectedCourse || selectedService) && (
                   <div className="mt-8 rounded-2xl bg-[var(--color-background)] p-5">
                     <p className="text-xs font-bold uppercase tracking-[0.2em] text-slate-500">
                       Your selection
                     </p>
 
                     <p className="mt-2 font-bold text-[var(--color-primary)]">
-                      {selectedService.title}
+                      {selectedCourse?.title || selectedService?.title}
                     </p>
 
                     <p className="mt-1 text-sm text-slate-500">
-                      {selectedGroup?.title}
+                      {selectedCourse ? "Course" : selectedGroup?.title}
                     </p>
 
                     {intent && (
                       <p className="mt-3 text-sm font-semibold text-[var(--color-secondary)]">
                         {intent === "demo"
-                          ? "30-minute Demo"
+                          ? "15-min Discovery Call"
                           : "Callback Request"}
                       </p>
                     )}
@@ -549,7 +658,7 @@ export default function Contact() {
                   {loading
                     ? "Processing..."
                     : intent === "demo"
-                      ? "Continue to Demo Request"
+                      ? "Continue to Call Request"
                       : intent === "callback"
                         ? "Request a Callback"
                         : "Continue"}
@@ -605,12 +714,12 @@ export default function Contact() {
 
       {/* Final CTA */}
       <CTASection
-        title="Prefer a quick conversation first?"
-        description="Reach out and we can discuss your audience, format, timelines, and desired outcomes."
+        title="Not sure where to begin?"
+        description="Tell us what you're looking to achieve. We'll help you find the right course or program for your goals, audience and needs."
         variant="soft"
-        primaryLabel="Start a Conversation"
-        primaryTo="https://wa.me/917908466757?text=Hello%20Empowering%20Minds%2C%20I%27d%20like%20to%20know%20more%20about%20your%20programs."
-        secondaryLabel="Explore Our Programs"
+        primaryLabel="Talk to Our Team"
+        primaryTo="https://wa.me/917908466757?text=Hello%20Empowering%20Minds%2C%20I'd%20like%20help%20finding%20the%20right%20course%20or%20program."
+        secondaryLabel="Explore Courses & Programs"
         secondaryTo="/programs"
       />
     </main>

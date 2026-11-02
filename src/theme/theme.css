@@ -240,3 +240,124 @@
 
   --color-error: #c86b63;
 }
+
+/* --------------------------------
+   Academy-specific theme
+-------------------------------- */
+
+.academy-theme {
+  /* Brand colours */
+  --color-primary: #d97950;
+  --color-secondary: #443b36;
+
+  /* Backgrounds */
+  --color-background: #fff8f1;
+  --color-surface: #ffffff;
+  --color-surface-warm: #f7eee4;
+  --color-soft-accent: #f5b19a;
+
+  /* Typography */
+  --color-text-primary: #443b36;
+  --color-text-secondary: #6e6259;
+  --color-text-muted: #89796e;
+  --color-text-light: #ffffff;
+
+  /* Supporting colours */
+  --color-rust: #d97950;
+  --color-rust-light: #f5b19a;
+  --color-deep-blue: #443b36;
+  --color-taupe: #c4b5a2;
+  --color-blush: #f5b19a;
+  --color-cream: #fff8f1;
+  --color-olive: #899176;
+
+  /* Borders */
+  --color-border: #e9ded2;
+  --color-border-soft: #f1e9e0;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(
+    135deg,
+    #d97950 0%,
+    #e99776 100%
+  );
+
+  --gradient-primary-soft: linear-gradient(
+    135deg,
+    #d97950 0%,
+    #f5b19a 100%
+  );
+
+  --gradient-warm: linear-gradient(
+    135deg,
+    #fff8f1 0%,
+    #f7eee4 100%
+  );
+
+  --gradient-soft: linear-gradient(
+    135deg,
+    #fff8f1 0%,
+    #fbe4d9 100%
+  );
+
+  --gradient-surface: linear-gradient(
+    135deg,
+    #ffffff 0%,
+    #fff8f1 100%
+  );
+
+  --gradient-brand: linear-gradient(
+    135deg,
+    #d97950 0%,
+    #e99776 60%,
+    #f5b19a 100%
+  );
+
+  --gradient-brand-soft: linear-gradient(
+    135deg,
+    rgb(217 121 80 / 7%) 0%,
+    rgb(245 177 154 / 14%) 100%
+  );
+
+  /* Shadows */
+  --shadow-sm: 0 3px 12px rgb(68 59 54 / 4%);
+  --shadow-md: 0 8px 24px rgb(68 59 54 / 6%);
+  --shadow-lg: 0 14px 35px rgb(68 59 54 / 8%);
+  --shadow-xl: 0 20px 50px rgb(68 59 54 / 10%);
+  --shadow-warm: 0 18px 45px rgb(217 121 80 / 14%);
+  --shadow-dark: 0 18px 45px rgb(68 59 54 / 10%);
+
+  /* Decorative elements */
+  --decorative-line-width: 48px;
+  --decorative-line-height: 3px;
+  --decorative-dot-size: 7px;
+  --decorative-ring-size: 72px;
+  --decorative-ring-border: 1px solid rgb(137 145 118 / 35%);
+
+  /* Overlays and interactions */
+  --overlay-light: rgb(255 255 255 / 82%);
+  --overlay-dark: rgb(68 59 54 / 72%);
+  --surface-hover: rgb(217 121 80 / 5%);
+  --border-subtle: rgb(68 59 54 / 9%);
+
+  /* Academy typography */
+  font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  color: var(--color-text-primary);
+}
+
+/* No display or serif fonts within the academy */
+.academy-theme h1,
+.academy-theme h2,
+.academy-theme h3,
+.academy-theme h4,
+.academy-theme h5,
+.academy-theme h6 {
+  font-family: "Nunito Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+.academy-theme button,
+.academy-theme input,
+.academy-theme textarea,
+.academy-theme select {
+  font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
+}

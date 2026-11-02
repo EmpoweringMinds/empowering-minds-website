@@ -62,6 +62,18 @@ const variants = {
     title: "text-[var(--color-secondary)]",
     description: "text-[var(--color-text-secondary)]",
   },
+  academy: {
+    card: `
+      border border-[var(--color-border)]
+      bg-[var(--color-surface)]
+      shadow-[var(--shadow-sm)]
+      hover:-translate-y-1
+      hover:shadow-[var(--shadow-warm)]
+    `,
+    title: "text-[var(--color-secondary)]",
+    description: "text-[var(--color-text-secondary)]",
+  },
+
 };
 
 export default function FeatureCard({
@@ -71,6 +83,7 @@ export default function FeatureCard({
   className = "",
   delay = 0,
   variant = "default",
+  accent,
 }) {
   const styles = variants[variant] ?? variants.default;
 
@@ -82,11 +95,11 @@ export default function FeatureCard({
       className={`
         h-full
         rounded-[var(--radius-lg)]
-        p-5
+        p-6
         transition
         duration-[var(--transition-base)]
         ease-[var(--ease-brand)]
-        sm:p-6
+        sm:p-7
         ${styles.card}
         ${className}
       `}
@@ -105,6 +118,13 @@ export default function FeatureCard({
               items-center justify-center
               rounded-[var(--radius-md)]
               ${styles.icon}
+              ${
+              accent === "coral"
+                ? "bg-[#F7E5DA] text-[#B96D4A]"
+                : accent === "olive"
+                  ? "bg-[#E8EBDD] text-[#697B59]"
+                  : ""
+            }
             `}
           >
             <Icon
@@ -121,6 +141,8 @@ export default function FeatureCard({
               text-lg font-bold
               tracking-tight
               sm:text-xl
+              text-center
+              ${variant === "academy" ? "text-left" : "text-center"}
               ${styles.title}
             `}
           >

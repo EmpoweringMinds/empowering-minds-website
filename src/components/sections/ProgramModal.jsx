@@ -245,7 +245,7 @@ export default function ProgramModal({ program, onClose }) {
                     onClick={() => handleIntentClick("demo")}
                     className="flex w-full items-center justify-center rounded-full bg-[var(--color-secondary)] px-6 py-3.5 text-sm font-semibold text-white transition hover:opacity-90"
                   >
-                    Book a 30-minute Demo
+                    Book a 15-minute Discovery Call
                   </button>
 
                   <button
@@ -281,7 +281,7 @@ export default function ProgramModal({ program, onClose }) {
 
                 <p className="text-sm font-semibold uppercase tracking-[0.28em] text-[var(--color-secondary)]">
                   {intent === "demo"
-                    ? "30-minute Demo"
+                    ? "15-minute Discovery Call"
                     : "Request a Callback"}
                 </p>
 
@@ -293,7 +293,7 @@ export default function ProgramModal({ program, onClose }) {
 
                 <p className="mt-4 text-sm leading-7 text-slate-600">
                   {intent === "demo"
-                    ? "Share your details and we'll contact you to arrange a convenient 30-minute time to explore this program."
+                    ? "Share your details and we'll contact you to arrange a convenient time to explore this program."
                     : "Share your details and a member of our team will contact you to understand your requirements."}
                 </p>
               </div>
@@ -463,7 +463,7 @@ export default function ProgramModal({ program, onClose }) {
               <p className="mt-4 max-w-md text-sm leading-7 text-slate-600 sm:text-base">
                 {intent === "demo" ? (
                   <>
-                    Your 30-minute demo request for{" "}
+                    Your 15-minute discovery call request for{" "}
                     <span className="font-semibold text-[var(--color-primary)]">
                       {title}
                     </span>{" "}

@@ -10,6 +10,7 @@ import ProgramsPreview from "../components/sections/ProgramsPreview";
 import TrainerPreview from "../components/sections/TrainerPreview";
 import TestimonialSection from "../components/sections/TestimonialSection";
 import WorkshopPreview from "../components/common/WorkshopPreview";
+import CoursePreview from "../components/common/CoursesPreview";
 
 
 export default function Home() {
@@ -137,6 +138,8 @@ export default function Home() {
         className="relative mx-auto mt-4 h-px max-w-7xl bg-[var(--color-border)]"
       />
     </section>
+
+    <CoursePreview />
 
     <WorkshopPreview />
 

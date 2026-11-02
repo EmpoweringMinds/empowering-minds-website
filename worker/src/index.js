@@ -1221,24 +1221,20 @@ if (
       const intent = body.intent;
 
       if (
-        !name ||
-        !email ||
-        !phone ||
-        !serviceGroup ||
-        !serviceId ||
-        !serviceTitle ||
-        (intent !== "callback" && intent !== "demo")
-      ) {
-        return Response.json(
-          {
-            success: false,
-            error:
-              "Name, email, phone, service information, and a valid request type are required.",
-          },
-          { status: 400, headers: corsHeaders }
-        );
+          !name ||
+          !email ||
+          !phone ||
+          (intent !== "callback" && intent !== "demo")
+        ) {
+          return Response.json(
+            {
+              success: false,
+              error:
+                "Name, email, phone, and a valid request type are required.",
+            },
+            { status: 400, headers: corsHeaders }
+          );
       }
-
       if (
         name.length > 150 ||
         email.length > 254 ||
@@ -1297,7 +1293,7 @@ if (
             success: true,
             message:
               intent === "demo"
-                ? "Your demo request has been received."
+                ? "Your discovery call request has been received."
                 : "Your callback request has been received.",
             enquiryId,
           },

@@ -8,6 +8,13 @@ import {
   Target,
   Users,
   TrendingUp,
+  LucideUser,
+  MessageCircle,
+  Briefcase,
+  LucideUser2,
+  LucideUsers,
+  MessagesSquare,
+  Sprout,
 } from "lucide-react";
 
 export const navLinks = [
@@ -502,3 +509,42 @@ export const testimonials = [
     programme: "The Leap to Success",
   },
 ];
+
+export const academyHomepageSections = {
+  learningOutcomes: [
+    {
+      title: "Personality Development",
+      description: "Understand yourself, recognise your strengths and grow into your own potential.",
+      icon: LucideUser,
+    },
+    {
+      title: "Communication",
+      description: "Express yourself clearly, listen with confidence and build stronger connections.",
+      icon: MessagesSquare,
+    },
+    {
+      title: "Professional Presence",
+      description: "Prepare for interviews, navigate professional settings and make a positive impression.",
+      icon: Briefcase,
+    },
+    {
+      title: "Leadership & Growth",
+      description: "Develop self-awareness, adaptability and the confidence to take initiative.",
+      icon: Sprout,
+    },
+  ],
+  whyThisAcademy: [
+    {
+      title: "THE GAP",
+      description: "You have the qualifications, the skills and the abilities. But is something still holding you back from reaching your full potential?"
+    },
+    {
+      title: "THE BRIDGE",
+      description: "At Empowering Minds Academy, we help you refine your personality, strengthen your communication and build the confidence to make a lasting impression."
+    },
+    {
+      title: "THE SOLUTION",
+      description: "Because sometimes, it is that final polish to your personality that makes all the difference."
+    },
+  ],
+}

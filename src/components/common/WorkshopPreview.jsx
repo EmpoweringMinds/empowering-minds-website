@@ -60,19 +60,32 @@ export default function WorkshopPreview() {
     .slice(0, 3);
 
   return (
-    <section className="relative overflow-hidden bg-[var(--color-surface-warm)] py-20 sm:py-24 lg:py-28">
-      {/* Subtle decorative geometry, matching the homepage visual language. */}
+    <section
+        className="
+          relative isolate overflow-hidden
+          bg-[var(--color-background)]
+          py-20 sm:py-24 lg:py-28
+        "
+      >
+      {/* Background image */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-28 -top-28 h-80 w-80 rounded-full border border-[var(--color-secondary)]/10"
+        className="
+          absolute inset-0 -z-20
+          bg-cover bg-center
+        "
+        style={{
+          backgroundImage: "url('/images/workshop-background.jpg')",
+        }}
       />
+
+      {/* Warm overlay */}
       <div
         aria-hidden="true"
-        className="pointer-events-none absolute -right-14 -top-14 h-52 w-52 rounded-full border border-[var(--color-secondary)]/10"
-      />
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -bottom-32 -left-24 h-72 w-72 rounded-full bg-[var(--color-secondary)]/5 blur-3xl"
+        className="
+          absolute inset-0 -z-10
+          bg-[var(--color-surface-warm)]/90
+        "
       />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

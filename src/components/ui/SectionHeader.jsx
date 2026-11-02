@@ -99,11 +99,11 @@ export default function SectionHeader({
       {/* Heading */}
       <h2
         className={`
-          text-3xl font-bold
+          text-2xl font-bold
           leading-tight
           tracking-[-0.025em]
-          sm:text-4xl
-          lg:text-5xl
+          sm:text-3xl
+          lg:text-4xl
           ${headingColor}
           ${titleClassName}
         `}
