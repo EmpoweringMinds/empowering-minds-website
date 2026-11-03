@@ -63,6 +63,9 @@ export default function TestimonialSection() {
     if (total <= 1 || isPaused || prefersReducedMotion) return;
 
     const interval = setInterval(() => {
+      if (window.matchMedia("(max-width: 639px)").matches) {
+      return;
+    }
       setActiveIndex((current) => (current + 1) % total);
     }, 7000);
 
@@ -102,10 +105,10 @@ export default function TestimonialSection() {
         >
           <div
             key={activeIndex}
-            className="grid gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8"
+            className="grid gap-4 sm:gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8"
           >
             {/* Classroom image placeholder */}
-            <div className="relative min-h-[280px] overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 sm:min-h-[360px] sm:p-6 lg:min-h-[440px]">
+            <div className="relative min-h-[190px] overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-3 sm:min-h-[300px] sm:p-6 lg:min-h-[440px]">
               {/* Decorative shapes */}
               <div
                 aria-hidden="true"
@@ -117,7 +120,7 @@ export default function TestimonialSection() {
                 className="absolute -bottom-16 -left-12 h-56 w-56 rounded-full bg-[var(--color-olive)] opacity-[0.12]"
               />
 
-              <div className="relative flex h-full min-h-[248px] flex-col items-center justify-center overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-warm)] px-6 py-10 text-center sm:min-h-[312px] lg:min-h-[392px]">
+              <div className="relative flex h-full min-h-[164px] flex-col items-center justify-center overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-warm)] px-4 py-6 text-center sm:min-h-[252px] sm:px-6 sm:py-10 lg:min-h-[392px]">
                 <div className="mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
                   <SceneIcon size={38} strokeWidth={1.3} />
                 </div>
@@ -137,7 +140,7 @@ export default function TestimonialSection() {
             </div>
 
             {/* Testimonial */}
-            <article className="flex flex-col rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-7 shadow-[var(--shadow-sm)] sm:p-10 lg:p-12">
+            <article className="flex flex-col rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-sm)] sm:p-10 lg:p-12">
               <div
                 aria-hidden="true"
                 className="font-serif text-7xl leading-[0.7] text-[var(--color-secondary)]/30"
@@ -175,7 +178,7 @@ export default function TestimonialSection() {
 
           {/* Carousel controls */}
           {total > 1 && (
-            <div className="mt-8 flex items-center justify-between">
+            <div className="mt-5 flex items-center justify-between gap-3 sm:mt-8">
               <div className="flex items-center gap-2">
                 {testimonials.map((testimonial, index) => (
                   <button

@@ -95,11 +95,12 @@ export default function FeatureCard({
       className={`
         h-full
         rounded-[var(--radius-lg)]
-        p-6
+        p-4
         transition
         duration-[var(--transition-base)]
         ease-[var(--ease-brand)]
-        sm:p-7
+        sm:p-6
+        lg:p-7
         ${styles.card}
         ${className}
       `}
@@ -113,10 +114,11 @@ export default function FeatureCard({
         {Icon && (
           <div
             className={`
-              flex h-12 w-12
+              flex flex h-10 w-10
               shrink-0
               items-center justify-center
               rounded-[var(--radius-md)]
+              sm:h-12 sm:w-12
               ${styles.icon}
               ${
               accent === "coral"
@@ -128,7 +130,7 @@ export default function FeatureCard({
             `}
           >
             <Icon
-              size={23}
+              size={20}
               strokeWidth={1.8}
               aria-hidden="true"
             />
@@ -151,8 +153,9 @@ export default function FeatureCard({
 
           <p
             className={`
-              mt-3
-              text-sm leading-7
+              mt-2
+              text-xs leading-6
+              sm:mt-3 sm:text-sm sm:leading-7
               ${styles.description}
             `}
           >

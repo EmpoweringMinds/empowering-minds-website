@@ -11,9 +11,6 @@ export default function CoursePreview() {
 
   const [showAllCourses, setShowAllCourses] = useState(false);
 
-    const visibleCourses = showAllCourses
-    ? courses
-    : courses.slice(0, 4);
 
   return (
     <section className="py-20 sm:py-24 lg:py-28">
@@ -30,7 +27,10 @@ export default function CoursePreview() {
             Loading courses...
           </p>
         ) : error ? (
-          <p role="alert" className="mt-12 text-center text-[var(--color-text-secondary)]">
+          <p
+            role="alert"
+            className="mt-12 text-center text-[var(--color-text-secondary)]"
+          >
             Unable to load courses right now.
           </p>
         ) : courses.length === 0 ? (
@@ -38,110 +38,165 @@ export default function CoursePreview() {
             New courses are coming soon.
           </p>
         ) : (
-          <div className="mt-12 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
-            {visibleCourses.map((course) => (
-              <article
-                key={course.id}
-                className="flex h-full flex-col overflow-hidden rounded-2xl border border-[var(--color-border)] bg-white shadow-sm transition duration-300 hover:-translate-y-1 hover:shadow-lg"
-              >
-                {course.image && (
-                  <img
-                    src={course.image}
-                    alt={course.title}
-                    loading="lazy"
-                    className="aspect-[3/2] w-full object-cover"
-                  />
-                )}
+          <>
+            {/* Course Cards */}
+            <div
+              className="
+                mt-12
+                -mx-4 px-4
+                flex gap-5 overflow-x-auto
+                snap-x snap-mandatory
+                overscroll-x-contain
+                pb-4
+                [scrollbar-width:none]
+                [&::-webkit-scrollbar]:hidden
 
-                <div className="flex flex-1 flex-col p-6 sm:p-7">
-                  <div className="flex flex-wrap gap-2">
-                    {course.formats.map((format) => (
-                      <span
-                        key={format}
-                        className="rounded-full bg-[var(--color-secondary)]/10 px-3 py-1.5 text-xs font-semibold text-[var(--color-secondary)]"
-                      >
-                        {format === "live-online"
-                          ? "Live Online"
-                          : format === "in-person"
-                            ? "In-Person"
-                            : format}
-                      </span>
-                    ))}
-                  </div>
+                sm:-mx-6 sm:px-6
+                md:mx-0 md:px-0
+                md:grid md:grid-cols-2 md:gap-6
+                md:overflow-visible md:pb-0
+                xl:grid-cols-4
+              "
+              aria-label="Available courses"
+            >
+              {courses.map((course, index) => (
+                <article
+                  key={course.id}
+                  className={`
+                    flex h-full min-w-0
+                    flex-[0_0_88%]
+                    snap-start
+                    flex-col overflow-hidden
+                    rounded-2xl border
+                    border-[var(--color-border)]
+                    bg-white shadow-sm
+                    transition duration-300
+                    hover:-translate-y-1 hover:shadow-lg
 
-                  <h3 className="mt-5 text-2xl font-bold leading-tight text-[var(--color-primary)]">
-                    {course.title}
-                  </h3>
-
-                  {course.duration && (
-                    <p className="mt-2 text-sm font-medium text-[var(--color-text-secondary)]">
-                      Duration: {course.duration}
-                    </p>
-                  )}
-
-                  <p className="mt-4 text-sm leading-7 text-[var(--color-text-secondary)] sm:text-base">
-                    {course.description}
-                  </p>
-
-                  {course.learningOutcomes.length > 0 && (
-                    <ul className="mt-5 space-y-2">
-                      {course.learningOutcomes.slice(0, 3).map((outcome, index) => (
-                        <li
-                          key={`${course.id}-outcome-${index}`}
-                          className="flex items-start gap-3 text-sm leading-6 text-[var(--color-text-secondary)]"
-                        >
-                          <span
-                            aria-hidden="true"
-                            className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[var(--color-secondary)]"
-                          />
-                          <span>{outcome}</span>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                  
-                  <div className="mt-auto flex flex-col gap-3 pt-7">
-                        <CTAButton
-                            onClick={() => {
-                            navigate(
-                                `/contact?course=${encodeURIComponent(course.slug || course.id)}#form`
-                              );
-                            }}
-                            showArrow={false}
-                            className="flex-1"
-                        >
-                            Schedule a Call
-                        </CTAButton>
-
-                        <CTAButton
-                            as="a"
-                            href={`https://wa.me/917908466757?text=${encodeURIComponent(
-                            `Hello, I'd like to know more about the course "${course.title}".`
-                            )}`}
-                            variant="secondary"
-                            showArrow={false}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="flex-1"
-                        >
-                            Contact on WhatsApp
-                        </CTAButton>
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
-        )}
-        {courses.length > 4 && (
-            <div className="mt-10 flex justify-center">
-                <CTAButton
-                variant="secondary"
-                showArrow={false}
-                onClick={() => setShowAllCourses((current) => !current)}
+                    sm:flex-[0_0_70%]
+                    md:flex-auto
+                    ${index >= 4 && !showAllCourses ? "md:hidden" : ""}`}
                 >
-                {showAllCourses ? "Show Fewer Courses" : "Show All Courses"}
-                </CTAButton>
+                  {course.image && (
+                    <img
+                      src={course.image}
+                      alt={course.title}
+                      loading="lazy"
+                      className="aspect-[3/2] w-full object-cover"
+                    />
+                  )}
+
+                  <div className="flex flex-1 flex-col p-6 sm:p-7">
+                    <div className="flex flex-wrap gap-2">
+                      {course.formats.map((format) => (
+                        <span
+                          key={format}
+                          className="
+                            rounded-full
+                            bg-[var(--color-secondary)]/10
+                            px-3 py-1.5
+                            text-xs font-semibold
+                            text-[var(--color-secondary)]
+                          "
+                        >
+                          {format === "live-online"
+                            ? "Live Online"
+                            : format === "in-person"
+                              ? "In-Person"
+                              : format}
+                        </span>
+                      ))}
+                    </div>
+
+                    <h3 className="mt-5 text-2xl font-bold leading-tight text-[var(--color-primary)]">
+                      {course.title}
+                    </h3>
+
+                    {course.duration && (
+                      <p className="mt-2 text-sm font-medium text-[var(--color-text-secondary)]">
+                        Duration: {course.duration}
+                      </p>
+                    )}
+
+                    <p className="mt-4 text-sm leading-7 text-[var(--color-text-secondary)] sm:text-base">
+                      {course.description}
+                    </p>
+
+                    {course.learningOutcomes.length > 0 && (
+                      <ul className="mt-5 space-y-2">
+                        {course.learningOutcomes.slice(0, 3).map((outcome, index) => (
+                          <li
+                            key={`${course.id}-outcome-${index}`}
+                            className="flex items-start gap-3 text-sm leading-6 text-[var(--color-text-secondary)]"
+                          >
+                            <span
+                              aria-hidden="true"
+                              className="
+                                mt-2 h-1.5 w-1.5 shrink-0
+                                rounded-full
+                                bg-[var(--color-secondary)]
+                              "
+                            />
+                            <span>{outcome}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+
+                    <div className="mt-auto flex flex-col gap-3 pt-7">
+                      <CTAButton
+                        onClick={() => {
+                          navigate(
+                            `/contact?course=${encodeURIComponent(course.slug || course.id)}#form`
+                          );
+                        }}
+                        showArrow={false}
+                        className="flex-1"
+                      >
+                        Schedule a Call
+                      </CTAButton>
+
+                      <CTAButton
+                        as="a"
+                        href={`https://wa.me/917908466757?text=${encodeURIComponent(
+                          `Hello, I'd like to know more about the course "${course.title}".`
+                        )}`}
+                        variant="secondary"
+                        showArrow={false}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex-1"
+                      >
+                        Contact on WhatsApp
+                      </CTAButton>
+                    </div>
+                  </div>
+                </article>
+              ))}
             </div>
+
+            {/* Mobile scroll indicator */}
+            <p className="mt-3 text-center text-xs text-[var(--color-text-secondary)] md:hidden">
+              Swipe to explore more courses →
+            </p>
+
+            {/* Show All / Show Fewer */}
+            {courses.length > 4 && (
+              <div className="mt-10 hidden md:flex justify-center ">
+                <CTAButton
+                  variant="secondary"
+                  showArrow={false}
+                  onClick={() =>
+                    setShowAllCourses((current) => !current)
+                  }
+                >
+                  {showAllCourses
+                    ? "Show Fewer Courses"
+                    : "Show All Courses"}
+                </CTAButton>
+              </div>
+            )}
+          </>
         )}
       </div>
     </section>

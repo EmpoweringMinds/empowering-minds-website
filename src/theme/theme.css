@@ -361,3 +361,105 @@
 .academy-theme select {
   font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
 }
+
+
+
+/* --------------------------------
+   Academy Dark Theme
+   Earthy + Editorial
+-------------------------------- */
+
+html[data-theme="dark"] .academy-theme {
+  color-scheme: dark;
+
+  /* Brand colours */
+  --color-primary: #d18b6a;
+  --color-secondary: #e1c7b5;
+
+  /* Backgrounds */
+  --color-background: #302a26;
+  --color-surface: #3d342e;
+  --color-surface-warm: #463a32;
+  --color-soft-accent: #554139;
+
+  /* Typography */
+  --color-text-primary: #f2e8dc;
+  --color-text-secondary: #cbbcaf;
+  --color-text-muted: #b9aa9b;
+  --color-text-light: #ffffff;
+
+  /* Supporting colours */
+  --color-rust: #d18b6a;
+  --color-rust-light: #e1a487;
+  --color-deep-blue: #e1c7b5;
+  --color-taupe: #aa9683;
+  --color-blush: #654a40;
+  --color-cream: #463a32;
+  --color-olive: #92977a;
+
+  /* Borders */
+  --color-border: #5b4d43;
+  --color-border-soft: #50443b;
+
+  /* Gradients */
+  --gradient-primary: linear-gradient(
+    135deg,
+    #bd795a 0%,
+    #d18b6a 100%
+  );
+
+  --gradient-primary-soft: linear-gradient(
+    135deg,
+    #bd795a 0%,
+    #e1a487 100%
+  );
+
+  --gradient-warm: linear-gradient(
+    135deg,
+    #302a26 0%,
+    #463a32 100%
+  );
+
+  --gradient-soft: linear-gradient(
+    135deg,
+    #3d342e 0%,
+    #554139 100%
+  );
+
+  --gradient-surface: linear-gradient(
+    135deg,
+    #3d342e 0%,
+    #463a32 100%
+  );
+
+  --gradient-brand: linear-gradient(
+    135deg,
+    #bd795a 0%,
+    #d18b6a 60%,
+    #e1a487 100%
+  );
+
+  --gradient-brand-soft: linear-gradient(
+    135deg,
+    rgb(209 139 106 / 10%) 0%,
+    rgb(146 151 122 / 10%) 100%
+  );
+
+  /* Shadows */
+  --shadow-sm: 0 3px 12px rgb(0 0 0 / 14%);
+  --shadow-md: 0 8px 24px rgb(0 0 0 / 18%);
+  --shadow-lg: 0 14px 35px rgb(0 0 0 / 22%);
+  --shadow-xl: 0 20px 50px rgb(0 0 0 / 26%);
+  --shadow-warm: 0 18px 45px rgb(209 139 106 / 10%);
+  --shadow-dark: 0 18px 45px rgb(0 0 0 / 25%);
+
+  /* Decorative elements */
+  --decorative-ring-border:
+    1px solid rgb(146 151 122 / 35%);
+
+  /* Overlays and interactions */
+  --overlay-light: rgb(233 222 208 / 8%);
+  --overlay-dark: rgb(0 0 0 / 65%);
+  --surface-hover: rgb(209 139 106 / 8%);
+  --border-subtle: rgb(233 222 208 / 12%);
+}

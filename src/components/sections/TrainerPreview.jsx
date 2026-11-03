@@ -1,30 +1,16 @@
+
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import TrainerCard from "../common/TrainerCard";
 import FadeIn from "../ui/FadeIn";
 
-import { getTrainers } from "../../cms/trainers";
 import { useTrainers } from "../../cms/useTrainers";
 
-import { useState, useEffect } from "react";
-
 export default function TrainerPreview() {
-  const [, setCmsTrainers] = useState([]);
-  
-  const {
-    trainers,
-    loading,
-    error,
-  } = useTrainers();
+  const { trainers, loading, error } = useTrainers();
+
   const featuredTrainers = trainers.slice(0, 3);
-  useEffect(() => {
-    getTrainers()
-    .then(setCmsTrainers)
-    .catch((error) => {
-      console.error("Failed to load trainers from Sanity:", error);
-    });
-  }, []);
-      
+
   if (loading) {
     return <div>Loading trainers...</div>;
   }
@@ -61,7 +47,7 @@ export default function TrainerPreview() {
 
             <Link
               to="/trainers"
-              className="group inline-flex shrink-0 items-center gap-2 text-sm font-semibold text-[var(--color-text)] transition-colors hover:text-[var(--color-accent)]"
+              className="group hidden shrink-0 items-center gap-2 text-sm font-semibold text-[var(--color-text)] transition-colors hover:text-[var(--color-accent)] sm:inline-flex"
             >
               Meet all trainers
               <ArrowUpRight
@@ -74,15 +60,69 @@ export default function TrainerPreview() {
         </FadeIn>
 
         {/* Featured trainers */}
-        <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:mt-12 lg:grid-cols-3 lg:gap-8">
+        <div
+          className="
+            mt-10
+            -mx-4 px-4
+            flex gap-5 overflow-x-auto
+            snap-x snap-mandatory
+            overscroll-x-contain
+            pb-4
+            [scrollbar-width:none]
+            [&::-webkit-scrollbar]:hidden
+
+            sm:mx-0 sm:px-0
+            sm:grid sm:grid-cols-2 sm:gap-6
+            sm:overflow-visible sm:pb-0
+
+            lg:mt-12 lg:grid-cols-3 lg:gap-8
+          "
+          aria-label="Featured trainers"
+        >
           {featuredTrainers.map((trainer, index) => (
-            <FadeIn key={trainer.id} delay={index * 0.06}>
-              <TrainerCard 
-                trainer={trainer} 
-                profilePath="/trainers"
-              />
-            </FadeIn>
+            <div
+              key={trainer.id}
+              className="
+                min-w-0 flex-[0_0_88%]
+                snap-start
+                sm:flex-auto
+              "
+            >
+              <FadeIn delay={index * 0.06}>
+                <TrainerCard
+                  trainer={trainer}
+                  profilePath="/trainers"
+                />
+              </FadeIn>
+            </div>
           ))}
+          <Link
+          to="/trainers"
+          className="
+            flex flex-[0_0_88%] snap-start
+            flex-col items-center justify-center
+            rounded-2xl border
+            border-[var(--color-border)]
+            bg-[var(--color-surface)]
+            p-8 text-center
+            transition duration-300
+            hover:shadow-md
+            sm:hidden
+          "
+        >
+          <span className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--color-accent)]">
+            Meet the team
+          </span>
+
+          <h3 className="mt-4 text-2xl font-semibold text-[var(--color-text)]">
+            Meet all our trainers.
+          </h3>
+
+          <span className="mt-5 inline-flex items-center gap-2 text-sm font-semibold text-[var(--color-accent)]">
+            Explore our team
+            <ArrowUpRight size={16} />
+          </span>
+        </Link>
         </div>
       </div>
     </section>

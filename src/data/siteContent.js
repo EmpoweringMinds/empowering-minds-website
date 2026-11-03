@@ -25,8 +25,8 @@ export const navLinks = [
   { label: "Contact", to: "/contact" },
   { label: "Workshops", to: "/workshops" },
   {
-    label: "Empowering U",
-    href: "https://empoweringu.theempoweringminds.com",
+    label: "Empowering Biz",
+    href: "https://empoweringbiz.theempoweringminds.com",
     external: true,
   },
 ];
@@ -471,7 +471,7 @@ export const aboutContent = {
 
 export const contactDetails = {
   phones: ["+91 7908466757", "+91 7003055263"],
-  email: "empoweringminds19@gmail.com",
+  email: "empoweringminds02@gmail.com",
   address: [
     "Yamuna Building, 86 Golaghata Road",
     "Dakshindari, South Dumdum",
@@ -508,6 +508,16 @@ export const testimonials = [
 
     programme: "The Leap to Success",
   },
+  {
+    quote:
+      "test quote",
+
+    name: "test-1",
+    role: "test",
+    organisation: "position",
+
+    programme: "The Leap to Success",
+  },
 ];
 
 export const academyHomepageSections = {
@@ -540,11 +550,11 @@ export const academyHomepageSections = {
     },
     {
       title: "THE BRIDGE",
-      description: "At Empowering Minds Academy, we help you refine your personality, strengthen your communication and build the confidence to make a lasting impression."
+      description: "Sometimes, it is that final polish to your personality that makes all the difference"
     },
     {
       title: "THE SOLUTION",
-      description: "Because sometimes, it is that final polish to your personality that makes all the difference."
+      description: "At Empowering Minds Academy, we help you refine your personality, strengthen your communication and build the confidence to make a lasting impression."
     },
   ],
 }
