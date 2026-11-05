@@ -13,6 +13,7 @@ import Workshops from "./pages/Workshops";
 import WorkshopDetails from "./components/sections/WorkshopDetails";
 import WorkshopRegistration from "./pages/WorkshopRegistration";
 import AcademyHomepage from "./pages/AcademyHomepage";
+import Courses from "./pages/Courses";
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
         <Route path="/workshops" element={<Workshops />} />
         <Route path="/workshops/:slug" element={<WorkshopDetails />} />
         <Route path="/workshops/:slug/register" element={<WorkshopRegistration />}/>
+        <Route path="/courses" element={<Courses />} />
       </Routes>
       <WhatsAppFloat />
       <Footer />

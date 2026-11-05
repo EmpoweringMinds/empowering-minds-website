@@ -720,7 +720,7 @@ export const workshop = defineType({
                     type: 'boolean',
                     initialValue: false,
                 }),
-            ]
-        })
+            ],
+        }),
     ],
 })

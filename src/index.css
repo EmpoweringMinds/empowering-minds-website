@@ -24,7 +24,7 @@
 
 html {
   scroll-behavior: smooth;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -33,7 +33,7 @@ body {
   background: var(--color-background);
   color: var(--color-text-primary);
   font-family: "Manrope", ui-sans-serif, system-ui, sans-serif;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 * {

@@ -24,6 +24,7 @@ export const navLinks = [
   { label: "Trainers", to: "/trainers" },
   { label: "Contact", to: "/contact" },
   { label: "Workshops", to: "/workshops" },
+  { label: "Courses", to: "/courses" },
   {
     label: "Empowering Biz",
     href: "https://empoweringbiz.theempoweringminds.com",
@@ -558,3 +559,104 @@ export const academyHomepageSections = {
     },
   ],
 }
+
+export const academyAboutContent = {
+  heroTitle:
+    "A more confident you. A more polished you. A more successful you.",
+
+  heroText:
+    "Empowering Minds Personality Development Academy offers practical, personalised and outcome-focused programmes to help you understand yourself, strengthen your capabilities and present yourself with greater confidence.",
+
+  definitionTitle:
+    "Knowledge and Skills Are Important. But They Are Not Enough.",
+
+  definitionText:
+    "You may have knowledge, qualifications, talent and ambition. However, success also depends on how confidently you communicate, how effectively you interact with others, how you manage yourself and how you present your abilities.",
+
+  definitionSupportingText:
+    "Personality development brings together your knowledge, skills, behaviour, confidence and personal presence so that you can use your potential more effectively in real-life situations.",
+
+  definitionClosing:
+    "The objective is not to make everyone look or behave alike. It is to help each individual become a more confident, authentic, polished and effective version of themselves.",
+
+  scopeTitle: "Developing the Whole Person",
+
+  scopeIntro:
+    "Personality development is not limited to appearance or speaking well. It can involve different areas of personal and professional growth, depending on your needs and goals.",
+
+  scopeCategories: [
+  {
+    title: "Self-Awareness & Confidence",
+    description:
+      "Understand yourself, recognise your strengths and build self-belief.",
+  },
+  {
+    title: "Communication & Behaviour",
+    description:
+      "Strengthen communication, interpersonal skills and emotional effectiveness.",
+  },
+  {
+    title: "Personal Presence",
+    description:
+      "Develop grooming, etiquette and a confident personal image.",
+  },
+  {
+    title: "Career Readiness",
+    description:
+      "Prepare for interviews and present yourself professionally.",
+  },
+  {
+    title: "Wellbeing & Personal Growth",
+    description:
+      "Build healthier habits and support your personal and professional growth.",
+  },
+  ],
+
+  approachTitle: "First Understand. Then Develop.",
+
+  approachIntro:
+    "Every individual has different strengths, challenges, goals and development needs. We begin by understanding the individual, then identify the learning areas and modules that best support their present goals.",
+
+  developmentSteps: [
+    {
+      title: "Self-Understanding",
+      description:
+        "Recognise your strengths, preferences, behavioural patterns and areas that require attention.",
+    },
+    {
+      title: "Goal Identification",
+      description:
+        "Clarify whether your focus is personal growth, education, career, leadership, business, image or overall development.",
+    },
+    {
+      title: "Personalised Module Selection",
+      description:
+        "Choose the combination of modules that best supports your present goals.",
+    },
+    {
+      title: "Guided Learning",
+      description:
+        "Develop knowledge and practical skills through discussions, activities, exercises, role plays and demonstrations.",
+    },
+    {
+      title: "Practice and Feedback",
+      description:
+        "Apply what you learn, receive personalised feedback and improve through focused practice.",
+    },
+    {
+      title: "Real-Life Application",
+      description:
+        "Use your learning in academic, personal, social and professional situations.",
+    },
+  ],
+
+  approachPrinciple:
+    "Knowledge gives you understanding. Skills give you capability. Practice helps you use those skills. Confidence, behaviour and personal presence help you communicate and apply them effectively.",
+
+  widerWorkTitle: "Development Beyond the Academy",
+
+  widerWorkText:
+    "Alongside individual learning programmes, Empowering Minds also works with educational institutions and organisations on structured human and professional development initiatives.",
+
+  widerWorkCta: "Explore Our Services",
+};

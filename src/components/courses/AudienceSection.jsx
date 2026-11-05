@@ -1,0 +1,47 @@
+import FadeIn from "../ui/FadeIn";
+import SectionHeader from "../ui/SectionHeader";
+
+export default function AudienceSection({ data }) {
+  if (!data?.audienceCards?.length) return null;
+
+  return (
+    <section className="bg-[var(--color-background)] py-20 sm:py-24 lg:py-28">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <FadeIn>
+          <SectionHeader
+            title={data.heading}
+            description={data.description}
+            align="center"
+          />
+        </FadeIn>
+
+        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {data.audienceCards.map((audience, index) => (
+            <FadeIn key={`${audience.title}-${index}`} delay={index * 0.05}>
+              <article className="h-full rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-md)] sm:p-7">
+                {audience.image && (
+                  <div className="mb-5 aspect-[16/9] overflow-hidden rounded-xl">
+                    <img
+                      src={audience.image}
+                      alt={audience.title}
+                      loading="lazy"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                )}
+
+                <h3 className="font-heading text-lg font-semibold text-[var(--color-text)]">
+                  {audience.title}
+                </h3>
+
+                <p className="mt-3 text-sm leading-7 text-[var(--color-text-muted)]">
+                  {audience.description}
+                </p>
+              </article>
+            </FadeIn>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}

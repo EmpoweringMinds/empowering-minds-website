@@ -9,6 +9,7 @@ function normalizeCourse(course) {
     title: course.title || "",
     slug: course.slug || "",
     description: course.description || "",
+    fullDescription: course.fullDescription || "",
     image: course.coverImage
       ? imageUrl(course.coverImage)
           .width(900)
@@ -18,8 +19,13 @@ function normalizeCourse(course) {
       : null,
     duration: course.duration || "",
     formats: course.formats || [],
+    topics: course.topics || [],
     learningOutcomes: course.learningOutcomes || [],
-    displayOrder: course.displayOrder ?? 0,
+    targetAudience: course.targetAudience || [],
+    activities: course.activities || [],
+    additionalModules: course.additionalModules || [],
+    displayOrder: course.displayOrder ??  0,
+    isActive: course.isActive ?? false,
   };
 }
 

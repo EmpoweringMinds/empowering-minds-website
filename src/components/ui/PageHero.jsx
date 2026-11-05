@@ -126,13 +126,13 @@ export default function PageHero({
               className="
                 mt-6
                 max-w-3xl
-                text-4xl font-bold
+                text-2xl font-bold
                 leading-[1.04]
                 tracking-[-0.035em]
                 text-[var(--color-secondary)]
-                sm:text-5xl
-                lg:text-6xl
-                xl:text-7xl
+                sm:text-3xl
+                lg:text-4xl
+                xl:text-5xl
               "
             >
               {title}
