@@ -719,8 +719,8 @@ export default function Contact() {
         variant="soft"
         primaryLabel="Talk to Our Team"
         primaryTo="https://wa.me/917908466757?text=Hello%20Empowering%20Minds%2C%20I'd%20like%20help%20finding%20the%20right%20course%20or%20program."
-        secondaryLabel="Explore Courses & Programs"
-        secondaryTo="/programs"
+        secondaryLabel="Explore Courses"
+        secondaryTo="/courses"
       />
     </main>
   );

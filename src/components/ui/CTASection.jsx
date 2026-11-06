@@ -45,8 +45,8 @@ export default function CTASection({
   primaryLabel = "Schedule a consultation",
   primaryTo = "/contact",
 
-  secondaryLabel = "Browse programs",
-  secondaryTo = "/programs",
+  secondaryLabel = "Browse Courses",
+  secondaryTo = "/courses",
 
   /*
    * soft is intentionally the default.

@@ -1,10 +1,20 @@
-import { Brain, Briefcase, Check, ArrowUpRight,HeartHandshake, Network } from "lucide-react";
-import { serviceGroups } from "../data/siteContent";
+import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
+import {
+  Brain,
+  Briefcase,
+  HeartHandshake,
+  Network,
+} from "lucide-react";
+
+import ProgramCard from "../components/common/ProgramCard";
+import ProgramModal from "../components/sections/ProgramModal";
 import CTASection from "../components/ui/CTASection";
 import FadeIn from "../components/ui/FadeIn";
+import FeatureCard from "../components/ui/FeatureCard";
 import PageHero from "../components/ui/PageHero";
 import SectionHeader from "../components/ui/SectionHeader";
-import FeatureCard from "../components/ui/FeatureCard";
+import { serviceGroups } from "../data/siteContent";
 
 const developmentAreas = [
   {
@@ -34,21 +44,42 @@ const developmentAreas = [
 ];
 
 export default function Services() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const urlGroupId = searchParams.get("group");
+
+  const selectedGroupId = serviceGroups.some(
+    (group) => group.id === urlGroupId
+  )
+    ? urlGroupId
+    : serviceGroups[0]?.id || null;
+
+  const [selectedProgram, setSelectedProgram] = useState(null);
+
+  const selectedGroup = serviceGroups.find(
+    (group) => group.id === selectedGroupId
+  );
+
+  const handleGroupChange = (groupId) => {
+    setSearchParams({ group: groupId }, { replace: true });
+  };
+
   return (
-    <main>
+    <main className="academy-theme">
+      {/* Hero */}
       <PageHero
         eyebrow="Our Services"
         title="Human capital development built around real outcomes"
         description="We design structured development interventions for institutions, organisations, individuals, and trainers — combining behavioural, emotional, and performance-focused capabilities."
         primaryCta={{
           label: "Explore Our Programs",
-          to: "/programs",
+          to: "#programs",
         }}
         secondaryCta={{
           label: "Talk to Our Team",
           to: "/contact",
         }}
       />
+
       {/* Core Development Areas */}
       <section className="py-16 sm:py-20 lg:py-24">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -74,149 +105,100 @@ export default function Services() {
         </div>
       </section>
 
-      {/* Audience Sections */}
-      {serviceGroups.map((group, groupIndex) => {
-        const AudienceIcon = group.icon;
+      {/* Programs by audience */}
+      <section
+        className="bg-[var(--color-background)] py-16 sm:py-20 lg:py-24"
+        id="programs"
+      >
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          <SectionHeader
+            eyebrow="Explore Our Programs"
+            title="Where would you like to make a difference?"
+            description="Choose the audience or area most relevant to you. Each group brings together development programmes designed around its needs."
+          />
 
-        return (
-          <section
-            key={group.id}
-            id={group.id}
-            className={
-              groupIndex % 2 === 0
-                ? "bg-white py-16 sm:py-20 lg:py-24"
-                : "bg-[var(--color-background)] py-16 sm:py-20 lg:py-24"
-            }
-          >
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-              {/* Audience introduction */}
-              <FadeIn>
-                <div className="flex items-start justify-between gap-8">
-                  <div className="max-w-3xl">
-                    <p className="text-sm font-bold uppercase tracking-[0.28em] text-[var(--color-secondary)]">
-                      {group.eyebrow}
-                    </p>
+          {/* Audience selector */}
+          <div className="mt-8 overflow-x-auto pb-2">
+            <div
+              className="flex min-w-max gap-2 rounded-full border border-[var(--color-border)] bg-white p-1.5 shadow-sm"
+              role="tablist"
+              aria-label="Program audiences"
+            >
+              {serviceGroups.map((group) => {
+                const isSelected = group.id === selectedGroupId;
 
-                    <h2 className="mt-3 text-3xl font-black tracking-tight text-[var(--color-primary)] sm:text-4xl lg:text-5xl">
-                      {group.title}
-                    </h2>
-
-                    <p className="mt-5 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
-                      {group.description}
-                    </p>
-                  </div>
-
-                  <div
-                    className="
-                      hidden h-16 w-16 shrink-0 items-center justify-center
-                      rounded-[22px]
-                      bg-[var(--color-soft-accent)]
-                      text-[var(--color-secondary)]
-                      sm:flex
-                    "
+                return (
+                  <button
+                    key={group.id}
+                    type="button"
+                    role="tab"
+                    id={`tab-${group.id}`}
+                    aria-selected={isSelected}
+                    onClick={() => handleGroupChange(group.id)}
+                    className={`rounded-full px-5 py-2.5 text-sm font-semibold transition-all duration-300 ${
+                      isSelected
+                        ? "bg-[var(--color-primary)] text-white shadow-sm"
+                        : "text-[var(--color-primary)] hover:bg-[var(--color-soft-accent)]"
+                    }`}
                   >
-                    <AudienceIcon size={29} />
-                  </div>
+                    {group.title}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Selected audience and its programs */}
+          {selectedGroup && (
+            <div
+              className="mt-12"
+              role="tabpanel"
+              id={`panel-${selectedGroup.id}`}
+              aria-labelledby={`tab-${selectedGroup.id}`}
+            >
+              <FadeIn>
+                <div className="max-w-3xl">
+                  <p className="text-xs font-bold uppercase tracking-[0.24em] text-[var(--color-secondary)]">
+                    {selectedGroup.eyebrow}
+                  </p>
+
+                  <h2 className="mt-3 text-2xl font-black tracking-tight text-[var(--color-primary)] sm:text-3xl">
+                    {selectedGroup.title}
+                  </h2>
+
+                  <p className="mt-4 text-sm leading-7 text-slate-600 sm:text-base sm:leading-8">
+                    {selectedGroup.description}
+                  </p>
                 </div>
               </FadeIn>
 
-              {/* Service areas */}
               <div className="mt-10 grid gap-6 lg:grid-cols-2">
-                {group.areas.map((area, areaIndex) => (
-                  <FadeIn
-                    key={area.id}
-                    delay={areaIndex * 0.06}
-                    className="
-                      h-full rounded-[32px]
-                      border border-[var(--color-border)]
-                      bg-white
-                      p-6
-                      shadow-[0_18px_45px_rgba(35,66,78,0.05)]
-                      sm:p-8
-                    "
-                  >
-                    <div className="flex items-start gap-5">
-                      <span
-                        className="
-                          mt-1 shrink-0
-                          text-sm font-bold tracking-[0.15em]
-                          text-[var(--color-secondary)]
-                        "
-                      >
-                        {String(areaIndex + 1).padStart(2, "0")}
-                      </span>
-
-                      <div className="min-w-0">
-                        <div className="flex items-start justify-between gap-4">
-                          <h3 className="text-2xl font-black tracking-tight text-[var(--color-primary)]">
-                            {area.title}
-                          </h3>
-
-                          <ArrowUpRight
-                            size={21}
-                            className="
-                              mt-1 shrink-0
-                              text-[var(--color-secondary)]
-                            "
-                          />
-                        </div>
-
-                        <p className="mt-4 text-sm leading-7 text-slate-600 sm:text-base">
-                          {area.description}
-                        </p>
-                      </div>
-                    </div>
-
-                    {/* Development areas */}
-                    <div className="mt-7 border-t border-[var(--color-border)] pt-6">
-                      <p className="text-xs font-bold uppercase tracking-[0.22em] text-[var(--color-secondary)]">
-                        Development Areas
-                      </p>
-                      <ul className="mt-5 grid gap-x-6 gap-y-3 sm:grid-cols-2">
-                        {area.modules.map((module) => (
-                          <li key={module} className="flex items-start gap-3">
-                            <Check
-                              size={16}
-                              className="mt-1 shrink-0 text-[var(--color-secondary)]"
-                            />
-
-                            <span className="text-sm leading-6 text-[var(--color-primary)]">
-                              {module}
-                            </span>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
-                  </FadeIn>
+                {selectedGroup.areas.map((program, index) => (
+                  <ProgramCard
+                    key={program.id}
+                    program={{
+                      ...program,
+                      serviceGroup: selectedGroup.id,
+                    }}
+                    onView={setSelectedProgram}
+                  />
                 ))}
               </div>
             </div>
-          </section>
-        );
-      })}
-      {/* Delivery */}
+          )}
+        </div>
+      </section>
+
+      {/* Delivery approach */}
       <section className="relative overflow-hidden [background-image:var(--gradient-brand)] py-20 sm:py-24 lg:py-32">
-        {/* Ambient brand glow */}
         <div
           aria-hidden="true"
-          className="
-            pointer-events-none absolute
-            -right-32 -top-32
-            h-96 w-96 rounded-full
-            bg-[var(--color-secondary)]/10
-            blur-3xl
-          "
+          className="pointer-events-none absolute -right-32 -top-32 h-96 w-96 rounded-full bg-[var(--color-secondary)]/10 blur-3xl"
         />
 
         <div
           aria-hidden="true"
-          className="
-            pointer-events-none absolute
-            -bottom-40 -left-32
-            h-96 w-96 rounded-full
-            bg-white/5
-            blur-3xl
-          "
+          className="pointer-events-none absolute -bottom-40 -left-32 h-96 w-96 rounded-full bg-white/5 blur-3xl"
         />
 
         <div className="relative mx-auto max-w-5xl px-4 sm:px-6 lg:px-8">
@@ -253,14 +235,21 @@ export default function Services() {
         </div>
       </section>
 
+      {/* Final CTA */}
       <CTASection
         title="Tell us what you want to develop."
         description="Whether you're developing people, strengthening an organisation, growing personally, or preparing to train others, we can explore the right approach together."
         variant="blush"
         primaryLabel="Discuss Your Development Goals"
         primaryTo="/contact"
-        secondaryLabel="View Our Programs"
-        secondaryTo="/programs"
+        secondaryLabel="Explore Our Programs"
+        secondaryTo="#programs"
+      />
+
+      {/* Program details */}
+      <ProgramModal
+        program={selectedProgram}
+        onClose={() => setSelectedProgram(null)}
       />
     </main>
   );

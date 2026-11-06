@@ -57,8 +57,8 @@ export default function Trainers() {
             to: "#trainers"
         }}
         secondaryCta={{
-            label: "Explore Our Programs",
-            to: "/programs"
+            label: "Explore Our Courses",
+            to: "/courses"
         }}
         />  
       {/* Founder */}

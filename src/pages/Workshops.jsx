@@ -72,7 +72,7 @@ export default function Workshops() {
   }
 
   return (
-    <main className="bg-[var(--color-background)]">
+    <main className="bg-[var(--color-background)] academy-theme">
       <section className="relative overflow-hidden bg-[var(--color-surface-warm)] py-20 sm:py-24 lg:py-32">
         <div aria-hidden="true" className="pointer-events-none absolute -right-28 -top-28 h-80 w-80 rounded-full border border-[var(--color-secondary)]/20 sm:h-[26rem] sm:w-[26rem]" />
         <div aria-hidden="true" className="pointer-events-none absolute -right-16 -top-16 h-56 w-56 rounded-full border border-[var(--color-secondary)]/20 sm:h-72 sm:w-72" />

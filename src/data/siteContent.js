@@ -22,7 +22,6 @@ export const navLinks = [
   { label: "Courses", to: "/courses" },
   { label: "Trainers", to: "/trainers" },
   { label: "Services", to: "/services" },
-  { label: "Programs", to: "/programs" },
   { label: "Workshops", to: "/workshops" },
   { label: "Contact", to: "/contact" },
   {
