@@ -59,12 +59,16 @@ export default function CourseCard({
   index,
   isOpen,
   onToggle,
+  cardRef,
 }) {
   if (!course) return null;
 
   return (
-    <article className="
-      overflow-hidden rounded-2xl
+    <article
+      id={course.slug || course.id}
+      ref={cardRef}
+      className="
+      scroll-mt-28 overflow-hidden rounded-2xl
       border border-[var(--color-border)]
       bg-[var(--color-surface)]
       shadow-[var(--shadow-sm)]
@@ -77,17 +81,16 @@ export default function CourseCard({
         onClick={onToggle}
         aria-expanded={isOpen}
         className="
-          flex w-full items-center gap-4
-          p-5 text-left
-          sm:p-7
+          flex w-full items-center gap-3
+          p-4 text-left
+          sm:gap-4 sm:p-7
         "
       >
         {/* Course number */}
         <span className="
-          hidden shrink-0 font-serif
-          text-3xl font-semibold
-          text-[var(--color-primary)] opacity-40
-          sm:block
+          shrink-0 font-serif font-semibold
+          text-lg text-[var(--color-primary)] opacity-50
+          sm:text-3xl
         ">
           {String(index + 1).padStart(2, "0")}
         </span>
@@ -118,8 +121,9 @@ export default function CourseCard({
           </h3>
 
           <p className="
-            mt-2 line-clamp-2 text-sm leading-6
+            mt-1.5 line-clamp-2 text-sm leading-5
             text-[var(--color-text-secondary)]
+            sm:mt-2 sm:leading-6
           ">
             {course.description}
           </p>
@@ -127,7 +131,7 @@ export default function CourseCard({
           {/* Learning formats */}
           {course.formats?.length > 0 && (
             <div className="
-              mt-3 flex flex-wrap gap-2
+              mt-3 hidden flex-wrap gap-2 sm:flex
             ">
               {course.formats.map((format, formatIndex) => (
                 <span
@@ -149,8 +153,9 @@ export default function CourseCard({
 
         {/* Expand indicator */}
         <span className="
-          flex h-10 w-10 shrink-0
+          flex h-9 w-9 shrink-0
           items-center justify-center
+          sm:h-10 sm:w-10
           rounded-full
           bg-[var(--color-surface-warm)]
           text-[var(--color-primary)]

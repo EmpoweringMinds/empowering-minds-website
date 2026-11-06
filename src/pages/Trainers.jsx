@@ -44,7 +44,7 @@ export default function Trainers() {
     }
 
   return (
-    <main className="bg-[var(--color-background)] text-[var(--color-text)]">
+    <main className="bg-[var(--color-background)] text-[var(--color-text)] academy-theme">
         {/* Hero */}
         <PageHero
         eyebrow="Our Trainers"

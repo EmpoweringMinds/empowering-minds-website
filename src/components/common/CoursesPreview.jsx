@@ -1,61 +1,65 @@
-
+import { useState } from "react";
 import { useCourses } from "../../cms/useCourses";
 import CTAButton from "../ui/CTAButton";
 import SectionHeader from "../ui/SectionHeader";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function CoursePreview() {
   const { courses, loading, error } = useCourses();
   const navigate = useNavigate();
-
   const [showAllCourses, setShowAllCourses] = useState(false);
 
+  function getCourseTarget(course) {
+    return course.slug || course.id;
+  }
+
+  function handleExploreCourse(course) {
+    navigate(`/courses#${encodeURIComponent(getCourseTarget(course))}`);
+  }
+
+  function handleAdvisorClick(course) {
+    navigate(
+      `/contact?course=${encodeURIComponent(getCourseTarget(course))}#form`
+    );
+  }
 
   return (
-    <section className="py-20 sm:py-24 lg:py-28">
+    <section className="py-14 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <SectionHeader
           eyebrow="Learn · Grow · Apply"
-          title="Courses designed for students, job seekers and working professionals."
-          description="Explore learning experiences designed to build useful skills and turn knowledge into action."
+          title="Find a programme that moves you forward."
+          description="Explore courses designed to help you build confidence, develop useful skills and put what you learn into action."
           align="center"
         />
 
         {loading ? (
-          <p className="mt-12 text-center text-[var(--color-text-secondary)]">
+          <p className="mt-10 text-center text-[var(--color-text-secondary)]">
             Loading courses...
           </p>
         ) : error ? (
           <p
             role="alert"
-            className="mt-12 text-center text-[var(--color-text-secondary)]"
+            className="mt-10 text-center text-[var(--color-text-secondary)]"
           >
             Unable to load courses right now.
           </p>
         ) : courses.length === 0 ? (
-          <p className="mt-12 text-center text-[var(--color-text-secondary)]">
+          <p className="mt-10 text-center text-[var(--color-text-secondary)]">
             New courses are coming soon.
           </p>
         ) : (
           <>
-            {/* Course Cards */}
             <div
               className="
-                mt-12
-                -mx-4 px-4
-                flex gap-5 overflow-x-auto
-                snap-x snap-mandatory
-                overscroll-x-contain
-                pb-4
+                mt-8 -mx-4 flex gap-4 overflow-x-auto
+                snap-x snap-mandatory overscroll-x-contain
+                px-4 pb-4
                 [scrollbar-width:none]
                 [&::-webkit-scrollbar]:hidden
-
                 sm:-mx-6 sm:px-6
-                md:mx-0 md:px-0
-                md:grid md:grid-cols-2 md:gap-6
-                md:overflow-visible md:pb-0
-                xl:grid-cols-4
+                md:mx-0 md:mt-12 md:grid md:grid-cols-2
+                md:gap-5 md:overflow-visible md:px-0 md:pb-0
               "
               aria-label="Available courses"
             >
@@ -63,111 +67,108 @@ export default function CoursePreview() {
                 <article
                   key={course.id}
                   className={`
-                    flex h-full min-w-0
-                    flex-[0_0_88%]
-                    snap-start
-                    flex-col overflow-hidden
-                    rounded-2xl border
-                    border-[var(--color-border)]
-                    bg-white shadow-sm
-                    transition duration-300
-                    hover:-translate-y-1 hover:shadow-lg
-
-                    sm:flex-[0_0_70%]
+                    flex min-w-0 flex-[0_0_86%] snap-start
+                    flex-col overflow-hidden rounded-2xl
+                    border border-[var(--color-border)]
+                    bg-[var(--color-surface)]
+                    shadow-[var(--shadow-sm)]
+                    transition-all duration-300
+                    hover:-translate-y-1 hover:shadow-[var(--shadow-md)]
                     md:flex-auto
-                    ${index >= 4 && !showAllCourses ? "md:hidden" : ""}`}
+                    ${index >= 4 && !showAllCourses ? "md:hidden" : ""}
+                  `}
                 >
+                  {/* Image-led mobile card; desktop uses an editorial layout. */}
                   {course.image && (
                     <img
                       src={course.image}
                       alt={course.title}
                       loading="lazy"
-                      className="aspect-[3/2] w-full object-cover"
+                      className="aspect-[16/9] w-full object-cover md:hidden"
                     />
                   )}
 
-                  <div className="flex flex-1 flex-col p-6 sm:p-7">
-                    <div className="flex flex-wrap gap-2">
-                      {course.formats.map((format) => (
-                        <span
-                          key={format}
-                          className="
-                            rounded-full
-                            bg-[var(--color-secondary)]/10
-                            px-3 py-1.5
-                            text-xs font-semibold
-                            text-[var(--color-secondary)]
-                          "
-                        >
-                          {format === "live-online"
-                            ? "Live Online"
-                            : format === "in-person"
-                              ? "In-Person"
-                              : format}
+                  <div className="flex flex-1 flex-col p-4 sm:p-5 md:p-6">
+                    <div className="flex flex-wrap items-center justify-between gap-2">
+                      <div className="flex flex-wrap gap-2">
+                        {(course.formats || []).map((format) => (
+                          <span
+                            key={format}
+                            className="
+                              rounded-full
+                              bg-[var(--color-secondary)]/10
+                              px-2.5 py-1 text-[11px] font-semibold
+                              text-[var(--color-secondary)]
+                              sm:text-xs
+                            "
+                          >
+                            {format === "live-online"
+                              ? "Live Online"
+                              : format === "in-person"
+                                ? "In-Person"
+                                : format}
+                          </span>
+                        ))}
+                      </div>
+
+                      {course.duration && (
+                        <span className="text-xs text-[var(--color-text-muted)]">
+                          {course.duration}
                         </span>
-                      ))}
+                      )}
                     </div>
 
-                    <h3 className="mt-5 text-2xl font-bold leading-tight text-[var(--color-primary)]">
-                      {course.title}
-                    </h3>
+                    <div className="mt-3 md:flex md:items-start md:gap-4">
+                      <span className="
+                        hidden shrink-0 pt-0.5
+                        font-serif text-2xl font-semibold
+                        text-[var(--color-primary)] opacity-40
+                        md:block
+                      ">
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
 
-                    {course.duration && (
-                      <p className="mt-2 text-sm font-medium text-[var(--color-text-secondary)]">
-                        Duration: {course.duration}
-                      </p>
-                    )}
+                      <div className="min-w-0 flex-1">
+                        <h3 className="
+                          font-heading text-xl font-semibold leading-tight
+                          text-[var(--color-primary)]
+                          sm:text-2xl md:text-xl
+                        ">
+                          {course.title}
+                        </h3>
 
-                    <p className="mt-4 text-sm leading-7 text-[var(--color-text-secondary)] sm:text-base">
-                      {course.description}
-                    </p>
+                        <p className="
+                          mt-2 line-clamp-3 text-sm leading-6
+                          text-[var(--color-text-secondary)]
+                          md:line-clamp-2
+                        ">
+                          {course.description}
+                        </p>
+                      </div>
+                    </div>
 
-                    {course.learningOutcomes.length > 0 && (
-                      <ul className="mt-5 space-y-2">
-                        {course.learningOutcomes.slice(0, 3).map((outcome, index) => (
-                          <li
-                            key={`${course.id}-outcome-${index}`}
-                            className="flex items-start gap-3 text-sm leading-6 text-[var(--color-text-secondary)]"
-                          >
-                            <span
-                              aria-hidden="true"
-                              className="
-                                mt-2 h-1.5 w-1.5 shrink-0
-                                rounded-full
-                                bg-[var(--color-secondary)]
-                              "
-                            />
-                            <span>{outcome}</span>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-
-                    <div className="mt-auto flex flex-col gap-3 pt-7">
+                    <div className="
+                      mt-5 flex flex-col gap-2
+                      border-t border-[var(--color-border)]
+                      pt-4
+                      sm:flex-row sm:items-center
+                      md:mt-6
+                    ">
                       <CTAButton
-                        onClick={() => {
-                          navigate(
-                            `/contact?course=${encodeURIComponent(course.slug || course.id)}#form`
-                          );
-                        }}
+                        onClick={() => handleAdvisorClick(course)}
                         showArrow={false}
-                        className="flex-1"
+                        className="w-full sm:flex-1"
                       >
-                        Schedule a Call
+                        Talk to an advisor
                       </CTAButton>
 
                       <CTAButton
-                        as="a"
-                        href={`https://wa.me/917908466757?text=${encodeURIComponent(
-                          `Hello, I'd like to know more about the course "${course.title}".`
-                        )}`}
                         variant="secondary"
-                        showArrow={false}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="flex-1"
+                        onClick={() => handleExploreCourse(course)}
+                        showArrow={true}
+                        className="w-full sm:flex-1"
                       >
-                        Contact on WhatsApp
+                        Explore course
                       </CTAButton>
                     </div>
                   </div>
@@ -175,24 +176,26 @@ export default function CoursePreview() {
               ))}
             </div>
 
-            {/* Mobile scroll indicator */}
-            <p className="mt-3 text-center text-xs text-[var(--color-text-secondary)] md:hidden">
-              Swipe to explore more courses →
-            </p>
+            {/* Mobile swipe guidance */}
+            {courses.length > 1 && (
+              <p className="
+                mt-2 text-center text-xs
+                text-[var(--color-text-secondary)] md:hidden
+              ">
+                Swipe to explore more courses
+                <span aria-hidden="true"> →</span>
+              </p>
+            )}
 
-            {/* Show All / Show Fewer */}
+            {/* Desktop: reveal the remaining courses */}
             {courses.length > 4 && (
-              <div className="mt-10 hidden md:flex justify-center ">
+              <div className="mt-8 hidden justify-center md:flex">
                 <CTAButton
                   variant="secondary"
                   showArrow={false}
-                  onClick={() =>
-                    setShowAllCourses((current) => !current)
-                  }
+                  onClick={() => setShowAllCourses((current) => !current)}
                 >
-                  {showAllCourses
-                    ? "Show Fewer Courses"
-                    : "Show All Courses"}
+                  {showAllCourses ? "Show fewer courses" : "View all courses"}
                 </CTAButton>
               </div>
             )}

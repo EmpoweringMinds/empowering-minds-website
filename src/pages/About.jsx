@@ -48,8 +48,18 @@ export default function About() {
   return (
     <main className="academy-theme">
       <PageHero
+        eyebrow="ABOUT"
         title={academyAboutContent.heroTitle}
         description={academyAboutContent.heroText}
+        primaryCta={{
+          label: academyAboutContent.primaryCTA,
+          as: "a",
+          href: "https://wa.me/917908466757?text=Hello%20Empowering%20Minds%2C%20I%27d%20like%20to%20know%20more%20about%20your%20courses."
+        }}
+        secondaryCta={{
+            label: academyAboutContent.secondaryCTA,
+            to: "/courses",
+        }}
       />
 
       {/* Understanding personality development */}

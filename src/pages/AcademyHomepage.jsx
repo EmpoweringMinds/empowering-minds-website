@@ -385,7 +385,7 @@ export default function AcademyHomepage () {
                 title="Your Journey Towards Growth Begins Here."
                 description="Find the programme that fits your goals."
                 variant="soft"
-                primaryLabel= "Contact a Advisor"
+                primaryLabel= "Talk to an Advisor"
                 primaryTo = "https://wa.me/917908466757?text=Hello%20Empowering%20Minds%2C%20I%27d%20like%20to%20know%20more%20about%20your%20programs."
                 secondaryLabel= "Explore Courses"
                 secondaryTo= "#courses"

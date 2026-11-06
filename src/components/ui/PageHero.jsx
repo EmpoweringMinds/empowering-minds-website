@@ -1,3 +1,4 @@
+
 import CTAButton from "./CTAButton";
 import FadeIn from "./FadeIn";
 
@@ -16,148 +17,146 @@ export default function PageHero({
     to: "/programs",
   },
 
-  /**
-   * Optional visual to place on the right side of the hero.
-   * Useful for illustrations, diagrams, or page-specific visuals.
-   */
+  // Optional React visual: image, illustration, composition, etc.
   visual = null,
+
+  // Visuals are desktop-only by default.
+  visualOnMobile = false,
+
+  // Optional styling hooks for page-specific visuals.
+  visualClassName = "",
+  contentClassName = "",
 }) {
+  const hasVisual = Boolean(visual);
+
   return (
     <section
       className="
         relative isolate overflow-hidden
         bg-[var(--color-background)]
-        pt-24
-        sm:pt-28
-        lg:pt-32
+        pt-24 sm:pt-28 lg:pt-32
       "
     >
-      {/* --------------------------------
-          Decorative atmosphere
-      -------------------------------- */}
+      {/* Decorative atmosphere */}
 
       <div
         aria-hidden="true"
         className="
           pointer-events-none absolute
-          -right-24 -top-24
-          h-72 w-72
-          rounded-full
-          border
-          border-[var(--color-primary)]/10
-        "
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none absolute
-          -right-12 top-12
-          h-40 w-40
-          rounded-full
-          border
-          border-[var(--color-primary)]/10
-        "
-      />
-
-      <div
-        aria-hidden="true"
-        className="
-          pointer-events-none absolute
-          -bottom-24 -left-20
-          h-64 w-64
-          rounded-full
+          -right-24 -top-20
+          h-72 w-72 rounded-full
           bg-[var(--color-soft-accent)]/30
+          blur-3xl
+          sm:h-96 sm:w-96
+        "
+      />
+
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none absolute
+          -bottom-24 -left-24
+          h-72 w-72 rounded-full
+          bg-[var(--color-olive)]/10
           blur-3xl
         "
       />
 
-      {/* --------------------------------
-          Hero content
-      -------------------------------- */}
-
       <div
         className="
-          relative mx-auto max-w-7xl
-          px-4
-          py-16
-          sm:px-6 sm:py-20
-          lg:px-8 lg:py-24
+          relative z-10 mx-auto max-w-7xl
+          px-4 py-12
+          sm:px-6 sm:py-16
+          lg:px-8 lg:py-20
         "
       >
         <div
-          className="
-            grid items-center gap-12
-            lg:grid-cols-[1.05fr_0.95fr]
-            lg:gap-16
-          "
+          className={`
+            grid items-center gap-10
+            ${hasVisual
+              ? "lg:grid-cols-[1.05fr_0.95fr] lg:gap-16"
+              : "grid-cols-1"
+            }
+          `}
         >
-          {/* --------------------------------
-              Content
-          -------------------------------- */}
+          {/* Content */}
 
-          <FadeIn className="max-w-3xl">
-            {/* Eyebrow */}
-            <div className="flex items-center gap-3">
-              <span
-                aria-hidden="true"
-                className="
-                  h-[var(--decorative-line-height)]
-                  w-[var(--decorative-line-width)]
-                  rounded-full
-                  bg-[var(--color-primary)]
-                "
-              />
+          <FadeIn
+            className={`
+              ${hasVisual ? "max-w-3xl" : "max-w-4xl"}
+              ${contentClassName}
+            `}
+          >
+            {eyebrow && (
+              <div className="flex items-center gap-3">
+                <span
+                  aria-hidden="true"
+                  className="
+                    h-[var(--decorative-line-height)]
+                    w-[var(--decorative-line-width)]
+                    rounded-full
+                    bg-[var(--color-primary)]
+                  "
+                />
 
-              <p
-                className="
-                  text-xs font-semibold uppercase
-                  tracking-[0.24em]
-                  text-[var(--color-secondary)]
-                  sm:text-sm sm:tracking-[0.3em]
-                "
-              >
-                {eyebrow}
-              </p>
-            </div>
+                <p
+                  className="
+                    text-xs font-bold uppercase
+                    tracking-[0.22em]
+                    text-[var(--color-primary)]
+                    sm:text-sm sm:tracking-[0.26em]
+                  "
+                >
+                  {eyebrow}
+                </p>
+              </div>
+            )}
 
-            {/* Heading */}
             <h1
               className="
-                mt-6
-                max-w-3xl
-                text-2xl font-bold
-                leading-[1.04]
+                mt-5
+                max-w-4xl
+                text-3xl font-bold
+                leading-[1.1]
                 tracking-[-0.035em]
                 text-[var(--color-secondary)]
-                sm:text-3xl
-                lg:text-4xl
-                xl:text-5xl
+                sm:text-5xl
+                lg:text-6xl
               "
             >
               {title}
             </h1>
 
-            {/* Description */}
-            <p
+            <div
+              aria-hidden="true"
               className="
-                mt-6
-                max-w-2xl
-                text-sm leading-7
-                text-[var(--color-text-secondary)]
-                sm:text-base sm:leading-8
-                lg:text-lg
+                mt-7
+                h-[var(--decorative-line-height)]
+                w-[var(--decorative-line-width)]
+                rounded-full
+                bg-[var(--color-primary)]
               "
-            >
-              {description}
-            </p>
+            />
+
+            {description && (
+              <p
+                className="
+                  mt-6 max-w-2xl
+                  text-base leading-8
+                  text-[var(--color-text-secondary)]
+                  sm:text-lg
+                "
+              >
+                {description}
+              </p>
+            )}
 
             {/* Actions */}
+
             {(primaryCta || secondaryCta) && (
               <div
                 className="
-                  mt-8
-                  flex flex-col gap-3
+                  mt-8 flex flex-col gap-3
                   sm:mt-9
                   sm:flex-row sm:flex-wrap sm:gap-4
                 "
@@ -191,125 +190,30 @@ export default function PageHero({
             )}
           </FadeIn>
 
-          {/* --------------------------------
-              Visual
-          -------------------------------- */}
+          {/* Optional visual */}
 
-          <FadeIn
-            delay={0.12}
-            className="
-              relative
-              hidden
-              min-h-[280px]
-              items-center
-              justify-center
-              lg:flex
-            "
-          >
-            {visual ? (
-              visual
-            ) : (
-              <div
-                aria-hidden="true"
-                className="
-                  relative
-                  flex h-64 w-64
-                  items-center justify-center
-                "
-              >
-                {/* Outer ring */}
-                <div
-                  className="
-                    absolute inset-0
-                    rounded-full
-                    border
-                    border-[var(--color-primary)]/15
-                  "
-                />
-
-                {/* Middle ring */}
-                <div
-                  className="
-                    absolute inset-8
-                    rounded-full
-                    border
-                    border-[var(--color-primary)]/20
-                  "
-                />
-
-                {/* Core */}
-                <div
-                  className="
-                    flex h-24 w-24
-                    items-center justify-center
-                    rounded-full
-                    bg-[var(--color-primary)]
-                    shadow-[var(--shadow-warm)]
-                  "
-                >
-                  <span
-                    className="
-                      h-3 w-3
-                      rounded-full
-                      bg-white
-                    "
-                  />
-                </div>
-
-                {/* Orbit points */}
-                <span
-                  className="
-                    absolute left-6 top-1/2
-                    h-2 w-2
-                    -translate-y-1/2
-                    rounded-full
-                    bg-[var(--color-primary)]
-                  "
-                />
-
-                <span
-                  className="
-                    absolute right-6 top-1/2
-                    h-2 w-2
-                    -translate-y-1/2
-                    rounded-full
-                    bg-[var(--color-primary)]
-                  "
-                />
-
-                <span
-                  className="
-                    absolute left-1/2 top-5
-                    h-2 w-2
-                    -translate-x-1/2
-                    rounded-full
-                    bg-[var(--color-secondary)]
-                  "
-                />
-
-                <span
-                  className="
-                    absolute bottom-5 left-1/2
-                    h-2 w-2
-                    -translate-x-1/2
-                    rounded-full
-                    bg-[var(--color-secondary)]
-                  "
-                />
-              </div>
-            )}
-          </FadeIn>
+          {hasVisual && (
+            <FadeIn
+              delay={0.15}
+              className={`
+                relative items-center justify-center
+                ${visualOnMobile ? "flex" : "hidden lg:flex"}
+                ${visualClassName}
+              `}
+            >
+              {visual}
+            </FadeIn>
+          )}
         </div>
 
         {/* Bottom transition */}
+
         <div
           aria-hidden="true"
           className="
-            mt-14
-            h-px
-            w-full
+            mt-12 h-px w-full
             bg-[var(--color-border)]
-            sm:mt-18
+            sm:mt-16 lg:mt-20
           "
         />
       </div>

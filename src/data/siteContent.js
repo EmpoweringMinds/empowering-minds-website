@@ -19,12 +19,12 @@ import {
 
 export const navLinks = [
   { label: "About", to: "/about" },
+  { label: "Courses", to: "/courses" },
+  { label: "Trainers", to: "/trainers" },
   { label: "Services", to: "/services" },
   { label: "Programs", to: "/programs" },
-  { label: "Trainers", to: "/trainers" },
-  { label: "Contact", to: "/contact" },
   { label: "Workshops", to: "/workshops" },
-  { label: "Courses", to: "/courses" },
+  { label: "Contact", to: "/contact" },
   {
     label: "Empowering Biz",
     href: "https://empoweringbiz.theempoweringminds.com",
@@ -566,6 +566,8 @@ export const academyAboutContent = {
 
   heroText:
     "Empowering Minds Personality Development Academy offers practical, personalised and outcome-focused programmes to help you understand yourself, strengthen your capabilities and present yourself with greater confidence.",
+  primaryCTA: "Talk to An Advisor",
+  secondaryCTA: "Explore Courses",
 
   definitionTitle:
     "Knowledge and Skills Are Important. But They Are Not Enough.",

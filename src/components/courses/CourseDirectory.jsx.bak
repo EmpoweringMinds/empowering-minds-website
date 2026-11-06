@@ -1,0 +1,67 @@
+
+import { useState } from "react";
+import FadeIn from "../ui/FadeIn";
+import SectionHeader from "../ui/SectionHeader";
+import CourseCard from "./CourseCard";
+
+export default function CourseDirectory({ courses = [] }) {
+  const [openCourse, setOpenCourse] = useState(null);
+
+  if (!courses.length) return null;
+
+  function handleToggle(index) {
+    setOpenCourse((current) =>
+      current === index ? null : index
+    );
+  }
+
+  return (
+    <section
+      id="course-directory"
+      className="
+        bg-[var(--color-background)]
+        py-20 sm:py-24 lg:py-28
+      "
+    >
+      <div className="
+        mx-auto max-w-5xl
+        px-4 sm:px-6 lg:px-8
+      ">
+        <FadeIn>
+          <SectionHeader
+            title="What would you like to develop?"
+            description="Explore programmes designed to help you grow personally and professionally."
+            align="center"
+          />
+        </FadeIn>
+
+        <div className="mt-8 sm:mt-12">
+          <div className="mb-4 flex items-center justify-between sm:mb-5">
+            <h3 className="text-sm font-semibold text-[var(--color-secondary)] sm:text-base">
+              All programmes
+            </h3>
+            <span className="text-xs font-medium text-[var(--color-text-muted)] sm:text-sm">
+              {courses.length} programmes
+            </span>
+          </div>
+
+          <div className="space-y-3 sm:space-y-4">
+            {courses.map((course, index) => (
+              <FadeIn
+                key={course.id}
+                delay={index * 0.04}
+              >
+                <CourseCard
+                  course={course}
+                  index={index}
+                  isOpen={openCourse === index}
+                  onToggle={() => handleToggle(index)}
+                />
+              </FadeIn>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}

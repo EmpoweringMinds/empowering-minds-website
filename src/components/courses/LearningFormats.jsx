@@ -1,22 +1,6 @@
 import FadeIn from "../ui/FadeIn";
 import SectionHeader from "../ui/SectionHeader";
-import {
-  UserRound,
-  Layers,
-  Target,
-  ClipboardList,
-  Monitor,
-  Users,
-} from "lucide-react";
-
-const iconMap = {
-  UserRound,
-  Layers,
-  Target,
-  ClipboardList,
-  Monitor,
-  Users,
-};
+import * as Icons from "lucide-react";
 
 export default function LearningFormats({ data }) {
   if (!data?.formatCards?.length) return null;
@@ -32,13 +16,19 @@ export default function LearningFormats({ data }) {
           />
         </FadeIn>
 
-        <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        <div className="mt-8 grid grid-cols-2 gap-3 sm:mt-12 sm:grid-cols-2 sm:gap-4 lg:grid-cols-3">
           {data.formatCards.map((format, index) => {
-            const Icon = iconMap[format.iconName] || Layers;
+            const Icon = Icons[format.iconName] || Icons.Layers;
 
             return (
-              <FadeIn key={`${format.title}-${index}`} delay={index * 0.05}>
-                <article className="flex h-full gap-4 rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-[var(--shadow-md)] sm:p-7">
+            <FadeIn key={`${format.title}-${index}`} delay={index * 0.05}>
+              <article className=" flex h-full flex-col items-start gap-3
+                rounded-xl border border-[var(--color-border)]
+                bg-[var(--color-surface)]
+                p-4 transition-all duration-300
+                hover:-translate-y-1
+                hover:shadow-[var(--shadow-md)]
+                sm:flex-row sm:gap-4 sm:rounded-2xl sm:p-7">
                   <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-[var(--color-accent)]/10 text-[var(--color-accent)]">
                     <Icon size={21} strokeWidth={1.8} />
                   </div>
@@ -52,8 +42,8 @@ export default function LearningFormats({ data }) {
                       {format.description}
                     </p>
                   </div>
-                </article>
-              </FadeIn>
+                  </article>
+            </FadeIn>
             );
           })}
         </div>
