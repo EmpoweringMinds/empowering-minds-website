@@ -75,30 +75,6 @@ export const courses = defineType({
             ],
             validation: (rule) => rule.required().min(1),
         }),
-        defineField({
-            name: "topics",
-            title: "Topics of Study",
-            description: "A small preview of modules to be followed.",
-            type: "array",
-            of: [
-                defineArrayMember({
-                    type: "object",
-                    fields: [
-                        defineField({
-                            name: "title",
-                            title: "Module Title",
-                            type: "string",
-                        }),
-                        defineField({
-                            name: "description",
-                            title: "Course Description",
-                            description: "A small module description",
-                            type: "text"
-                        }),
-                    ],
-                }),
-            ],
-        }),
 
         defineField({
             name: "learningOutcomes",
@@ -117,18 +93,6 @@ export const courses = defineType({
             name: "targetAudience",
             title: "Target Audience for Course",
             description: "List of audiences this course is intended for",
-            type: "array",
-            of: [
-                defineArrayMember({
-                    type:"string",
-                }),
-            ],
-        }),
-
-        defineField({
-            name: "activities",
-            title: "Practical learning activities",
-            description: "Preview of activities included in this course",
             type: "array",
             of: [
                 defineArrayMember({

@@ -8,8 +8,46 @@ import {
 } from "framer-motion";
 
 import FadeIn from "../ui/FadeIn";
-import SectionHeader from "../ui/SectionHeader";
 
+
+/* --------------------------------
+   Card colour variations
+-------------------------------- */
+
+const cardVariants = [
+  {
+    card: "bg-[var(--color-secondary)]",
+    heading: "text-[var(--color-text-light)]",
+    description: "text-[var(--color-text-light)]/80",
+    number: "text-[var(--color-primary)]/25",
+    accent: "bg-[var(--color-primary)]",
+    label: "text-[var(--color-primary)]",
+    decoration: "border-white/10",
+  },
+  {
+    card: "bg-[var(--color-surface)]",
+    heading: "text-[var(--color-secondary)]",
+    description: "text-[var(--color-text-secondary)]",
+    number: "text-[var(--color-primary)]/20",
+    accent: "bg-[var(--color-primary)]",
+    label: "text-[var(--color-primary)]",
+    decoration: "border-[var(--color-primary)]/10",
+  },
+  {
+    card: "bg-[var(--color-soft-accent)]",
+    heading: "text-[var(--color-secondary)]",
+    description: "text-[var(--color-secondary)]/80",
+    number: "text-[var(--color-secondary)]/10",
+    accent: "bg-[var(--color-secondary)]",
+    label: "text-[var(--color-secondary)]",
+    decoration: "border-[var(--color-secondary)]/10",
+  },
+];
+
+
+/* --------------------------------
+   Mobile stacked card
+-------------------------------- */
 
 function StackedAreaCard({ card, index, total, progress }) {
   const start = index / total;
@@ -41,6 +79,8 @@ function StackedAreaCard({ card, index, total, progress }) {
       : [index === 0 ? 1 : 0.94, 1]
   );
 
+  const variant = cardVariants[index % cardVariants.length];
+
   return (
     <motion.article
       style={{
@@ -48,53 +88,95 @@ function StackedAreaCard({ card, index, total, progress }) {
         scale,
         zIndex: index + 1,
       }}
-      className="
+      className={`
         absolute left-1/2 top-1/2
         flex h-[min(68svh,34rem)]
         w-[88vw] max-w-lg
         -translate-x-1/2 -translate-y-1/2
-        flex-col justify-center
+        flex-col justify-between
         overflow-y-auto
-        rounded-[1.75rem]
+        overflow-x-clip
+        rounded-[2rem]
         border border-[var(--color-border)]
-        bg-[var(--color-surface)]
         p-7 shadow-[var(--shadow-lg)]
         sm:p-9
-      "
+        ${variant.card}
+      `}
     >
-      <div className="mb-8 flex items-center justify-between">
-            <div className="
-            h-[var(--decorative-line-height)]
-            w-12 rounded-full
-            bg-[var(--color-primary)]" 
-            />
 
-            <span className="font-serif text-4xl font-semibold text-[var(--color-primary)] opacity-25">
-            {String(index + 1).padStart(2, "0")}
-            </span>
+      {/* Decorative background number */}
+      <span
+        aria-hidden="true"
+        className={`
+          pointer-events-none absolute -right-3 -top-8
+          text-[9rem] font-extrabold leading-none
+          ${variant.number}
+        `}
+      >
+        {String(index + 1).padStart(2, "0")}
+      </span>
+
+      <div className="relative z-10">
+
+        <div className="mb-10 flex items-center justify-between">
+          <div className={`
+            h-1 w-12 rounded-full
+            ${variant.accent}
+          `} />
+
+          <span className={`
+            text-xs font-bold uppercase tracking-[0.16em]
+            ${variant.label}
+          `}>
+            AREA {String(index + 1).padStart(2, "0")}
+          </span>
+        </div>
+
+        <h3 className={`
+          max-w-sm text-3xl font-extrabold
+          leading-tight tracking-tight
+          sm:text-4xl
+          ${variant.heading}
+        `}>
+          {card.title}
+        </h3>
+
+        <p className={`
+          mt-5 max-w-md text-sm leading-8
+          sm:text-base
+          ${variant.description}
+        `}>
+          {card.description}
+        </p>
+
       </div>
 
-      <h3 className="max-w-sm text-2xl font-bold leading-snug text-[var(--color-secondary)] sm:text-3xl">
-            {card.title}
-      </h3>
+      <div className={`
+        relative z-10 mt-8 flex items-center gap-3
+        border-t pt-5
+        ${variant.decoration}
+      `}>
+        <span className={`
+          h-2.5 w-2.5 rounded-full
+          ${variant.accent}
+        `} />
 
-      <p className="mt-5 max-w-md text-sm leading-8 text-[var(--color-text-secondary)] sm:text-base">
-            {card.description}
-      </p>
-
-      <div className="
-        mt-8 flex items-center gap-2
-        text-xs font-semibold uppercase
-        tracking-[0.16em]
-        text-[var(--color-primary)]"
-        >
-        <span className="h-2 w-2 rounded-full bg-[var(--color-primary)]" />
-            Development area
+        <span className={`
+          text-xs font-bold uppercase tracking-[0.16em]
+          ${variant.label}
+        `}>
+          Personal development
+        </span>
       </div>
+
     </motion.article>
   );
 }
 
+
+/* --------------------------------
+   Main section
+-------------------------------- */
 
 export default function DevelopmentAreas({ data }) {
   const stackRef = useRef(null);
@@ -118,162 +200,394 @@ export default function DevelopmentAreas({ data }) {
         py-20 sm:py-24 lg:py-28
       "
     >
-        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <FadeIn>
-                <SectionHeader
-                    title={data.heading}
-                    description={data.description}
-                    align="center"
-                />
-            </FadeIn>
-        </div>
+
+      {/* --------------------------------
+          Section introduction
+      -------------------------------- */}
+
+      <div className="
+        relative mx-auto max-w-7xl
+        px-4 sm:px-6 lg:px-8
+      ">
+
+        <FadeIn>
+          <div className="
+            relative grid items-stretch
+            gap-6 md:grid-cols-[1fr_0.85fr]
+            lg:gap-10
+          ">
+
+            {/* Heading */}
+            <div className="
+              relative flex flex-col justify-center
+              overflow-hidden rounded-[2rem]
+              bg-[var(--color-background)]
+              p-8 sm:p-10 lg:p-12
+            ">
+
+              <div
+                aria-hidden="true"
+                className="
+                  absolute -bottom-20 -right-16
+                  h-56 w-56 rounded-full
+                  border-[28px]
+                  border-[var(--color-primary)]/10
+                "
+              />
+
+              <div className="
+                relative z-10 mb-7 flex items-center gap-3
+              ">
+                <span className="
+                  h-[3px] w-10 rounded-full
+                  bg-[var(--color-primary)]
+                " />
+
+                <span className="
+                  text-xs font-bold uppercase
+                  tracking-[0.18em]
+                  text-[var(--color-primary)]
+                ">
+                  The foundation of growth
+                </span>
+              </div>
+
+              <h2 className="
+                relative z-10 max-w-xl
+                text-4xl font-extrabold
+                leading-[1.12] tracking-tight
+                text-[var(--color-secondary)]
+                sm:text-5xl lg:text-6xl
+                [text-wrap:balance]
+              ">
+                {data.heading}
+              </h2>
+
+            </div>
+
+            {/* Description */}
+            <div className="
+              relative flex flex-col justify-between
+              overflow-hidden rounded-[2rem]
+              bg-[var(--color-primary)]
+              p-8 sm:p-10 lg:p-12
+            ">
+
+              <div
+                aria-hidden="true"
+                className="
+                  absolute -right-16 -top-16
+                  h-60 w-60 rounded-full
+                  border-[32px] border-white/10
+                "
+              />
+
+              <div className="relative z-10">
+
+                <span className="
+                  text-xs font-bold uppercase
+                  tracking-[0.18em]
+                  text-white/80
+                ">
+                  Discover your potential
+                </span>
+
+                <div className="
+                  mt-8 text-5xl font-extrabold
+                  leading-none text-white/60
+                " aria-hidden="true">
+                  “
+                </div>
+
+                <p className="
+                  mt-2 text-base font-medium
+                  leading-8 text-white
+                  sm:text-lg sm:leading-9
+                ">
+                  {data.description}
+                </p>
+
+              </div>
+
+              <div className="
+                relative z-10 mt-8
+                border-t border-white/30 pt-5
+              ">
+                <span className="
+                  text-xs font-bold uppercase
+                  tracking-[0.16em] text-white/80
+                ">
+                  Learn · Practise · Evolve
+                </span>
+              </div>
+
+            </div>
+
+          </div>
+        </FadeIn>
+
+      </div>
+
 
       {/* --------------------------------
           Mobile scroll-driven stack
       -------------------------------- */}
 
-        {!shouldReduceMotion && cards.length > 0 && (
-            <div
-            ref={stackRef}
-            className="relative mt-10 md:hidden"
-            style={{
-                height: `${100 + cards.length * 65}svh`,
-            }}
-            >
-                <div className="sticky top-0 h-[100svh] overflow-hidden">
-                    <div className="relative h-full w-full">
-                        {cards.map((card, index) => (
-                            <StackedAreaCard
-                            key={`${card.title}-${index}`}
-                            card={card}
-                            index={index}
-                            total={cards.length}
-                            progress={scrollYProgress}
-                            />
-                        ))}
-                    </div>
+      {!shouldReduceMotion && cards.length > 0 && (
+        <div
+          ref={stackRef}
+          className="relative mt-12 md:hidden"
+          style={{
+            height: `${100 + cards.length * 65}svh`,
+          }}
+        >
+          <div className="
+            sticky top-0 h-[100svh]
+            overflow-hidden
+          ">
+            <div className="relative h-full w-full">
 
-                    {/* Scroll indicator */}
-                    <div className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center">
-                        <p className="
-                            text-[10px] font-semibold uppercase
-                            tracking-[0.2em]
-                            text-[var(--color-text-muted)]
-                        ">
-                            Scroll to explore
-                        </p>
+              {cards.map((card, index) => (
+                <StackedAreaCard
+                  key={`${card.title}-${index}`}
+                  card={card}
+                  index={index}
+                  total={cards.length}
+                  progress={scrollYProgress}
+                />
+              ))}
 
-                        <div className="
-                            mx-auto mt-3 h-8 w-px
-                            bg-[var(--color-primary)] opacity-50
-                        " />
-                    </div>
-                </div>
             </div>
-        )}
+
+            {/* Scroll indicator */}
+            <div className="
+              pointer-events-none absolute
+              bottom-8 left-1/2 z-50
+              -translate-x-1/2 text-center
+            ">
+              <p className="
+                text-[10px] font-bold uppercase
+                tracking-[0.2em]
+                text-[var(--color-text-muted)]
+              ">
+                Scroll to explore
+              </p>
+
+              <div className="
+                mx-auto mt-3 h-8 w-px
+                bg-[var(--color-primary)] opacity-60
+              " />
+            </div>
+
+          </div>
+        </div>
+      )}
+
 
       {/* --------------------------------
           Reduced-motion mobile fallback
       -------------------------------- */}
 
-        {shouldReduceMotion && (
-            <div className="
-            mt-10 grid gap-4 px-4 md:hidden
-            ">
-                {cards.map((card, index) => (
-                    <article
-                    key={`${card.title}-${index}`}
-                    className="
-                        rounded-2xl border
-                        border-[var(--color-border)]
-                        bg-[var(--color-surface)]
-                        p-7 shadow-[var(--shadow-sm)]
-                    "
-                    >
-                        <span className="
-                            font-serif text-3xl
-                            text-[var(--color-primary)] opacity-40
-                        ">
-                            {String(index + 1).padStart(2, "0")}
-                        </span>
+      {shouldReduceMotion && cards.length > 0 && (
+        <div className="
+          mt-10 grid gap-4 px-4
+          sm:px-6 md:hidden
+        ">
+          {cards.map((card, index) => {
+            const variant = cardVariants[index % cardVariants.length];
 
-                        <h3 className="
-                            mt-5 text-xl font-bold
-                            text-[var(--color-secondary)]
-                        ">
-                            {card.title}
-                        </h3>
+            return (
+              <article
+                key={`${card.title}-${index}`}
+                className={`
+                  relative overflow-hidden
+                  rounded-[2rem] border
+                  border-[var(--color-border)]
+                  p-7 shadow-[var(--shadow-md)]
+                  ${variant.card}
+                `}
+              >
 
-                        <p className="
-                            mt-3 text-sm leading-7
-                            text-[var(--color-text-secondary)]
-                        ">
-                            {card.description}
-                        </p>
-                    </article>
-                ))}
-            </div>
-        )}
+                <span
+                  aria-hidden="true"
+                  className={`
+                    pointer-events-none absolute
+                    -right-3 -top-8
+                    text-[8rem] font-extrabold
+                    leading-none ${variant.number}
+                  `}
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+
+                <div className="relative z-10">
+
+                  <span className={`
+                    text-xs font-bold uppercase
+                    tracking-[0.16em]
+                    ${variant.label}
+                  `}>
+                    AREA {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <h3 className={`
+                    mt-6 text-2xl font-extrabold
+                    leading-tight
+                    ${variant.heading}
+                  `}>
+                    {card.title}
+                  </h3>
+
+                  <p className={`
+                    mt-4 text-sm leading-8
+                    ${variant.description}
+                  `}>
+                    {card.description}
+                  </p>
+
+                </div>
+
+              </article>
+            );
+          })}
+        </div>
+      )}
+
 
       {/* --------------------------------
-          Desktop grid
+          Desktop feature cards
       -------------------------------- */}
 
       <div className="
-        mx-auto mt-12 hidden max-w-7xl
+        mx-auto mt-14 hidden max-w-7xl
         grid-cols-2 gap-5
         px-6 md:grid lg:grid-cols-3 lg:gap-6
+        lg:px-8
       ">
-            {cards.map((card, index) => (
+
+        {cards.map((card, index) => {
+          const variant = cardVariants[index % cardVariants.length];
+
+          return (
             <FadeIn
-                key={`${card.title}-${index}`}
-                delay={index * 0.07}
+              key={`${card.title}-${index}`}
+              delay={index * 0.07}
             >
-                <article className={`
-                group h-full rounded-2xl border
+              <article className={`
+                group relative flex h-full
+                min-h-[340px] flex-col
+                justify-between overflow-hidden
+                rounded-[2rem] border
                 border-[var(--color-border)]
                 p-8 transition-all duration-300
-                hover:-translate-y-1
-                hover:shadow-[var(--shadow-md)]
-                ${
-                    index % 2 === 0
-                    ? "bg-[var(--color-surface)]"
-                    : "bg-[var(--color-background)]"
-                }
-                `}>
-                    <span className="
-                        font-serif text-4xl
-                        text-[var(--color-primary)] opacity-25
-                    ">
-                        {String(index + 1).padStart(2, "0")}
+                hover:-translate-y-2
+                hover:shadow-[var(--shadow-lg)]
+                lg:p-9
+                ${variant.card}
+              `}>
+
+                {/* Oversized decorative number */}
+                <span
+                  aria-hidden="true"
+                  className={`
+                    pointer-events-none absolute
+                    -right-4 -top-8
+                    text-[10rem] font-extrabold
+                    leading-none tracking-tighter
+                    transition-transform duration-500
+                    group-hover:-translate-y-2
+                    ${variant.number}
+                  `}
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+
+                {/* Top content */}
+                <div className="relative z-10">
+
+                  <div className="
+                    flex items-center justify-between
+                  ">
+                    <span className={`
+                      text-xs font-bold uppercase
+                      tracking-[0.18em]
+                      ${variant.label}
+                    `}>
+                      DEVELOPMENT AREA
                     </span>
 
-                    <div className="
-                        mb-6 mt-5 h-[var(--decorative-line-height)]
-                        w-10 rounded-full
-                        bg-[var(--color-primary)]
-                        transition-all duration-300
-                        group-hover:w-16
-                    " />
+                    <span className={`
+                      flex h-10 w-10 items-center
+                      justify-center rounded-full
+                      border ${variant.decoration}
+                    `}>
+                      <span className={`
+                        h-2.5 w-2.5 rounded-full
+                        ${variant.accent}
+                      `} />
+                    </span>
+                  </div>
 
-                    <h3 className="
-                        text-xl font-bold leading-snug
-                        text-[var(--color-secondary)]
-                    ">
-                        {card.title}
-                    </h3>
+                  <div className={`
+                    mb-7 mt-12 h-1 w-12
+                    rounded-full transition-all
+                    duration-300 group-hover:w-20
+                    ${variant.accent}
+                  `} />
 
-                    <p className="
-                        mt-4 text-sm leading-7
-                        text-[var(--color-text-secondary)]
-                        sm:text-base
-                    ">
-                        {card.description}
-                    </p>
-                </article>
+                  <h3 className={`
+                    max-w-sm text-2xl
+                    font-extrabold leading-tight
+                    tracking-tight
+                    lg:text-3xl
+                    ${variant.heading}
+                  `}>
+                    {card.title}
+                  </h3>
+
+                  <p className={`
+                    mt-5 max-w-md text-sm
+                    leading-8 lg:text-base
+                    ${variant.description}
+                  `}>
+                    {card.description}
+                  </p>
+
+                </div>
+
+                {/* Bottom decoration */}
+                <div className={`
+                  relative z-10 mt-8
+                  flex items-center justify-between
+                  border-t pt-5
+                  ${variant.decoration}
+                `}>
+
+                  <span className={`
+                    text-xs font-bold uppercase
+                    tracking-[0.14em]
+                    ${variant.label}
+                  `}>
+                    Area {String(index + 1).padStart(2, "0")}
+                  </span>
+
+                  <span className={`
+                    text-lg transition-transform
+                    duration-300 group-hover:translate-x-1
+                    ${variant.label}
+                  `} aria-hidden="true">
+                    →
+                  </span>
+
+                </div>
+
+              </article>
             </FadeIn>
-            ))}
-        </div>
+          );
+        })}
+
+      </div>
+
     </section>
   );
 }

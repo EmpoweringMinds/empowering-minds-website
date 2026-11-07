@@ -40,10 +40,8 @@ export const coursesQuery = `
     coverImage,
     duration,
     formats,
-    topics,
     learningOutcomes,
     targetAudience,
-    activities,
     additionalModules[]-> {
       _id,
       title,

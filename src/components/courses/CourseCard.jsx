@@ -203,21 +203,6 @@ export default function CourseCard({
                 </p>
               )}
 
-              {/* Topics */}
-              {course.topics?.length > 0 && (
-                <div className="mt-8">
-                  <h4 className="
-                    text-sm font-bold uppercase
-                    tracking-[0.14em]
-                    text-[var(--color-primary)]
-                  ">
-                    Topics covered
-                  </h4>
-
-                  <ContentList items={course.topics} />
-                </div>
-              )}
-
               {/* Learning outcomes */}
               {course.learningOutcomes?.length > 0 && (
                 <div className="mt-8">
@@ -245,21 +230,6 @@ export default function CourseCard({
                   </h4>
 
                   <ContentList items={course.targetAudience} />
-                </div>
-              )}
-
-              {/* Activities */}
-              {course.activities?.length > 0 && (
-                <div className="mt-8">
-                  <h4 className="
-                    text-sm font-bold uppercase
-                    tracking-[0.14em]
-                    text-[var(--color-primary)]
-                  ">
-                    Practical activities
-                  </h4>
-
-                  <ContentList items={course.activities} />
                 </div>
               )}
 
