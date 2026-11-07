@@ -164,42 +164,17 @@ export default function AcademyHomepage () {
                                 bg-[var(--color-surface-warm)]
                                 p-3 shadow-[var(--shadow-warm)]
                             ">
-
-                                <div className="
-                                relative flex aspect-[4/4.5]
-                                flex-col items-center justify-center
-                                overflow-hidden rounded-[1.5rem]
-                                bg-[var(--color-background)]
-                                text-center
-                                ">
-
-                                    <div className="relative z-10 px-6">
-                                        <span className="
-                                        mx-auto flex h-16 w-16
-                                        items-center justify-center
-                                        rounded-full bg-white
-                                        text-3xl text-[var(--color-olive)]
-                                        shadow-sm
-                                        ">
-                                        ✳
-                                        </span>
-
-                                        <p className="
-                                        mt-5 font-semibold
-                                        text-[var(--color-secondary)]
-                                        ">
-                                        Academy Photography
-                                        </p>
-
-                                        <p className="
-                                        mt-2 max-w-xs text-sm leading-6
-                                        text-[var(--color-text-secondary)]
-                                        ">
-                                        A glimpse into learning, confidence
-                                        and personal growth.
-                                        </p>
-                                    </div>
-
+                                <div className="relative z-10 px-6">
+                                    <img
+                                        src="/images/homepage.jpg"
+                                        alt=""
+                                        fetchPriority="high"
+                                        className="
+                                        aspect-[4/4.2] w-full
+                                        rounded-[1.5rem]
+                                        object-cover
+                                        "
+                                    />
                                 </div>
                             </div>
 
