@@ -1,7 +1,8 @@
 
 import { AnimatePresence, motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { ChevronDown, ArrowRight } from "lucide-react";
+import { ChevronDown} from "lucide-react";
+import CTAButton from "../ui/CTAButton";
+import { useNavigate } from "react-router-dom";
 
 // ----------------------------------
 // Reusable content list
@@ -53,7 +54,6 @@ function ContentList({ items }) {
 // ----------------------------------
 // Course Card
 // ----------------------------------
-
 export default function CourseCard({
   course,
   index,
@@ -62,84 +62,119 @@ export default function CourseCard({
   cardRef,
 }) {
   if (!course) return null;
+  const navigate = useNavigate();
+  function getCourseTarget(course) {
+    return course.slug || course.id;
+  }
+
+  function handleCallClick(course) {
+    navigate(
+      `/contact?course=${encodeURIComponent(getCourseTarget(course))}#form`
+    );
+  }
+  const detailsId = `course-details-${course.slug || course.id}`;
 
   return (
     <article
       id={course.slug || course.id}
       ref={cardRef}
-      className="
-      scroll-mt-28 overflow-hidden rounded-2xl
-      border border-[var(--color-border)]
-      bg-[var(--color-surface)]
-      shadow-[var(--shadow-sm)]
-      transition-shadow duration-300
-      hover:shadow-[var(--shadow-md)]
-    ">
-      {/* Card header */}
+      className={`
+        scroll-mt-28 overflow-hidden
+        rounded-[1.5rem] border
+        transition-all duration-300
+        ${
+          isOpen
+            ? "border-[var(--color-primary)] shadow-[var(--shadow-md)]"
+            : "border-[var(--color-border)] bg-[var(--color-surface)] shadow-[var(--shadow-sm)] hover:-translate-y-0.5 hover:shadow-[var(--shadow-md)]"
+        }
+      `}
+    >
+      {/* Course header */}
       <button
         type="button"
         onClick={onToggle}
         aria-expanded={isOpen}
-        className="
+        aria-controls={detailsId}
+        className={`
           flex w-full items-center gap-3
-          p-4 text-left
-          sm:gap-4 sm:p-7
-        "
+          p-4 text-left transition-colors duration-300
+          sm:gap-6 sm:p-7
+          ${
+            isOpen
+              ? "bg-[var(--color-secondary)]"
+              : "bg-[var(--color-surface)]"
+          }
+        `}
       >
         {/* Course number */}
-        <span className="
-          shrink-0 font-serif font-semibold
-          text-lg text-[var(--color-primary)] opacity-50
-          sm:text-3xl
-        ">
+        <span className={`
+          shrink-0 font-heading
+          text-xl font-bold sm:text-3xl
+          ${
+            isOpen
+              ? "text-[var(--color-soft-accent)]"
+              : "text-[var(--color-primary)]"
+          }
+        `}>
           {String(index + 1).padStart(2, "0")}
         </span>
 
         {/* Course information */}
         <div className="min-w-0 flex-1">
-          <div className="
-            flex flex-wrap items-center gap-2
-          ">
-            {course.duration && (
-              <span className="
-                rounded-full
-                bg-[var(--color-surface-warm)]
-                px-3 py-1 text-xs font-medium
-                text-[var(--color-text-secondary)]
-              ">
-                {course.duration}
-              </span>
-            )}
-          </div>
+          {course.duration && (
+            <span className={`
+              inline-flex rounded-full
+              px-3 py-1 text-[10px] font-semibold
+              tracking-wide sm:text-xs
+              ${
+                isOpen
+                  ? "bg-white/10 text-white/80"
+                  : "bg-[var(--color-surface-warm)] text-[var(--color-text-secondary)]"
+              }
+            `}>
+              {course.duration}
+            </span>
+          )}
 
-          <h3 className="
-            mt-2 text-lg font-bold leading-snug
-            text-[var(--color-secondary)]
-            sm:text-xl
-          ">
+          <h3 className={`
+            mt-2 font-heading
+            text-lg font-bold leading-snug
+            sm:text-xl lg:text-2xl
+            ${
+              isOpen
+                ? "text-white"
+                : "text-[var(--color-secondary)]"
+            }
+          `}>
             {course.title}
           </h3>
 
-          <p className="
-            mt-1.5 line-clamp-2 text-sm leading-5
-            text-[var(--color-text-secondary)]
-            sm:mt-2 sm:leading-6
-          ">
+          <p className={`
+            mt-1.5 line-clamp-2
+            text-xs leading-6 sm:text-sm
+            ${
+              isOpen
+                ? "text-white/75"
+                : "text-[var(--color-text-secondary)]"
+            }
+          `}>
             {course.description}
           </p>
 
           {/* Learning formats */}
           {course.formats?.length > 0 && (
-            <div className="
-              mt-3 hidden flex-wrap gap-2 sm:flex
-            ">
+            <div className="mt-3 hidden flex-wrap gap-2 sm:flex">
               {course.formats.map((format, formatIndex) => (
                 <span
                   key={`${format}-${formatIndex}`}
-                  className="
+                  className={`
                     text-xs font-medium
-                    text-[var(--color-text-muted)]
-                  "
+                    ${
+                      isOpen
+                        ? "text-white/65"
+                        : "text-[var(--color-text-muted)]"
+                    }
+                  `}
                 >
                   {format}
                   {formatIndex < course.formats.length - 1 && (
@@ -152,14 +187,17 @@ export default function CourseCard({
         </div>
 
         {/* Expand indicator */}
-        <span className="
+        <span className={`
           flex h-9 w-9 shrink-0
           items-center justify-center
-          sm:h-10 sm:w-10
-          rounded-full
-          bg-[var(--color-surface-warm)]
-          text-[var(--color-primary)]
-        ">
+          rounded-full transition-colors duration-300
+          sm:h-12 sm:w-12
+          ${
+            isOpen
+              ? "bg-white/15 text-white"
+              : "bg-[var(--color-surface-warm)] text-[var(--color-primary)]"
+          }
+        `}>
           <motion.span
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={{ duration: 0.3 }}
@@ -174,6 +212,7 @@ export default function CourseCard({
       <AnimatePresence initial={false}>
         {isOpen && (
           <motion.div
+            id={detailsId}
             key="course-details"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
@@ -185,72 +224,133 @@ export default function CourseCard({
               },
               opacity: { duration: 0.25 },
             }}
-            className="overflow-hidden"
+            className="overflow-hidden bg-[var(--color-surface)]"
           >
             <div className="
-              border-t border-[var(--color-border)]
               px-5 pb-7 pt-6
-              sm:px-7 sm:pb-8
+              sm:px-8 sm:pb-9 sm:pt-8
             ">
               {/* Full description */}
               {course.fullDescription && (
-                <p className="
-                  max-w-3xl text-sm leading-8
-                  text-[var(--color-text-secondary)]
-                  sm:text-base
+                <div className="
+                  rounded-2xl
+                  bg-[var(--color-surface-warm)]
+                  p-5 sm:p-6
                 ">
-                  {course.fullDescription}
-                </p>
-              )}
-
-              {/* Learning outcomes */}
-              {course.learningOutcomes?.length > 0 && (
-                <div className="mt-8">
-                  <h4 className="
-                    text-sm font-bold uppercase
-                    tracking-[0.14em]
+                  <span className="
+                    text-[10px] font-bold uppercase
+                    tracking-[0.18em]
                     text-[var(--color-primary)]
                   ">
-                    Learning outcomes
-                  </h4>
+                    About this programme
+                  </span>
 
-                  <ContentList items={course.learningOutcomes} />
+                  <p className="
+                    mt-3 max-w-4xl
+                    text-sm leading-7
+                    text-[var(--color-text-secondary)]
+                    sm:text-base sm:leading-8
+                  ">
+                    {course.fullDescription}
+                  </p>
                 </div>
               )}
 
-              {/* Target audience */}
-              {course.targetAudience?.length > 0 && (
-                <div className="mt-8">
-                  <h4 className="
-                    text-sm font-bold uppercase
-                    tracking-[0.14em]
-                    text-[var(--color-primary)]
-                  ">
-                    Who is this for?
-                  </h4>
+              {/* Learning outcomes and target audience */}
+              <div className="
+                mt-8 grid gap-8
+                md:grid-cols-2 md:gap-10
+              ">
+                {course.learningOutcomes?.length > 0 && (
+                  <div>
+                    <div className="
+                      flex items-center gap-3
+                      border-b border-[var(--color-border)]
+                      pb-3
+                    ">
+                      <span className="
+                        h-2.5 w-2.5 rounded-full
+                        bg-[var(--color-primary)]
+                      " />
+                      <h4 className="
+                        font-heading text-base
+                        font-bold text-[var(--color-secondary)]
+                      ">
+                        What you'll learn
+                      </h4>
+                    </div>
 
-                  <ContentList items={course.targetAudience} />
-                </div>
-              )}
+                    <ContentList items={course.learningOutcomes} />
+                  </div>
+                )}
+
+                {course.targetAudience?.length > 0 && (
+                  <div>
+                    <div className="
+                      flex items-center gap-3
+                      border-b border-[var(--color-border)]
+                      pb-3
+                    ">
+                      <span className="
+                        h-2.5 w-2.5 rounded-full
+                        bg-[var(--color-olive)]
+                      " />
+                      <h4 className="
+                        font-heading text-base
+                        font-bold text-[var(--color-secondary)]
+                      ">
+                        Who is this for?
+                      </h4>
+                    </div>
+
+                    <ContentList items={course.targetAudience} />
+                  </div>
+                )}
+              </div>
 
               {/* Additional modules */}
               {course.additionalModules?.length > 0 && (
                 <div className="
-                  mt-8 rounded-xl
+                  mt-9 overflow-hidden
+                  rounded-2xl
                   bg-[var(--color-surface-warm)]
                   p-5 sm:p-6
                 ">
-                  <h4 className="
-                    text-sm font-bold uppercase
-                    tracking-[0.14em]
-                    text-[var(--color-primary)]
+                  <div className="
+                    flex flex-wrap items-center
+                    justify-between gap-3
                   ">
-                    Additional modules
-                  </h4>
+                    <h4 className="
+                      font-heading text-base
+                      font-bold text-[var(--color-secondary)]
+                    ">
+                      Additional modules
+                    </h4>
 
-                  <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                    <span className="
+                      rounded-full
+                      bg-[var(--color-soft-accent)]/40
+                      px-3 py-1
+                      text-xs font-semibold
+                      text-[var(--color-secondary)]
+                    ">
+                      More to explore
+                    </span>
+                  </div>
+
+                  <div className="
+                    mt-5 grid gap-5
+                    sm:grid-cols-2
+                  ">
                     {course.additionalModules.map((module) => (
-                      <div key={module._id}>
+                      <div
+                        key={module._id}
+                        className="
+                          border-l-2
+                          border-[var(--color-primary)]/50
+                          pl-4
+                        "
+                      >
                         <h5 className="
                           text-sm font-semibold
                           text-[var(--color-secondary)]
@@ -260,7 +360,7 @@ export default function CourseCard({
 
                         {module.shortDescription && (
                           <p className="
-                            mt-1 text-sm leading-6
+                            mt-1.5 text-sm leading-6
                             text-[var(--color-text-secondary)]
                           ">
                             {module.shortDescription}
@@ -274,25 +374,33 @@ export default function CourseCard({
 
               {/* Discovery call */}
               <div className="
-                mt-8 flex flex-col gap-4
-                border-t border-[var(--color-border)]
-                pt-6 sm:flex-row sm:items-center
-                sm:justify-between
+                mt-9 flex flex-col gap-4
+                rounded-2xl
+                bg-[var(--color-secondary)]
+                p-5 sm:flex-row sm:items-center
+                sm:justify-between sm:p-6
               ">
-                <p className="
-                  max-w-md text-sm leading-6
-                  text-[var(--color-text-secondary)]
-                ">
-                  Interested in this course? Let's discuss
-                  how it fits your development goals.
-                </p>
+                <div>
+                  <span className="
+                    text-[10px] font-bold uppercase
+                    tracking-[0.18em]
+                    text-[var(--color-soft-accent)]
+                  ">
+                    Take the next step
+                  </span>
 
-                <Link
-                  to="/contact"
-                  state={{
-                    courseSlug: course.slug,
-                    courseTitle: course.title,
-                  }}
+                  <p className="
+                    mt-2 max-w-md
+                    text-sm leading-6 text-white/85
+                  ">
+                    Interested in this course? Let's discuss
+                    how it fits your development goals.
+                  </p>
+                </div>
+
+                <CTAButton
+                  onClick={() => handleCallClick(course)}
+                  showArrow={true}
                   className="
                     inline-flex shrink-0 items-center
                     justify-center gap-2
@@ -303,11 +411,11 @@ export default function CourseCard({
                     transition-all duration-300
                     hover:-translate-y-0.5
                     hover:brightness-105
+                    hover:bg-[var(--color-primary)]
                   "
                 >
                   Schedule a discovery call
-                  <ArrowRight size={16} />
-                </Link>
+                </CTAButton>
               </div>
             </div>
           </motion.div>

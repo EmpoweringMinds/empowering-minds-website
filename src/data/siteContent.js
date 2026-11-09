@@ -508,16 +508,6 @@ export const testimonials = [
 
     programme: "The Leap to Success",
   },
-  {
-    quote:
-      "test quote",
-
-    name: "test-1",
-    role: "test",
-    organisation: "position",
-
-    programme: "The Leap to Success",
-  },
 ];
 
 export const academyHomepageSections = {

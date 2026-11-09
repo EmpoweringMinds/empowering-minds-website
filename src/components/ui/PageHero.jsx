@@ -17,13 +17,9 @@ export default function PageHero({
     to: "/programs",
   },
 
-  // Optional React visual: image, illustration, composition, etc.
   visual = null,
-
-  // Visuals are desktop-only by default.
   visualOnMobile = false,
 
-  // Optional styling hooks for page-specific visuals.
   visualClassName = "",
   contentClassName = "",
 }) {
@@ -32,13 +28,12 @@ export default function PageHero({
   return (
     <section
       className="
-        relative isolate overflow-hidden
+        relative isolate 
         bg-[var(--color-background)]
         pt-24 sm:pt-28 lg:pt-32
       "
     >
       {/* Decorative atmosphere */}
-
       <div
         aria-hidden="true"
         className="
@@ -65,14 +60,14 @@ export default function PageHero({
       <div
         className="
           relative z-10 mx-auto max-w-7xl
-          px-4 py-12
-          sm:px-6 sm:py-16
-          lg:px-8 lg:py-20
+          px-2 py-10
+          sm:px-4 sm:py-14
+          lg:px-6 lg:py-18
         "
       >
         <div
           className={`
-            grid items-center gap-10
+            grid items-center gap-8
             ${hasVisual
               ? "lg:grid-cols-[1.05fr_0.95fr] lg:gap-16"
               : "grid-cols-1"
@@ -80,7 +75,6 @@ export default function PageHero({
           `}
         >
           {/* Content */}
-
           <FadeIn
             className={`
               ${hasVisual ? "max-w-3xl" : "max-w-4xl"}
@@ -114,14 +108,11 @@ export default function PageHero({
 
             <h1
               className="
-                mt-5
-                max-w-4xl
-                text-3xl font-bold
-                leading-[1.1]
-                tracking-[-0.035em]
+                mt-5 max-w-4xl
+                font-heading text-3xl font-bold
+                leading-[1.1] tracking-[-0.035em]
                 text-[var(--color-secondary)]
-                sm:text-5xl
-                lg:text-6xl
+                sm:text-5xl lg:text-6xl
               "
             >
               {title}
@@ -151,8 +142,20 @@ export default function PageHero({
               </p>
             )}
 
-            {/* Actions */}
+            {/* Mobile visual: between description and CTAs */}
+            {hasVisual && visualOnMobile && (
+              <div
+                className={`
+                  relative mt-7 w-full
+                  lg:hidden
+                  ${visualClassName}
+                `}
+              >
+                {visual}
+              </div>
+            )}
 
+            {/* Actions */}
             {(primaryCta || secondaryCta) && (
               <div
                 className="
@@ -190,14 +193,13 @@ export default function PageHero({
             )}
           </FadeIn>
 
-          {/* Optional visual */}
-
+          {/* Desktop visual */}
           {hasVisual && (
             <FadeIn
               delay={0.15}
               className={`
-                relative items-center justify-center
-                ${visualOnMobile ? "flex" : "hidden lg:flex"}
+                relative hidden items-center justify-center
+                lg:flex
                 ${visualClassName}
               `}
             >
@@ -207,7 +209,6 @@ export default function PageHero({
         </div>
 
         {/* Bottom transition */}
-
         <div
           aria-hidden="true"
           className="

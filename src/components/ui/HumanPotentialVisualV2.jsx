@@ -66,7 +66,7 @@ export default function HumanPotentialVisualV2() {
             cy="260"
             r="260"
             stroke="var(--color-primary)"
-            strokeOpacity="0.08"
+            strokeOpacity="1"
             strokeWidth="1"
             />
 
@@ -75,7 +75,7 @@ export default function HumanPotentialVisualV2() {
             cy="260"
             r="240"
             stroke="var(--color-secondary)"
-            strokeOpacity="0.25"
+            strokeOpacity="1"
             strokeWidth="1"
             strokeDasharray="2 9"
             />

@@ -15,7 +15,7 @@ function normalizeImage(image, width = 900, height = 600) {
   return imageUrl(image)
     .width(width)
     .height(height)
-    .fit("crop")
+    .fit("max")
     .url();
 }
 
@@ -38,7 +38,7 @@ function normalizeCoursesPage(page, allCourses, allModules) {
       image: normalizeImage(
         page.hero?.heroImage,
         1600,
-        900
+        1600
       ),
       primaryCTA: page.hero?.primaryCTA || "",
       secondaryCTA: page.hero?.secondaryCTA || "",

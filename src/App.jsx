@@ -6,6 +6,7 @@ import WhatsAppFloat from "./components/common/WhatsAppFloat";
 //import AcademyAbout from "./pages/AcademyAbout";
 import About from "./pages/About";
 import Contact from "./pages/Contact";
+import TestAbout from "./pages/TestAbout";
 //import Home from "./pages/Home";
 //import Programs from "./pages/Programs";
 import Services from "./pages/Services";
@@ -23,7 +24,7 @@ function App() {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<AcademyHomepage />} />
-        <Route path="/about" element={<About />} />
+        <Route path="/about" element={<TestAbout />} />
         <Route path="/services" element={<Services />} />
         <Route path="/trainers" element={<Trainers />} />
         <Route path="/contact" element={<Contact />} />

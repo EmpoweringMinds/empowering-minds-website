@@ -47,6 +47,7 @@ export default function CTASection({
 
   secondaryLabel = "Browse Courses",
   secondaryTo = "/courses",
+  secondaryLabelIsVisible = true,
 
   /*
    * soft is intentionally the default.
@@ -179,7 +180,7 @@ export default function CTASection({
                 </CTAButton>
               )}
 
-              {secondaryLabel && (
+              {secondaryLabelIsVisible && secondaryLabel &&  (
                 <CTAButton
                   to={secondaryTo}
                   variant="secondary"
