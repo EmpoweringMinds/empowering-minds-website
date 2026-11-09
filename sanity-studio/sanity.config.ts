@@ -20,9 +20,24 @@ export default defineConfig({
             .title('Pages')
             .id('pageContent')
             .child(
-              S.document()
-              .schemaType('coursesPage')
-              .documentId('coursesPage')
+              S.list()
+              .title('Pages')
+              .items([
+                S.listItem()
+                  .title('Courses Page')
+                  .child(
+                    S.document()
+                      .schemaType('coursesPage')
+                      .documentId('coursesPage')
+                  ),
+                S.listItem()
+                .title('About Page')
+                .child(
+                  S.document()
+                    .schemaType('aboutPage')
+                    .documentId('aboutPage')
+                ),
+              ])
             ),
           S.divider(),
 

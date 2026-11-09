@@ -156,3 +156,86 @@ export const coursesPageQuery = `
     }
   }
 `;
+
+export const aboutPageQuery = `
+  *[
+    _type == "aboutPage"
+    && _id == "aboutPage"
+  ][0] {
+    _id,
+
+    hero {
+      eyebrow,
+      heading,
+      description,
+      heroImage,
+      primaryCTA,
+      secondaryCTA
+    },
+
+    introduction {
+      eyebrow,
+      heading,
+      description,
+      fullDescription
+    },
+
+    foundations {
+      eyebrow,
+      heading,
+      accent,
+      description,
+      areaCards[] {
+        title,
+        description
+      },
+      closingStatement
+    },
+
+    founderSection {
+      eyebrow,
+      title,
+      founderName,
+      founderRole,
+      founderNote,
+      founderNoteContinued,
+      founderStory,
+      founderClosing
+    },
+
+    whyEmpoweringMinds {
+      eyebrow,
+      heading,
+      description,
+      whyCards[] {
+        title,
+        description
+      }
+    },
+
+    developmentPathways {
+      eyebrow,
+      heading,
+      description,
+      developmentPathwayCards[] {
+        title,
+        description,
+        ctaLabel
+      }
+    },
+
+    finalCTA {
+      heading,
+      description,
+      primaryCTA,
+      secondaryCTA
+    },
+
+    seo {
+      metaTitle,
+      metaDescription,
+      ogImage,
+      noIndex
+    }
+  }
+`;

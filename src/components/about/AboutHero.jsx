@@ -1,8 +1,10 @@
 import PageHero from "../ui/PageHero";
 import { aboutContent } from "../../data/siteContent";
 
-export default function AboutHero({ image }) {
-  const visual = image ? (
+export default function AboutHero({ data }) {
+  if (!data) return null;
+
+  const visual = data.image ? (
     <div className="
       relative mx-auto
       flex aspect-[4/4.2] w-full
@@ -56,7 +58,7 @@ export default function AboutHero({ image }) {
 
       {/* Transparent subject */}
       <img
-        src={image}
+        src={data.image}
         alt=""
         fetchPriority="high"
         className="

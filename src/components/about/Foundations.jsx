@@ -129,7 +129,7 @@ export default function FoundationsSection() {
             {/* Section introduction */}
             <FadeIn>
             <div className="max-w-3xl">
-                <p className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--color-soft-accent)]">
+                <p className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--color-olive)]">
                 What guides our work
                 </p>
 
