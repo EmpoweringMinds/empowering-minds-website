@@ -1,8 +1,7 @@
 
-import { aboutContent } from "../../data/siteContent";
 import FadeIn from "../ui/FadeIn";
 
-export default function WhoWeAre() {
+export default function WhoWeAre({data}) {
   return (
     <section className="relative overflow-hidden bg-[var(--color-background)] py-16 sm:py-20 lg:py-28">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -14,17 +13,17 @@ export default function WhoWeAre() {
             <div className="max-w-2xl">
 
               <p className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--color-primary)]">
-                The thinking behind our work
+                {data.eyebrow}
               </p>
 
               <h2 className="mt-5 text-4xl font-extrabold leading-[1.12] tracking-tight text-[var(--color-secondary)] sm:text-5xl lg:text-6xl">
-                {aboutContent.whoWeAreTitle}
+                {data.heading}
               </h2>
 
               <div className="mt-6 h-1.5 w-16 rounded-full bg-[var(--color-primary)]" />
 
               <p className="mt-7 max-w-xl text-base leading-8 text-[var(--color-text-secondary)] sm:text-lg sm:leading-9">
-                {aboutContent.whoWeAre}
+                {data.description}
               </p>
 
             </div>
@@ -64,7 +63,7 @@ export default function WhoWeAre() {
                 <div className="mt-6 h-px w-full bg-white/25" />
 
                 <p className="mt-7 text-base leading-8 text-white/90 sm:text-lg sm:leading-9">
-                  {aboutContent.approach}
+                  {data.fullDescription}
                 </p>
 
               </div>

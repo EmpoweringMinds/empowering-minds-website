@@ -150,3 +150,5 @@ export async function getCoursesPage() {
 
   return normalizeCoursesPage(page, allCourses, allModules);
 }
+
+

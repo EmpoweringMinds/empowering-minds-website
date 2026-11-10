@@ -186,8 +186,10 @@ export const aboutPageQuery = `
       accent,
       description,
       areaCards[] {
+        number,
         title,
-        description
+        description,
+        iconName
       },
       closingStatement
     },
@@ -218,9 +220,14 @@ export const aboutPageQuery = `
       heading,
       description,
       developmentPathwayCards[] {
+        number,
         title,
         description,
-        ctaLabel
+        iconName,
+        symbol,
+        ctaLabel,
+        theme,
+        linkTo
       }
     },
 

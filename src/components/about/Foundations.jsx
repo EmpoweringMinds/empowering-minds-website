@@ -1,55 +1,10 @@
 import { motion, useReducedMotion } from "framer-motion";
-import {
-  Brain,
-  HeartHandshake,
-  Lightbulb,
-  TrendingUp,
-  Users,
-} from "lucide-react";
-
+import * as Icons from "lucide-react";
 import FadeIn from "../ui/FadeIn";
 import HumanPotentialVisual from "../ui/HumanPotentialVisual";
 
-const foundations = [
-  {
-    number: "01",
-    title: "Applied Psychology",
-    description:
-      "Understanding the human factors that shape behaviour, decisions, and performance.",
-    icon: Brain,
-  },
-  {
-    number: "02",
-    title: "Behavioural Science",
-    description:
-      "Turning behavioural insight into practical approaches for stronger performance and alignment.",
-    icon: Users,
-  },
-  {
-    number: "03",
-    title: "Emotional Intelligence",
-    description:
-      "Building emotional awareness, regulation, resilience, and stronger interpersonal effectiveness.",
-    icon: HeartHandshake,
-  },
-  {
-    number: "04",
-    title: "Neuro-Linguistic Programming",
-    description:
-      "Using NLP as part of a structured approach to communication, behaviour, and personal development.",
-    icon: Lightbulb,
-  },
-  {
-    number: "05",
-    title: "Performance Acceleration",
-    description:
-      "Connecting human capability with measurable institutional and organisational outcomes.",
-    icon: TrendingUp,
-  },
-];
-
-function FoundationItem({ item, index }) {
-  const Icon = item.icon;
+function FoundationItem({ card, index, length }) {
+  const Icon = Icons[card.iconName] || Icons.Layers;
   const shouldReduceMotion = useReducedMotion();
 
   return (
@@ -75,19 +30,19 @@ function FoundationItem({ item, index }) {
             ease: [0.22, 1, 0.36, 1],
         }}
         className={`group relative flex gap-4 py-5 sm:gap-5 sm:py-6 ${
-            index !== foundations.length - 1
+            index !== length - 1
             ? "border-b border-white/15"
             : ""
         }`}
         >
             <span className="shrink-0 pt-1 font-bold text-2xl tracking-tight text-[var(--color-olive)] sm:text-3xl">
-            {item.number}
+            {card.number}
             </span>
 
             <div className="min-w-0 flex-1">
             <div className="flex items-center justify-between gap-3">
                 <h3 className="text-lg font-bold leading-tight text-[var(--color-secondary)] sm:text-xl">
-                {item.title}
+                {card.title}
                 </h3>
 
                 <Icon
@@ -99,7 +54,7 @@ function FoundationItem({ item, index }) {
             </div>
 
             <p className="mt-2 max-w-xl text-sm leading-7 text-[var(--color-secondary)]/75 sm:text-base">
-                {item.description}
+                {card.description}
             </p>
             </div>
       </motion.article>
@@ -107,9 +62,11 @@ function FoundationItem({ item, index }) {
   );
 }
 
-export default function FoundationsSection() {
+export default function FoundationsSection({data}) {
+    if (!data?.areaCards?.length) return null;
     const shouldReduceMotion = useReducedMotion();
-
+    const cards = data?.areaCards || [];
+    const length = cards.length;
     return (
         <section className="relative isolate overflow-hidden bg-[var(--color-taupe)] py-16 sm:py-20 lg:py-28">
 
@@ -130,17 +87,15 @@ export default function FoundationsSection() {
             <FadeIn>
             <div className="max-w-3xl">
                 <p className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--color-olive)]">
-                What guides our work
+                {data.eyebrow}
                 </p>
 
                 <h2 className="mt-5 max-w-2xl text-4xl font-extrabold leading-[1.12] tracking-tight text-[var(--color-secondary)] sm:text-5xl lg:text-6xl">
-                The disciplines behind how we develop <span className="text-[var(--color-olive)] italic">people.</span>
+                {data.heading} <span className="text-[var(--color-olive)] italic">{data.accent}</span>
                 </h2>
 
                 <p className="mt-6 max-w-2xl text-base leading-8 text-[var(--color-secondary)]/80 sm:text-lg sm:leading-9">
-                Our work brings together complementary disciplines and
-                frameworks to create structured interventions for
-                meaningful human and organisational development.
+                  {data.description}
                 </p>
             </div>
             </FadeIn>
@@ -150,11 +105,12 @@ export default function FoundationsSection() {
 
             {/* Numbered foundations */}
             <div>
-                {foundations.map((item, index) => (
+                {cards.map((card, index, length) => (
                 <FoundationItem
-                    key={item.number}
-                    item={item}
+                    key={card.number}
+                    card={card}
                     index={index}
+                    length={length}
                     shouldReduceMotion={shouldReduceMotion}
                 />
                 ))}
@@ -189,7 +145,7 @@ export default function FoundationsSection() {
 
                     <div className="mt-4 border-t border-[var(--color-border)] pt-5">
                     <p className="text-xl font-extrabold leading-snug text-[var(--color-secondary)] sm:text-2xl">
-                        Developing people. Strengthening potential.
+                        {data.closingStatement}
                     </p>
                     </div>
                 </div>

@@ -1,4 +1,4 @@
-import { ArrowRight } from "lucide-react";
+import { ArrowUpRight} from "lucide-react";
 import { Link } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import { clsx } from "clsx";
@@ -39,10 +39,10 @@ export default function CTAButton({
       <span>{children}</span>
 
       {showArrow && (
-        <ArrowRight
+        <ArrowUpRight
           size={16}
           aria-hidden="true"
-          className="transition-transform duration-[var(--transition-fast)] group-hover:translate-x-1"
+          className="transition-transform duration-[var(--transition-fast)] group-hover:-translate-y-1 group-hover:transition-translate group-hover:duration-[var(--transition-fast)]"
         />
       )}
     </Component>

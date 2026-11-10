@@ -38,10 +38,12 @@ function normalizeAboutPage(page) {
       heading: page.foundations?.heading || "",
       accent: page.foundations?.accent || "",
       description: page.foundations?.description || "",
-      audienceCards: (page.foundations?.areaCards || []).map(
+      areaCards: (page.foundations?.areaCards || []).map(
         (card) => ({
+          number: card.number || "",
           title: card.title || "",
           description: card.description || "",
+          iconName: card.iconName || "",
         })
       ),
       closingStatement: page.foundations?.closingStatement || "",
@@ -52,7 +54,7 @@ function normalizeAboutPage(page) {
       eyebrow: page.founderSection?.eyebrow || "",
       title: page.founderSection?.founderTitle || "",
       founderName: page.founderSection?.founderName || "",
-      founderRole: page.founderSection?.founderRoll || "",
+      founderRole: page.founderSection?.founderRole || "",
       founderNote: page.founderSection?.founderNote || "",
       founderNoteContinued: page.founderSection?.founderNoteContinued || "",
       founderStory: page.founderSection?.founderStory || "",
@@ -79,10 +81,15 @@ function normalizeAboutPage(page) {
       description: page.developmentPathways?.description || "",
       developmentPathwayCards: (
         page.developmentPathways?.developmentPathwayCards || []
-      ).map((card) => ({
-        title: card.title || "",
-        description: card.description || "",
-        ctaLabel: card.ctaLabel || "",
+      ).map((pathway) => ({
+        number: pathway.number || "",
+        title: pathway.title || "",
+        description: pathway.description || "",
+        iconName: pathway.iconName || "",
+        symbol: pathway.symbol ||"",        
+        ctaLabel: pathway.ctaLabel || "",
+        theme: pathway.theme || "",
+        link: pathway.linkTo || "",
       })),
     },
 

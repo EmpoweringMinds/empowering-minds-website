@@ -122,7 +122,7 @@ export default function CourseDirectory({ courses = [] }) {
               text-[var(--color-secondary)]
               sm:text-lg
             ">
-              Explore all programmes
+              Explore all courses
             </h3>
           </div>
 
@@ -134,7 +134,7 @@ export default function CourseDirectory({ courses = [] }) {
             text-[var(--color-text-secondary)]
             sm:text-sm
           ">
-            {courses.length} programmes
+            {courses.length} courses
           </span>
         </div>
 

@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   Brain,
   Briefcase,
@@ -7,8 +6,7 @@ import {
   Network,
 } from "lucide-react";
 
-import ProgramCard from "../components/common/ProgramCard";
-import ProgramModal from "../components/sections/ProgramModal";
+import ProgramCard from "../components/programs/ProgramCard";
 import CTASection from "../components/ui/CTASection";
 import FadeIn from "../components/ui/FadeIn";
 import FeatureCard from "../components/ui/FeatureCard";
@@ -44,6 +42,7 @@ const developmentAreas = [
 ];
 
 export default function Services() {
+  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const urlGroupId = searchParams.get("group");
 
@@ -53,14 +52,22 @@ export default function Services() {
     ? urlGroupId
     : serviceGroups[0]?.id || null;
 
-  const [selectedProgram, setSelectedProgram] = useState(null);
-
   const selectedGroup = serviceGroups.find(
     (group) => group.id === selectedGroupId
   );
 
   const handleGroupChange = (groupId) => {
     setSearchParams({ group: groupId }, { replace: true });
+  };
+
+  const handleEnquire = (program) => {
+    const params = new URLSearchParams({
+      type: "program",
+      group: program.serviceGroup,
+      service: program.id,
+    });
+
+    navigate(`/contact?${params.toString()}#form`);
   };
 
   return (
@@ -172,7 +179,7 @@ export default function Services() {
                 </div>
               </FadeIn>
 
-              <div className="mt-10 grid gap-6 lg:grid-cols-2">
+              <div className="mt-10 grid gap-5 lg:grid-cols-2">
                 {selectedGroup.areas.map((program, index) => (
                   <ProgramCard
                     key={program.id}
@@ -180,7 +187,8 @@ export default function Services() {
                       ...program,
                       serviceGroup: selectedGroup.id,
                     }}
-                    onView={setSelectedProgram}
+                    index={index}
+                    onEnquire={handleEnquire}
                   />
                 ))}
               </div>
@@ -247,10 +255,6 @@ export default function Services() {
       />
 
       {/* Program details */}
-      <ProgramModal
-        program={selectedProgram}
-        onClose={() => setSelectedProgram(null)}
-      />
     </main>
   );
 }

@@ -27,6 +27,29 @@ export default function Contact() {
   const { courses, loading: coursesLoading, error: coursesError } = useCourses();
 
   useEffect(() => {
+    const requestedType = searchParams.get("type");
+    const requestedGroup = searchParams.get("group");
+    const requestedService = searchParams.get("service");
+
+    if (requestedType === "program") {
+      const group = serviceGroups.find(
+        (item) => item.id === requestedGroup
+      );
+
+      if (!group) return;
+
+      const service = group.areas.find(
+        (item) => item.id === requestedService
+      );
+
+      setInterestType("program");
+      setCourseId("");
+      setServiceGroupId(group.id);
+      setServiceId(service?.id ?? "");
+      setIntent("");
+      
+      return;
+    }
     const requestedCourse = searchParams.get("course");
 
     if (!requestedCourse || courses.length === 0) return;

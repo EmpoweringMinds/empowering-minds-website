@@ -1,8 +1,7 @@
 
-import { aboutContent } from "../../data/siteContent";
 import FadeIn from "../ui/FadeIn";
 
-export default function FounderSection() {
+export default function FounderSection({data}) {
   return (
     <section className="relative overflow-hidden bg-[var(--color-background)] py-16 sm:py-20 lg:py-28">
 
@@ -41,11 +40,11 @@ export default function FounderSection() {
                 </p>
 
                 <h2 className="mt-3 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">
-                  {aboutContent.founderName}
+                  {data.founderName}
                 </h2>
 
                 <p className="mt-2 text-sm font-medium text-white/80">
-                  {aboutContent.founderRole}
+                  {data.founderRole}
                 </p>
 
               </div>
@@ -65,22 +64,22 @@ export default function FounderSection() {
               <div className="relative z-10">
 
                 <p className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--color-primary)]">
-                  {aboutContent.founderTitle}
+                  {data.eyebrow}
                 </p>
 
                 <h3 className="mt-5 max-w-lg text-3xl font-extrabold leading-tight tracking-tight text-[var(--color-secondary)] sm:text-4xl lg:text-5xl">
-                  A belief in the potential of people.
+                  {data.title}
                 </h3>
 
                 <div className="mt-7 h-1.5 w-16 rounded-full bg-[var(--color-primary)]" />
 
                 <div className="mt-8 space-y-5 text-base leading-8 text-[var(--color-text-secondary)] sm:text-lg sm:leading-9">
 
-                  <p>{aboutContent.founderNote}</p>
+                  <p>{data.founderNote}</p>
 
-                  <p>{aboutContent.founderNoteContinued}</p>
+                  <p>{data.founderNoteContinued}</p>
 
-                  <p>{aboutContent.founderStory}</p>
+                  <p>{data.founderStory}</p>
 
                 </div>
 
@@ -97,7 +96,7 @@ export default function FounderSection() {
                   <div className="relative z-10">
 
                     <p className="text-xl font-extrabold leading-relaxed text-[var(--color-secondary)] sm:text-2xl">
-                      {aboutContent.founderClosing}
+                      {data.founderClosing}
                     </p>
 
                   </div>

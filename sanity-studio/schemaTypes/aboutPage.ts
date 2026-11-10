@@ -150,6 +150,11 @@ export const aboutPage = defineType({
                                     validation: (rule) => rule.required(),
                                     rows: 2,
                                 }),
+                                defineField({
+                                    name:"iconName",
+                                    title: "Icon Name",
+                                    type: "string",
+                                })
                             ],
                         }),
                     ],
@@ -333,8 +338,18 @@ export const aboutPage = defineType({
                                     type: "string",
                                 }),
                                 defineField({
-                                    name: "symbolName",
+                                    name: "symbol",
                                     title: "Symbol Name",
+                                    type: "string",
+                                }),
+                                defineField({
+                                    name: "theme",
+                                    title: "Theme",
+                                    type: "string",
+                                }),
+                                defineField({
+                                    name: "linkTo",
+                                    title: "Link To",
                                     type: "string",
                                 }),
                             ],

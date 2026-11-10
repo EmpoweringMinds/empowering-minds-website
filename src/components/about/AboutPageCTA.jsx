@@ -5,7 +5,7 @@ export default function AboutPageCTA({ data }) {
 
   return (
     <CTASection
-      eyebrow="Your next step starts here"
+      eyebrow="Get in Touch"
       title={data.heading}
       description={data.description}
       primaryLabel={data.primaryCTA?.label || "Schedule a discovery call"}

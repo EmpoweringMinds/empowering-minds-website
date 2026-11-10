@@ -1,5 +1,4 @@
 import PageHero from "../ui/PageHero";
-import { aboutContent } from "../../data/siteContent";
 
 export default function AboutHero({ data }) {
   if (!data) return null;
@@ -72,12 +71,16 @@ export default function AboutHero({ data }) {
 
   return (
     <PageHero
-      eyebrow="ABOUT EMPOWERING MINDS"
-      title={aboutContent.heroTitle}
-      description={aboutContent.heroText}
+      eyebrow={data.eyebrow}
+      title={data.heading}
+      description={data.description}
       primaryCta={{
-        label: "Get in Touch",
+        label: data.primaryCTA,
         to: "/contact",
+      }}
+      secondaryCta={{
+        label: data.secondaryCTA,
+        to: "/trainers"
       }}
       visual={visual}
       visualOnMobile={true}

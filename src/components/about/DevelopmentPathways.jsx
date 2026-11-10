@@ -2,45 +2,14 @@
 import { Link } from "react-router-dom";
 import {
   ArrowUpRight,
-  Sprout,
-  Users,
-  GraduationCap,
-  Building2,
 } from "lucide-react";
+import * as Icons from "lucide-react";
 
-import { aboutContent, academyAboutContent } from "../../data/siteContent";
 import FadeIn from "../ui/FadeIn";
 
-const pathways = [
-  {
-    number: "01",
-    eyebrow: "THE ACADEMY",
-    title: "Personality & Performance Development Academy",
-    description:
-      "Knowledge and skills are important. But confidence, communication, behaviour and personal presence help you put your potential into practice.",
-    link: "/courses",
-    linkLabel: "Explore the Academy",
-    icon: GraduationCap,
-    symbol: Sprout,
-    theme: "academy",
-  },
-  {
-    number: "02",
-    eyebrow: "HUMAN CAPITAL DEVELOPMENT",
-    title: "Human Capital Development Programmes",
-    description:
-      "We design structured developmental interventions that strengthen people, behavioural capabilities and performance across educational institutions and organisations.",
-    link: "/services",
-    linkLabel: "Explore Our Programmes",
-    icon: Building2,
-    symbol: Users,
-    theme: "human",
-  },
-];
-
-function PathwayPanel({ pathway, index }) {
-  const Symbol = pathway.symbol;
-
+function PathwayPanel({ pathway, index}) {
+  const Icon = Icons[pathway.iconName] || Icons.CircleQuestionMark;
+  const Symbol = Icons[pathway.symbol] || Icons.BadgeQuestionMark;
   const isAcademy = pathway.theme === "academy";
 
   return (
@@ -101,7 +70,7 @@ function PathwayPanel({ pathway, index }) {
             {pathway.number} / {pathway.eyebrow}
           </span>
 
-          <pathway.icon
+          <Icon
             size={24}
             strokeWidth={1.5}
             aria-hidden="true"
@@ -228,7 +197,7 @@ function PathwayPanel({ pathway, index }) {
               }
             `}
           >
-            {pathway.linkLabel}
+            {pathway.ctaLabel}
 
             <ArrowUpRight
               size={19}
@@ -242,7 +211,10 @@ function PathwayPanel({ pathway, index }) {
   );
 }
 
-export default function DevelopmentPathways() {
+export default function DevelopmentPathways({data}) {
+  if(!data?.developmentPathwayCards?.length) return null;
+
+  const pathways = data?.developmentPathwayCards || [];
   return (
     <section className="relative overflow-hidden bg-[var(--color-background)] py-16 sm:py-20 lg:py-28">
 
@@ -253,15 +225,15 @@ export default function DevelopmentPathways() {
           <div className="mx-auto max-w-3xl text-center">
 
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-[var(--color-primary)]">
-              Our Work
+              {data.eyebrow}
             </p>
 
             <h2 className="mt-5 text-4xl font-extrabold leading-[1.12] tracking-tight text-[var(--color-secondary)] sm:text-5xl lg:text-6xl">
-              One philosophy. Two avenues of development.
+              {data.heading}
             </h2>
 
             <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-[var(--color-text-secondary)] sm:text-lg">
-              {academyAboutContent.widerWorkText}
+              {data.description}
             </p>
 
           </div>

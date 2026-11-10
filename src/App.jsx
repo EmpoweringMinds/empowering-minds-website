@@ -3,13 +3,10 @@ import ScrollToTop from "./components/common/ScrollToTop";
 import Footer from "./components/common/Footer";
 import Navbar from "./components/common/Navbar";
 import WhatsAppFloat from "./components/common/WhatsAppFloat";
-//import AcademyAbout from "./pages/AcademyAbout";
-import About from "./pages/About";
 import Contact from "./pages/Contact";
-import TestAbout from "./pages/TestAbout";
-//import Home from "./pages/Home";
-//import Programs from "./pages/Programs";
-import Services from "./pages/Services";
+import About from "./pages/About.jsx";
+import Programs from "./pages/Programs";
+//import Services from "./pages/Services";
 import Trainers from "./pages/Trainers";
 import Workshops from "./pages/Workshops";
 import WorkshopDetails from "./components/sections/WorkshopDetails";
@@ -24,8 +21,8 @@ function App() {
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<AcademyHomepage />} />
-        <Route path="/about" element={<TestAbout />} />
-        <Route path="/services" element={<Services />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/services" element={<Programs />} />
         <Route path="/trainers" element={<Trainers />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/workshops" element={<Workshops />} />
