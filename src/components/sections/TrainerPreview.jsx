@@ -2,7 +2,7 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 
-import TrainerCard from "../trainers/trainerCard";
+import TrainerCard from "../trainers/TrainerCard";
 import FadeIn from "../ui/FadeIn";
 import { useTrainers } from "../../cms/useTrainers";
 
