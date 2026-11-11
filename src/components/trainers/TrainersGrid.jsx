@@ -2,7 +2,7 @@
 import { useState } from "react";
 import FadeIn from "../ui/FadeIn";
 import SectionHeader from "../ui/SectionHeader";
-import TrainerCard from "./trainerCard";
+import TrainerCard from "./TrainerCard";
 
 const layouts = [
   { span: "lg:col-span-5", orientation: "portrait" },
