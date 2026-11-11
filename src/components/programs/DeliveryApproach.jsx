@@ -1,7 +1,7 @@
 
 import FadeIn from "../ui/FadeIn";
 
-export default function DeliveryApproach() {
+export default function DeliveryApproach({data}) {
     return (
         <section className="
             relative overflow-hidden
@@ -77,7 +77,7 @@ export default function DeliveryApproach() {
                             />
 
                             <img
-                                src="/images/delivery-approach.png"
+                                src={data.image}
                                 alt=""
                                 className="
                                     relative z-10
@@ -97,7 +97,7 @@ export default function DeliveryApproach() {
                                 tracking-[0.3em]
                                 text-[var(--color-secondary)]
                             ">
-                                Our Approach
+                                {data.eyebrow}
                             </p>
 
                             <h2 className="
@@ -106,12 +106,12 @@ export default function DeliveryApproach() {
                                 text-white/60
                                 sm:text-5xl lg:text-6xl
                             ">
-                                Structured development.
+                                {data.heading}
                                 <span className="
                                     mt-2 block
                                     text-[var(--color-olive)]
                                 ">
-                                    Measurable performance.
+                                    {data.accentHeading}
                                 </span>
                             </h2>
 
@@ -120,12 +120,7 @@ export default function DeliveryApproach() {
                                 text-base leading-8
                                 text-white/75 sm:text-lg
                             ">
-                                We do not simply conduct workshops.
-                                Our interventions are structured around
-                                institutional and organisational objectives,
-                                with a focus on behavioural alignment,
-                                resilience, capability, and sustainable
-                                performance.
+                                {data.description}
                             </p>
 
                             <div className="

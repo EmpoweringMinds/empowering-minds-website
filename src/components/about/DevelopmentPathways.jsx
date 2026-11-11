@@ -7,7 +7,7 @@ import * as Icons from "lucide-react";
 
 import FadeIn from "../ui/FadeIn";
 
-function PathwayPanel({ pathway, index}) {
+function PathwayPanel({ pathway}) {
   const Icon = Icons[pathway.iconName] || Icons.CircleQuestionMark;
   const Symbol = Icons[pathway.symbol] || Icons.BadgeQuestionMark;
   const isAcademy = pathway.theme === "academy";
@@ -263,7 +263,6 @@ export default function DevelopmentPathways({data}) {
             >
               <PathwayPanel
                 pathway={pathway}
-                index={index}
               />
             </FadeIn>
           ))}

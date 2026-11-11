@@ -1,6 +1,4 @@
 
-import { useRef } from "react";
-import { motion, useMotionValue, animate } from "framer-motion";
 import FadeIn from "../ui/FadeIn";
 
 const audienceStyles = [
@@ -39,33 +37,9 @@ const audienceStyles = [
 ];
 
 export default function AudienceSection({ data }) {
-  const carouselRef = useRef(null);
-  const x = useMotionValue(0);
 
   if (!data?.audienceCards?.length) return null;
 
-  const cardCount = data.audienceCards.length;
-
-  const handleDragEnd = (_, info) => {
-    const container = carouselRef.current;
-    if (!container) return;
-
-    const maxDrag =
-      container.scrollWidth - container.offsetWidth;
-
-    const currentX = x.get();
-    const projectedX = currentX + info.velocity.x * 0.2;
-
-    animate(
-      x,
-      Math.max(-maxDrag, Math.min(0, projectedX)),
-      {
-        type: "spring",
-        stiffness: 300,
-        damping: 35,
-      }
-    );
-  };
 
   return (
     <section className="

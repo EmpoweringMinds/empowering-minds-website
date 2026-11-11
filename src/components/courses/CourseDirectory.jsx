@@ -5,13 +5,15 @@ import FadeIn from "../ui/FadeIn";
 import CourseCard from "./CourseCard";
 
 export default function CourseDirectory({ courses = [] }) {
-  const [openCourse, setOpenCourse] = useState(null);
+
+
   const location = useLocation();
   const cardRefs = useRef(new Map());
 
-  // Open and scroll to a course when the URL contains its slug.
-  useEffect(() => {
-    if (!courses.length || !location.hash) return;
+  const [manualOpenCourse, setManualOpenCourse] = useState(null);
+
+  const urlCourseIndex = (() => {
+    if (!courses.length || !location.hash) return null;
 
     let targetSlug;
 
@@ -21,31 +23,46 @@ export default function CourseDirectory({ courses = [] }) {
       targetSlug = location.hash.slice(1);
     }
 
-    const targetIndex = courses.findIndex(
+    const index = courses.findIndex(
       (course) => (course.slug || course.id) === targetSlug
     );
 
-    if (targetIndex === -1) return;
+    return index === -1 ? null : index;
+  })();
 
-    setOpenCourse(targetIndex);
+  const openCourse = urlCourseIndex ?? manualOpenCourse;
 
-    // Wait for the accordion to expand before positioning the card.
+  // Open and scroll to a course when the URL contains its slug.
+    useEffect(() => {
+    if (urlCourseIndex === null || !location.hash) return;
+
+    const targetSlug = (() => {
+      try {
+        return decodeURIComponent(location.hash.slice(1));
+      } catch {
+        return location.hash.slice(1);
+      }
+    })();
+
     const timeoutId = window.setTimeout(() => {
       cardRefs.current
         .get(targetSlug)
-        ?.scrollIntoView({ behavior: "smooth", block: "start" });
+        ?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
     }, 600);
 
     return () => window.clearTimeout(timeoutId);
-  }, [courses, location.hash]);
+  }, [urlCourseIndex, location.hash]);
 
   if (!courses.length) return null;
 
   function handleToggle(index) {
-    setOpenCourse((current) =>
-      current === index ? null : index
-    );
-  }
+  setManualOpenCourse((current) =>
+    current === index ? null : index
+  );
+}
 
   return (
     <section

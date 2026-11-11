@@ -1,13 +1,15 @@
 import FadeIn from "../ui/FadeIn";
 import ProgramCard from "./ProgramCard";
-import { serviceGroups } from "../../data/siteContent";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams} from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import * as Icons from "lucide-react";
 
-export default function ProgramsByAudience() {
+export default function ProgramsByAudience({data}) {
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
   const urlGroupId = searchParams.get("group");
+  const serviceGroups = data.serviceGroups || [];
+
 
   const selectedGroupId = serviceGroups.some(
       (group) => group.id === urlGroupId
@@ -20,8 +22,11 @@ export default function ProgramsByAudience() {
   );
 
   const handleGroupChange = (groupId) => {
-      setSearchParams({ group: groupId }, { replace: true });
-  };
+    setSearchParams(
+        { group: groupId },
+        { replace: true }
+    );
+};
 
   const handleEnquire = (program) => {
       const params = new URLSearchParams({
@@ -54,7 +59,7 @@ export default function ProgramsByAudience() {
                             tracking-[0.2em]
                             text-[var(--color-primary)]
                         ">
-                            Explore Our Programs
+                            {data.eyebrow}
                         </span>
 
                         <h2 className="
@@ -64,7 +69,7 @@ export default function ProgramsByAudience() {
                             text-[var(--color-secondary)]
                             sm:text-4xl lg:text-5xl
                         ">
-                            Where would you like to make a difference?
+                            {data.heading}
                         </h2>
                         </div>
 
@@ -78,17 +83,15 @@ export default function ProgramsByAudience() {
                             text-[var(--color-text-secondary)]
                             sm:text-base sm:leading-8
                         ">
-                            Choose the audience or area most relevant to you. Each group brings together development programmes designed around its needs.
+                            {data.description}
                         </p>
                         </div>
                     </div>
                 </FadeIn>
                 <div className="
-                    mt-10 flex flex-col items-center
-                    justify-between gap-4
-                    border-b-2 border-[var(--color-secondary)]
-                    pb-4 sm:mt-14 sm:pb-5
-                    " 
+                    mt-10 border-b-2
+                    border-[var(--color-secondary)]
+                    sm:mt-14" 
                 />
                     {/* Audience selector */}
                     <div
@@ -103,7 +106,7 @@ export default function ProgramsByAudience() {
                     >
                         {serviceGroups.map((group, index) => {
                             const isSelected = group.id === selectedGroupId;
-                            const Icon = group.icon;
+                            const Icon = Icons[group.iconName] || Icons.Layers;
 
                             return (
                                 <button
@@ -267,7 +270,7 @@ export default function ProgramsByAudience() {
                                             tracking-tighter
                                             text-[var(--color-soft-accent)]
                                         ">
-                                            {String(selectedGroup.areas.length).padStart(2, "0")}
+                                            {String(selectedGroup.groupCards.length).padStart(2, "0")}
                                         </span>
 
                                         <span className="
@@ -288,12 +291,12 @@ export default function ProgramsByAudience() {
                             mt-7 grid gap-5
                             lg:grid-cols-2
                         ">
-                            {selectedGroup.areas.map((program, index) => (
+                            {selectedGroup.groupCards.map((program, index) => (
                                 <ProgramCard
                                     key={program.id}
                                     program={{
                                         ...program,
-                                        serviceGroup: selectedGroup.id,
+                                        serviceGroup: program.groupReferance,
                                     }}
                                     index={index}
                                     onEnquire={handleEnquire}

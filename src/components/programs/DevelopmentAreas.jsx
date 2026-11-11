@@ -6,26 +6,11 @@ import {
   useTransform,
   useReducedMotion,
 } from "framer-motion";
-import {
-  Brain,
-  BriefcaseBusiness,
-  HeartHandshake,
-  Network,
-  ArrowDown,
-} from "lucide-react";
+import * as Icons from "lucide-react"
 
-/* --------------------------------
-   Development area content
--------------------------------- */
 
-const developmentAreas = [
+const cardVariants= [
   {
-    number: "01",
-    icon: Brain,
-    title: "Mindset & Performance",
-    description:
-      "Building emotional regulation, resilience, focus, confidence, and the ability to sustain performance under pressure.",
-    category: "Personal effectiveness",
     card: "bg-[var(--color-secondary)]",
     foreground: "text-[var(--color-background)]",
     accent: "bg-[var(--color-primary)]",
@@ -34,12 +19,6 @@ const developmentAreas = [
     border: "border-white/15",
   },
   {
-    number: "02",
-    icon: BriefcaseBusiness,
-    title: "Professional & Corporate Skills",
-    description:
-      "Strengthening communication, workplace effectiveness, professional behaviour, and practical skills for modern organisations.",
-    category: "Professional capability",
     card: "bg-[var(--color-primary)]",
     foreground: "text-[var(--color-text-light)]",
     accent: "bg-white",
@@ -48,12 +27,6 @@ const developmentAreas = [
     border: "border-white/25",
   },
   {
-    number: "03",
-    icon: Network,
-    title: "Cognitive & Leadership Development",
-    description:
-      "Developing decision-making, leadership maturity, strategic thinking, and the cognitive capabilities needed for effective performance.",
-    category: "Leadership & thinking",
     card: "bg-[var(--color-olive)]",
     foreground: "text-white",
     accent: "bg-[var(--color-soft-accent)]",
@@ -62,12 +35,6 @@ const developmentAreas = [
     border: "border-white/20",
   },
   {
-    number: "04",
-    icon: HeartHandshake,
-    title: "Interpersonal & Instructional Techniques",
-    description:
-      "Improving interpersonal effectiveness, communication, classroom engagement, and practical approaches to learning and development.",
-    category: "People & learning",
     card: "bg-[var(--color-soft-accent)]",
     foreground: "text-[var(--color-text-primary)]",
     accent: "bg-[var(--color-primary)]",
@@ -87,7 +54,7 @@ function StackedAreaCard({
   total,
   progress,
 }) {
-  const Icon = area.icon;
+  const Icon = Icons[area.iconName] || Icons.Layers;
 
   
   const start = index / total;
@@ -124,6 +91,8 @@ function StackedAreaCard({
         ? [0.94, 1, 0.975]
         : [0.94, 1]
   );
+  
+  const variant = cardVariants[index % cardVariants.length];
 
   return (
     <motion.article
@@ -142,11 +111,11 @@ function StackedAreaCard({
         flex-col justify-between
         overflow-hidden
         rounded-[2rem] sm:rounded-[2.5rem]
-        border ${area.border}
+        border ${variant.border}
         p-6 sm:p-9 lg:p-12
         shadow-[var(--shadow-lg)]
-        ${area.card}
-        ${area.foreground}
+        ${variant.card}
+        ${variant.foreground}
       `}
     >
       {/* Oversized decorative number */}
@@ -158,7 +127,7 @@ function StackedAreaCard({
           text-[11rem] font-black
           leading-none tracking-tighter
           sm:text-[16rem] lg:text-[20rem]
-          ${area.numberColor}
+          ${variant.numberColor}
         `}
       >
         {area.number}
@@ -172,7 +141,7 @@ function StackedAreaCard({
           <span className={`
             text-[10px] font-bold uppercase
             tracking-[0.2em] sm:text-xs
-            ${area.label}
+            ${variant.label}
           `}>
             Development Area
           </span>
@@ -191,7 +160,7 @@ function StackedAreaCard({
         <div className={`
           mt-8 h-1 w-12 rounded-full
           sm:mt-10 sm:w-16
-          ${area.accent}
+          ${variant.accent}
         `} />
 
         {/* Heading and description */}
@@ -220,12 +189,12 @@ function StackedAreaCard({
         relative z-10 mt-6
         flex items-center justify-between gap-3
         border-t pt-4 sm:pt-6
-        ${area.border}
+        ${variant.border}
       `}>
         <span className={`
           text-[10px] font-bold uppercase
           tracking-[0.16em] sm:text-xs
-          ${area.label}
+          ${variant.label}
         `}>
           {area.category}
         </span>
@@ -245,16 +214,17 @@ function StackedAreaCard({
    Static fallback for reduced motion
 -------------------------------- */
 
-function StaticAreaCards() {
+function StaticAreaCards({data}) {
+  const developmentAreas = data.areaCards || [];
   return (
     <div className="
       mx-auto mt-10 grid max-w-5xl
       gap-5 px-4 sm:px-6
       md:grid-cols-2 lg:px-8
     ">
-      {developmentAreas.map((area) => {
-        const Icon = area.icon;
-
+      {developmentAreas.map((area, index) => {
+        const Icon = Icons[area.iconName] || Icons.Layers;
+        const variant = cardVariants[index % cardVariants.length];
         return (
           <article
             key={area.number}
@@ -263,21 +233,21 @@ function StaticAreaCards() {
               flex-col justify-between
               overflow-hidden rounded-[2rem]
               p-7 sm:p-9
-              ${area.card} ${area.foreground}
+              ${variant.card} ${variant.foreground}
             `}
           >
             <span className={`
               pointer-events-none absolute
               -right-4 -top-8
               text-[9rem] font-black
-              leading-none ${area.numberColor}
+              leading-none ${variant.numberColor}
             `}>
               {area.number}
             </span>
 
             <div className="relative z-10">
               <div className="flex justify-between">
-                <span className={area.label}>
+                <span className={variant.label}>
                   {area.number}
                 </span>
                 <Icon size={26} />
@@ -299,7 +269,7 @@ function StaticAreaCards() {
               relative z-10 mt-8
               border-t pt-4 text-xs
               font-bold uppercase tracking-wider
-              ${area.label} ${area.border}
+              ${variant.label} ${variant.border}
             `}>
               {area.category}
             </p>
@@ -314,9 +284,10 @@ function StaticAreaCards() {
    Main section
 -------------------------------- */
 
-export default function DevelopmentAreas() {
+export default function DevelopmentAreas({data}) {
   const stackRef = useRef(null);
   const shouldReduceMotion = useReducedMotion();
+  const developmentAreas = data.areaCards || [];
 
   const { scrollYProgress } = useScroll({
     target: stackRef,
@@ -378,7 +349,7 @@ export default function DevelopmentAreas() {
                 tracking-[0.18em]
                 text-[var(--color-primary)]
               ">
-                The foundation of growth
+                {data.eyebrow}
               </span>
             </div>
 
@@ -389,7 +360,7 @@ export default function DevelopmentAreas() {
               text-[var(--color-text-primary)]
               sm:text-4xl lg:text-5xl
             ">
-              Growth begins with understanding people.
+              {data.heading}
             </h2>
           </div>
 
@@ -422,11 +393,7 @@ export default function DevelopmentAreas() {
                 leading-8 text-white
                 sm:text-lg sm:leading-9
               ">
-                Meaningful development goes beyond
-                technical knowledge. We work across
-                the behavioural, emotional and
-                professional capabilities that shape
-                how people think, interact and perform.
+                  {data.description}
               </p>
             </div>
 
@@ -451,7 +418,7 @@ export default function DevelopmentAreas() {
       -------------------------------- */}
 
       {shouldReduceMotion ? (
-        <StaticAreaCards />
+        <StaticAreaCards data={data}/>
       ) : (
         <div
           ref={stackRef}
@@ -492,7 +459,7 @@ export default function DevelopmentAreas() {
                   Scroll to explore
                 </span>
 
-                <ArrowDown size={13} />
+                <Icons.ArrowDown size={13} />
               </div>
 
             </div>

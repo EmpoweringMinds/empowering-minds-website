@@ -59,6 +59,11 @@ function normalizeAboutPage(page) {
       founderNoteContinued: page.founderSection?.founderNoteContinued || "",
       founderStory: page.founderSection?.founderStory || "",
       founderClosing: page.founderSection?.founderClosing || "",
+      image: normalizeImage(
+        page.founderSection?.founderImage,
+        1080,
+        1350
+      ), 
     },
 
     //Why Empowering Minds

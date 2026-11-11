@@ -2,13 +2,11 @@ import { academyHomepageSections } from "../data/siteContent"
 import FadeIn from "../components/ui/FadeIn"
 import CTAButton from "../components/ui/CTAButton"
 import SectionHeader from "../components/ui/SectionHeader"
-import FeatureCard from "../components/ui/FeatureCard"
 import CoursePreview from "../components/common/CoursesPreview"
 import TrainerPreview from "../components/sections/TrainerPreview"
 import TestimonialSection from "../components/sections/TestimonialSection"
 import WorkshopPreview from "../components/common/WorkshopPreview"
 import CTASection from "../components/ui/CTASection"
-import { Sprout } from "lucide-react"
 
 export default function AcademyHomepage () {
     return (
@@ -276,7 +274,7 @@ export default function AcademyHomepage () {
             <CTASection
                 title="Your Journey Towards Growth Begins Here."
                 description="Find the programme that fits your goals."
-                variant="soft"
+                variant="warm"
                 primaryLabel= "Talk to an Advisor"
                 primaryTo = "https://wa.me/917908466757?text=Hello%20Empowering%20Minds%2C%20I%27d%20like%20to%20know%20more%20about%20your%20programs."
                 secondaryLabel= "Explore Courses"

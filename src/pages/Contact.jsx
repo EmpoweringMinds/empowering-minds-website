@@ -1,5 +1,5 @@
 import { Mail, MapPin, Phone } from "lucide-react";
-import { useMemo, useState, useEffect } from "react";
+import { useMemo, useState} from "react";
 import { useSearchParams } from "react-router-dom";
 import { serviceGroups, contactDetails, faqs } from "../data/siteContent";
 import CTASection from "../components/ui/CTASection";
@@ -9,10 +9,11 @@ import SectionHeader from "../components/ui/SectionHeader";
 import { useCourses } from "../cms/useCourses";
 
 export default function Contact() {
-  const [serviceGroupId, setServiceGroupId] = useState("");
-  const [serviceId, setServiceId] = useState("");
-  const [intent, setIntent] = useState("");
-  const [searchParams] = useSearchParams();
+  const [serviceGroupIdOverride, setServiceGroupId] = useState(null);
+  const [serviceIdOverride, setServiceId] = useState(null);
+  const [intentOverride, setIntent] = useState(null);
+  const [interestTypeOverride, setInterestType] = useState(null);
+  const [courseIdOverride, setCourseId] = useState(null);
 
   const [name, setName] = useState("");
   const [organization, setOrganization] = useState("");
@@ -24,9 +25,11 @@ export default function Contact() {
   const [success, setSuccess] = useState("");
   const [error, setError] = useState("");
 
+  const [searchParams] = useSearchParams();
+
   const { courses, loading: coursesLoading, error: coursesError } = useCourses();
 
-  useEffect(() => {
+  const urlPrefill = useMemo(() => {
     const requestedType = searchParams.get("type");
     const requestedGroup = searchParams.get("group");
     const requestedService = searchParams.get("service");
@@ -36,39 +39,55 @@ export default function Contact() {
         (item) => item.id === requestedGroup
       );
 
-      if (!group) return;
+      if (!group) return {};
 
       const service = group.areas.find(
         (item) => item.id === requestedService
       );
 
-      setInterestType("program");
-      setCourseId("");
-      setServiceGroupId(group.id);
-      setServiceId(service?.id ?? "");
-      setIntent("");
-      
-      return;
+      return {
+        interestType: "program",
+        courseId: "",
+        serviceGroupId: group.id,
+        serviceId: service?.id ?? "",
+        intent: "",
+      };
     }
+
     const requestedCourse = searchParams.get("course");
 
-    if (!requestedCourse || courses.length === 0) return;
+    if (!requestedCourse) return {};
 
     const course = courses.find(
       (item) =>
         item.slug === requestedCourse || item.id === requestedCourse
     );
 
-    if (!course) return;
+    if (!course) return {};
 
-    setInterestType("course");
-    setCourseId(course.id);
-    setIntent("demo");
+    return {
+      interestType: "course",
+      courseId: course.id,
+      serviceGroupId: "",
+      serviceId: "",
+      intent: "demo",
+    };
   }, [courses, searchParams]);
 
-  const [interestType, setInterestType] = useState("");
-  const [courseId, setCourseId] = useState("");
+  // Use manual selections when present; otherwise use URL defaults.
+  const interestType =
+    interestTypeOverride ?? urlPrefill.interestType ?? "";
 
+  const courseId =
+    courseIdOverride ?? urlPrefill.courseId ?? "";
+
+  const serviceGroupId =
+    serviceGroupIdOverride ?? urlPrefill.serviceGroupId ?? "";
+
+  const serviceId =
+    serviceIdOverride ?? urlPrefill.serviceId ?? "";
+
+  const intent = intentOverride ?? urlPrefill.intent ?? "";
 
   const selectedGroup = useMemo(
     () => serviceGroups.find((group) => group.id === serviceGroupId),

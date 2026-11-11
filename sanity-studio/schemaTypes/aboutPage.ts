@@ -216,6 +216,11 @@ export const aboutPage = defineType({
                     title: "Founder Section Closing Statement",
                     type: "text",
                 }),
+                defineField({
+                    name: "founderImage",
+                    title: "Founder Image",
+                    type: "image",
+                }),
             ],
         }),
         defineField({

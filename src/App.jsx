@@ -6,8 +6,8 @@ import WhatsAppFloat from "./components/common/WhatsAppFloat";
 import Contact from "./pages/Contact";
 import About from "./pages/About.jsx";
 import Programs from "./pages/Programs";
-//import Services from "./pages/Services";
-import Trainers from "./pages/Trainers";
+//import Trainers from "./pages/Trainers";
+import TestTrainer from "./pages/TestTrainers.jsx";
 import Workshops from "./pages/Workshops";
 import WorkshopDetails from "./components/sections/WorkshopDetails";
 import WorkshopRegistration from "./pages/WorkshopRegistration";
@@ -22,8 +22,8 @@ function App() {
       <Routes>
         <Route path="/" element={<AcademyHomepage />} />
         <Route path="/about" element={<About />} />
-        <Route path="/services" element={<Programs />} />
-        <Route path="/trainers" element={<Trainers />} />
+        <Route path="/programs" element={<Programs />} />
+        <Route path="/trainers" element={<TestTrainer />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/workshops" element={<Workshops />} />
         <Route path="/workshops/:slug" element={<WorkshopDetails />} />

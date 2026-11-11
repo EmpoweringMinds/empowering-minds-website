@@ -1,6 +1,6 @@
 import PageHero from "../ui/PageHero";
 
-export default function ProgramsHero() {
+export default function ProgramsHero({data}) {
   const visual = (
     <div className="
       relative mx-auto
@@ -56,7 +56,7 @@ export default function ProgramsHero() {
 
       {/* Trainer photography */}
       <img
-        src="/images/trainer.png"
+        src={data.image}
         alt=""
         fetchPriority="high"
         className="
@@ -70,20 +70,15 @@ export default function ProgramsHero() {
 
   return (
     <PageHero
-      eyebrow="Our Programs"
-      title="Where people grow, organisations move forward."
-      description="
-        From individual development to institutional and
-        corporate training, we create practical programmes
-        that help people build stronger capabilities,
-        confidence and performance.
-      "
+      eyebrow={data.eyebrow}
+      title={data.heading}
+      description={data.description}
       primaryCta={{
-        label: "Explore Our Programs",
+        label: data.primaryCTA,
         to: "#programs",
       }}
       secondaryCta={{
-        label: "Talk to Our Team",
+        label: data.secondaryCTA,
         to: "/contact",
       }}
       visual={visual}

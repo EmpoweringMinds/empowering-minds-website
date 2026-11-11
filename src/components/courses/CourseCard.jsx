@@ -22,11 +22,6 @@ function ContentList({ items }) {
 
         return (
           <li key={index} className="flex gap-3">
-            <span className="
-              mt-2 h-1.5 w-1.5 shrink-0
-              rounded-full bg-[var(--color-primary)]
-            " />
-
             <div>
               <p className="
                 text-sm font-semibold
@@ -61,18 +56,20 @@ export default function CourseCard({
   onToggle,
   cardRef,
 }) {
-  if (!course) return null;
-  const navigate = useNavigate();
-  function getCourseTarget(course) {
-    return course.slug || course.id;
-  }
+    const navigate = useNavigate();
 
-  function handleCallClick(course) {
-    navigate(
-      `/contact?course=${encodeURIComponent(getCourseTarget(course))}#form`
-    );
-  }
-  const detailsId = `course-details-${course.slug || course.id}`;
+    if (!course) return null;
+    
+    function getCourseTarget(course) {
+      return course.slug || course.id;
+    }
+
+    function handleCallClick(course) {
+      navigate(
+        `/contact?course=${encodeURIComponent(getCourseTarget(course))}#form`
+      );
+    }
+    const detailsId = `course-details-${course.slug || course.id}`;
 
   return (
     <article
@@ -276,7 +273,7 @@ export default function CourseCard({
                         font-heading text-base
                         font-bold text-[var(--color-secondary)]
                       ">
-                        What you'll learn
+                        Course Outcomes
                       </h4>
                     </div>
 

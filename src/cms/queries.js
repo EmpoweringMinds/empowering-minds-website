@@ -202,7 +202,8 @@ export const aboutPageQuery = `
       founderNote,
       founderNoteContinued,
       founderStory,
-      founderClosing
+      founderClosing,
+      founderImage
     },
 
     whyEmpoweringMinds {
@@ -229,6 +230,80 @@ export const aboutPageQuery = `
         theme,
         linkTo
       }
+    },
+
+    finalCTA {
+      heading,
+      description,
+      primaryCTA,
+      secondaryCTA
+    },
+
+    seo {
+      metaTitle,
+      metaDescription,
+      ogImage,
+      noIndex
+    }
+  }
+`;
+
+export const programsPageQuery = `
+  *[
+    _type == "programsPage"
+    && _id == "programsPage"
+  ][0] {
+    _id,
+
+    hero {
+      eyebrow,
+      heading,
+      description,
+      heroImage,
+      primaryCTA,
+      secondaryCTA
+    },
+
+    developmentAreas {
+      eyebrow,
+      heading,
+      description,
+      areaCards[] {
+        number,
+        title,
+        description,
+        iconName,
+        category
+      }
+    },
+
+    programsByAudience {
+      eyebrow,
+      heading,
+      description,
+      serviceGroups[] {
+        id,
+        eyebrow,
+        heading,
+        description,
+        iconName,
+        groupCards[] {
+          id,
+          heading,
+          description,
+          groupReferance,
+          modules[],
+          ctaLabel
+        }
+      }
+    },
+
+    deliveryApproach {
+      eyebrow,
+      heading,
+      accentHeading,
+      description,
+      image
     },
 
     finalCTA {

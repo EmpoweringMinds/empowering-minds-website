@@ -1,71 +1,37 @@
 
 import { useEffect, useState } from "react";
-import {
-  BookOpen,
-  ChevronLeft,
-  ChevronRight,
-  Presentation,
-  Users,
-} from "lucide-react";
+import { useReducedMotion } from "framer-motion";
+import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 
-import SectionHeader from "../ui/SectionHeader";
+import FadeIn from "../ui/FadeIn";
 import { testimonials } from "../../data/siteContent";
 
-const classroomScenes = [
-  {
-    label: "Classroom learning session",
-    description: "Learners participating in a training session",
-    Icon: Presentation,
-  },
-  {
-    label: "Trainer-led discussion",
-    description: "A trainer facilitating an interactive discussion",
-    Icon: Users,
-  },
-  {
-    label: "Collaborative workshop",
-    description: "Learners working together during a workshop",
-    Icon: BookOpen,
-  },
+const classroomPhotos = [
+  "/images/classroom-photo-1.jpg",
+  "/images/classroom-photo-2.jpg",
+  "/images/classroom-photo-3.jpg",
 ];
 
 export default function TestimonialSection() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [prefersReducedMotion, setPrefersReducedMotion] = useState(false);
+
+  const prefersReducedMotion = useReducedMotion();
 
   const total = testimonials.length;
+
   const activeTestimonial = testimonials[activeIndex];
-  const scene = classroomScenes[activeIndex % classroomScenes.length];
-  const SceneIcon = scene.Icon;
+  const activePhoto = classroomPhotos[activeIndex % classroomPhotos.length];
 
-  // Respect the visitor's motion preference.
-  useEffect(() => {
-    const mediaQuery = window.matchMedia(
-      "(prefers-reduced-motion: reduce)"
-    );
-
-    setPrefersReducedMotion(mediaQuery.matches);
-
-    const handleMotionPreference = (event) => {
-      setPrefersReducedMotion(event.matches);
-    };
-
-    mediaQuery.addEventListener("change", handleMotionPreference);
-
-    return () => {
-      mediaQuery.removeEventListener("change", handleMotionPreference);
-    };
-  }, []);
-
-  // Automatically rotate testimonials every 7 seconds.
+  // Preserve existing desktop-only automatic rotation.
   useEffect(() => {
     if (total <= 1 || isPaused || prefersReducedMotion) return;
 
     const interval = setInterval(() => {
       if (window.matchMedia("(max-width: 639px)").matches) {
-      return;
-    }
+        return;
+      }
+
       setActiveIndex((current) => (current + 1) % total);
     }, 7000);
 
@@ -83,17 +49,77 @@ export default function TestimonialSection() {
   if (!total) return null;
 
   return (
-    <section className="bg-[var(--color-surface-warm)] py-16 sm:py-20 lg:py-24">
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <SectionHeader
-          eyebrow="Learner Perspectives"
-          title="What our learners say"
-          description="Our work is ultimately measured by the difference it makes in people, teams, and organisations."
-          align="center"
-        />
+    <section
+      className="
+        relative overflow-hidden
+        bg-[var(--color-surface-warm)]
+        py-16 sm:py-20 lg:py-24
+      "
+    >
+      {/* Background decoration */}
+      <div
+        aria-hidden="true"
+        className="
+          pointer-events-none absolute
+          -right-24 -top-24
+          h-72 w-72 rounded-full
+          bg-[var(--color-soft-accent)]/30
+          blur-3xl
+        "
+      />
 
+      <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+
+        {/* Editorial section heading */}
+        <FadeIn>
+          <div className="max-w-3xl">
+
+            <div className="flex items-center gap-3">
+              <span
+                aria-hidden="true"
+                className="
+                  h-[3px] w-10 rounded-full
+                  bg-[var(--color-primary)]
+                "
+              />
+
+              <p className="
+                text-xs font-bold uppercase
+                tracking-[0.22em]
+                text-[var(--color-primary)]
+              ">
+                Learner Perspectives
+              </p>
+            </div>
+
+            <h2 className="
+              mt-5 font-heading
+              text-3xl font-bold
+              leading-tight tracking-tight
+              text-[var(--color-secondary)]
+              sm:text-4xl lg:text-5xl
+            ">
+              The experiences that
+              <span className="text-[var(--color-primary)]">
+                {" "}stay with people.
+              </span>
+            </h2>
+
+            <p className="
+              mt-5 max-w-xl
+              text-sm leading-7
+              text-[var(--color-text-secondary)]
+              sm:text-base sm:leading-8
+            ">
+              Every learning experience leaves a different impression.
+              Here's what participants have shared about theirs.
+            </p>
+          </div>
+        </FadeIn>
+
+        {/* Carousel */}
         <div
-          className="mt-12 lg:mt-16"
+          className="mt-10 sm:mt-14"
           onMouseEnter={() => setIsPaused(true)}
           onMouseLeave={() => setIsPaused(false)}
           onFocus={() => setIsPaused(true)}
@@ -102,103 +128,193 @@ export default function TestimonialSection() {
               setIsPaused(false);
             }
           }}
+          aria-roledescription="carousel"
+          aria-label="Learner testimonials"
         >
+
           <div
-            key={activeIndex}
-            className="grid gap-4 sm:gap-6 lg:grid-cols-[0.9fr_1.1fr] lg:gap-8"
+            className="
+              grid overflow-hidden
+              rounded-[2rem]
+              bg-[var(--color-secondary)]
+              lg:grid-cols-[0.9fr_1.1fr]
+              lg:rounded-[2.5rem]
+            "
           >
-            {/* Classroom image placeholder */}
-            <div className="relative min-h-[190px] overflow-hidden rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-3 sm:min-h-[300px] sm:p-6 lg:min-h-[440px]">
-              {/* Decorative shapes */}
-              <div
-                aria-hidden="true"
-                className="absolute -right-12 -top-12 h-48 w-48 rounded-full bg-[var(--color-secondary)] opacity-[0.10]"
+
+            {/* Classroom photography */}
+            <div className="
+              relative min-h-[260px]
+              overflow-hidden
+              bg-[var(--color-olive)]
+              sm:min-h-[380px]
+              lg:min-h-[520px]
+            ">
+              <img
+                key={activePhoto}
+                src={activePhoto}
+                alt="Participants attending a learning workshop"
+                loading="lazy"
+                className="
+                  absolute inset-0
+                  h-full w-full
+                  object-cover object-center
+                "
               />
 
+              {/* Image overlay */}
               <div
                 aria-hidden="true"
-                className="absolute -bottom-16 -left-12 h-56 w-56 rounded-full bg-[var(--color-olive)] opacity-[0.12]"
+                className="
+                  pointer-events-none absolute inset-0
+                  bg-gradient-to-t
+                  from-black/30 via-transparent to-transparent
+                "
               />
 
-              <div className="relative flex h-full min-h-[164px] flex-col items-center justify-center overflow-hidden rounded-2xl border border-[var(--color-border)] bg-[var(--color-surface-warm)] px-4 py-6 text-center sm:min-h-[252px] sm:px-6 sm:py-10 lg:min-h-[392px]">
-                <div className="mb-5 flex h-20 w-20 items-center justify-center rounded-full bg-[var(--color-secondary)]/10 text-[var(--color-secondary)]">
-                  <SceneIcon size={38} strokeWidth={1.3} />
-                </div>
-
-                <p className="text-sm font-semibold tracking-wide text-[var(--color-primary)] sm:text-base">
-                  {scene.label}
-                </p>
-
-                <p className="mt-2 max-w-xs text-sm leading-6 text-[var(--color-text-secondary)]">
-                  {scene.description}
-                </p>
-
-                <span className="mt-6 rounded-full border border-[var(--color-border)] px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.18em] text-[var(--color-text-secondary)]">
-                  Classroom image placeholder
-                </span>
+              {/* Photo label */}
+              <div className="
+                absolute bottom-5 left-5
+                rounded-full border border-white/30
+                bg-black/25 px-4 py-2
+                text-[10px] font-bold uppercase
+                tracking-[0.16em] text-white
+                backdrop-blur-md
+                sm:bottom-7 sm:left-7
+              ">
+                Learning in action
               </div>
             </div>
 
-            {/* Testimonial */}
-            <article className="flex flex-col rounded-3xl border border-[var(--color-border)] bg-[var(--color-surface)] p-6 shadow-[var(--shadow-sm)] sm:p-10 lg:p-12">
-              <div
-                aria-hidden="true"
-                className="font-serif text-7xl leading-[0.7] text-[var(--color-secondary)]/30"
-              >
-                “
+            {/* Testimonial content */}
+            <article
+              key={activeIndex}
+              className="
+                relative flex min-w-0
+                flex-col justify-between
+                px-7 py-10
+                sm:px-10 sm:py-12
+                lg:px-14 lg:py-14
+              "
+              aria-roledescription="slide"
+              aria-label={`Testimonial ${activeIndex + 1} of ${total}`}
+            >
+
+              {/* Decorative quote */}
+              <div>
+                <Quote
+                  size={54}
+                  strokeWidth={1}
+                  aria-hidden="true"
+                  className="text-[var(--color-primary)]"
+                />
+
+                <blockquote className="
+                  mt-6 max-w-2xl
+                  font-heading text-xl
+                  font-semibold leading-[1.55]
+                  tracking-tight
+                  text-[var(--color-background)]
+                  sm:text-2xl sm:leading-[1.5]
+                  lg:text-[1.75rem]
+                ">
+                  {activeTestimonial.quote}
+                </blockquote>
               </div>
 
-              <blockquote
-                className="mt-6 flex-1 text-lg leading-8 text-[var(--color-secondary)]/80 sm:text-xl sm:leading-9"
-              >
-                {activeTestimonial.quote}
-              </blockquote>
+              {/* Attribution */}
+              <div className="mt-10">
 
-              <div className="mt-8 border-t border-[var(--color-border)] pt-6">
-                <p className="text-base font-semibold text-[var(--color-primary)]">
+                <div className="
+                  mb-6 h-[2px] w-12
+                  rounded-full
+                  bg-[var(--color-primary)]
+                " />
+
+                <p className="
+                  font-heading text-lg font-bold
+                  text-[var(--color-background)]
+                ">
                   {activeTestimonial.name}
                 </p>
 
-                <p className="mt-1 text-sm text-[var(--color-text-secondary)]">
-                  {activeTestimonial.role}
-                </p>
-
-                <p className="mt-1 text-sm font-medium text-[var(--color-secondary)]">
-                  {activeTestimonial.organisation}
-                </p>
-
-                {activeTestimonial.programme && (
-                  <p className="mt-3 text-xs font-medium uppercase tracking-wide text-[var(--color-primary)]">
-                    {activeTestimonial.programme}
+                {activeTestimonial.role && (
+                  <p className="
+                    mt-1 text-sm leading-6
+                    text-[var(--color-background)]/75
+                  ">
+                    {activeTestimonial.role}
                   </p>
                 )}
+
+                {activeTestimonial.organisation && (
+                  <p className="
+                    mt-1 text-sm font-semibold
+                    text-[var(--color-primary)]
+                  ">
+                    {activeTestimonial.organisation}
+                  </p>
+                )}
+
+                {activeTestimonial.programme && (
+                  <span className="
+                    mt-5 inline-flex max-w-full
+                    rounded-full border border-white/20
+                    px-4 py-2
+                    text-[10px] font-bold uppercase
+                    tracking-[0.14em]
+                    text-[var(--color-background)]
+                  ">
+                    {activeTestimonial.programme}
+                  </span>
+                )}
+
               </div>
             </article>
           </div>
 
-          {/* Carousel controls */}
+          {/* Carousel navigation */}
           {total > 1 && (
-            <div className="mt-5 flex items-center justify-between gap-3 sm:mt-8">
+            <div className="
+              mt-6 flex flex-wrap
+              items-center justify-between gap-5
+              sm:mt-8
+            ">
+
+              {/* Pagination dots */}
               <div className="flex items-center gap-2">
                 {testimonials.map((testimonial, index) => (
                   <button
-                    key={testimonial.name + index}
+                    key={`${testimonial.name}-${index}`}
                     type="button"
                     onClick={() => setActiveIndex(index)}
                     aria-label={`Show testimonial ${index + 1}`}
-                    aria-current={activeIndex === index ? "true" : undefined}
-                    className={`h-2.5 rounded-full transition-all duration-300 ${
-                      activeIndex === index
-                        ? "w-8 bg-[var(--color-secondary)]"
-                        : "w-2.5 bg-[var(--color-border)] hover:bg-[var(--color-olive)]"
-                    }`}
+                    aria-current={
+                      activeIndex === index ? "true" : undefined
+                    }
+                    className={`
+                      h-2.5 rounded-full
+                      transition-all duration-300
+                      ${
+                        activeIndex === index
+                          ? "w-9 bg-[var(--color-primary)]"
+                          : "w-2.5 bg-[var(--color-border)] hover:bg-[var(--color-olive)]"
+                      }
+                    `}
                   />
                 ))}
               </div>
 
+              {/* Previous / next */}
               <div className="flex items-center gap-3">
-                <span className="mr-2 text-xs font-medium tabular-nums text-[var(--color-text-secondary)]">
-                  {String(activeIndex + 1).padStart(2, "0")} /{" "}
+
+                <span className="
+                  mr-2 text-xs font-bold
+                  tabular-nums
+                  text-[var(--color-text-secondary)]
+                ">
+                  {String(activeIndex + 1).padStart(2, "0")}
+                  {" / "}
                   {String(total).padStart(2, "0")}
                 </span>
 
@@ -206,7 +322,15 @@ export default function TestimonialSection() {
                   type="button"
                   onClick={showPrevious}
                   aria-label="Previous testimonial"
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-border)] text-[var(--color-primary)] transition-colors hover:bg-[var(--color-olive)]/10"
+                  className="
+                    flex h-11 w-11
+                    items-center justify-center
+                    rounded-full border
+                    border-[var(--color-border)]
+                    text-[var(--color-secondary)]
+                    transition-colors
+                    hover:bg-[var(--color-soft-accent)]/40
+                  "
                 >
                   <ChevronLeft size={20} />
                 </button>
@@ -215,13 +339,22 @@ export default function TestimonialSection() {
                   type="button"
                   onClick={showNext}
                   aria-label="Next testimonial"
-                  className="flex h-11 w-11 items-center justify-center rounded-full border border-[var(--color-border)] text-[var(--color-primary)] transition-colors hover:bg-[var(--color-olive)]/10"
+                  className="
+                    flex h-11 w-11
+                    items-center justify-center
+                    rounded-full
+                    bg-[var(--color-primary)]
+                    text-white
+                    transition-transform duration-300
+                    hover:scale-105
+                  "
                 >
                   <ChevronRight size={20} />
                 </button>
               </div>
             </div>
           )}
+
         </div>
       </div>
     </section>

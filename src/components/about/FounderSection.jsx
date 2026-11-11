@@ -21,7 +21,7 @@ export default function FounderSection({data}) {
               />
 
               <img
-                src="/images/trainers/ira-saha.jpg"
+                src={data.image}
                 alt="Ira Saha, Founder of Empowering Minds"
                 className="absolute inset-0 h-full w-full object-cover object-center"
               />

@@ -63,10 +63,9 @@ function FoundationItem({ card, index, length }) {
 }
 
 export default function FoundationsSection({data}) {
-    if (!data?.areaCards?.length) return null;
     const shouldReduceMotion = useReducedMotion();
+    if (!data?.areaCards?.length) return null;
     const cards = data?.areaCards || [];
-    const length = cards.length;
     return (
         <section className="relative isolate overflow-hidden bg-[var(--color-taupe)] py-16 sm:py-20 lg:py-28">
 
@@ -105,12 +104,12 @@ export default function FoundationsSection({data}) {
 
             {/* Numbered foundations */}
             <div>
-                {cards.map((card, index, length) => (
+                {cards.map((card, index) => (
                 <FoundationItem
                     key={card.number}
                     card={card}
                     index={index}
-                    length={length}
+                    length={card.length}
                     shouldReduceMotion={shouldReduceMotion}
                 />
                 ))}

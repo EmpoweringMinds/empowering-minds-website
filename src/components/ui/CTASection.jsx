@@ -1,3 +1,4 @@
+
 import CTAButton from "./CTAButton";
 import FadeIn from "./FadeIn";
 
@@ -7,32 +8,29 @@ const variants = {
     eyebrow: "text-[var(--color-primary)]",
     title: "text-[var(--color-secondary)]",
     description: "text-[var(--color-text-secondary)]",
-    decoration:
-      "bg-[var(--color-soft-accent)]/50",
-    border:
-      "border-[var(--color-border-soft)]",
+    decoration: "bg-[var(--color-soft-accent)]/60",
+    secondaryDecoration: "bg-[var(--color-olive)]/20",
+    border: "border-[var(--color-border)]",
   },
 
   blush: {
-    background: "bg-[var(--color-soft-accent)]/60",
-    eyebrow: "text-[var(--color-primary)]",
+    background: "bg-[var(--color-soft-accent)]",
+    eyebrow: "text-[var(--color-secondary)]",
     title: "text-[var(--color-secondary)]",
-    description: "text-[var(--color-text-secondary)]",
-    decoration:
-      "bg-white/50",
-    border:
-      "border-[var(--color-soft-accent)]",
+    description: "text-[var(--color-secondary)]/80",
+    decoration: "bg-white/35",
+    secondaryDecoration: "bg-[var(--color-primary)]/15",
+    border: "border-[var(--color-border)]",
   },
 
   warm: {
-    background: "bg-[var(--color-primary)]/8",
+    background: "bg-[var(--color-secondary)]",
     eyebrow: "text-[var(--color-primary)]",
-    title: "text-[var(--color-secondary)]",
-    description: "text-[var(--color-text-secondary)]",
-    decoration:
-      "bg-[var(--color-primary)]/8",
-    border:
-      "border-[var(--color-primary)]/10",
+    title: "text-[var(--color-background)]",
+    description: "text-[var(--color-background)]/80",
+    decoration: "bg-[var(--color-primary)]/15",
+    secondaryDecoration: "bg-[var(--color-olive)]/15",
+    border: "border-white/10",
   },
 };
 
@@ -40,7 +38,7 @@ export default function CTASection({
   title,
   description,
 
-  eyebrow = "Let’s build what’s next",
+  eyebrow = "Let's build what's next",
 
   primaryLabel = "Schedule a consultation",
   primaryTo = "/contact",
@@ -49,10 +47,6 @@ export default function CTASection({
   secondaryTo = "/courses",
   secondaryLabelIsVisible = true,
 
-  /*
-   * soft is intentionally the default.
-   * No dark CTA sections.
-   */
   variant = "soft",
 }) {
   const styles = variants[variant] ?? variants.soft;
@@ -60,134 +54,144 @@ export default function CTASection({
   return (
     <section className="py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <FadeIn
-          className={`
-            relative isolate overflow-hidden
-            rounded-[var(--radius-xl)]
-            border
-            px-6 py-10
-            sm:px-10 sm:py-12
-            lg:px-14 lg:py-14
-            ${styles.background}
-            ${styles.border}
-          `}
-        >
-          {/* --------------------------------
-              Decorative atmosphere
-          -------------------------------- */}
 
+        <FadeIn>
           <div
-            aria-hidden="true"
             className={`
-              pointer-events-none absolute
-              -right-20 -top-20
-              h-56 w-56
-              rounded-full
-              blur-3xl
-              ${styles.decoration}
+              relative isolate overflow-hidden
+              rounded-[2rem] sm:rounded-[2.5rem]
+              border
+              px-7 py-10
+              sm:px-10 sm:py-12
+              lg:px-16 lg:py-16
+              ${styles.background}
+              ${styles.border}
             `}
-          />
+          >
 
-          <div
-            aria-hidden="true"
-            className={`
-              pointer-events-none absolute
-              -bottom-24 left-1/3
-              h-48 w-48
-              rounded-full
-              blur-3xl
-              ${styles.decoration}
-            `}
-          />
+            {/* Organic decorative shapes */}
+            <div
+              aria-hidden="true"
+              className={`
+                pointer-events-none absolute
+                -right-24 -top-28
+                h-72 w-72
+                rounded-full
+                ${styles.decoration}
+              `}
+            />
 
-          {/* --------------------------------
-              Content
-          -------------------------------- */}
+            <div
+              aria-hidden="true"
+              className={`
+                pointer-events-none absolute
+                -bottom-32 right-[18%]
+                h-64 w-64
+                rounded-full
+                ${styles.secondaryDecoration}
+              `}
+            />
 
-          <div
-            className="
-              relative
-              flex flex-col gap-8
+            {/* Decorative outline */}
+            <div
+              aria-hidden="true"
+              className="
+                pointer-events-none absolute
+                -right-10 top-1/2
+                hidden h-[420px] w-[420px]
+                -translate-y-1/2
+                rounded-full border
+                border-[var(--color-primary)]/20
+                lg:block
+              "
+            />
+
+            {/* Content */}
+            <div className="
+              relative z-10
+              flex flex-col gap-9
               lg:flex-row
               lg:items-center
               lg:justify-between
               lg:gap-12
-            "
-          >
-            <div className="max-w-2xl">
-              {/* Eyebrow */}
-              <p
-                className="
-                  text-xs font-semibold uppercase
-                  tracking-[0.24em]
-                  sm:text-sm sm:tracking-[0.3em]
-                "
-              >
-                <span className={styles.eyebrow}>
-                  {eyebrow}
-                </span>
-              </p>
+            ">
 
-              {/* Title */}
-              <h2
-                className={`
-                  mt-4
-                  text-3xl font-bold
-                  leading-tight
-                  tracking-[-0.025em]
+              {/* Text */}
+              <div className="max-w-2xl">
+
+                {eyebrow && (
+                  <div className="flex items-center gap-3">
+                    <span
+                      aria-hidden="true"
+                      className="
+                        h-[3px] w-10 rounded-full
+                        bg-[var(--color-primary)]
+                      "
+                    />
+
+                    <p className={`
+                      text-xs font-bold uppercase
+                      tracking-[0.22em]
+                      sm:text-sm
+                      ${styles.eyebrow}
+                    `}>
+                      {eyebrow}
+                    </p>
+                  </div>
+                )}
+
+                <h2 className={`
+                  mt-5 max-w-2xl
+                  font-heading text-3xl
+                  font-bold leading-[1.15]
+                  tracking-tight
                   sm:text-4xl
                   lg:text-5xl
                   ${styles.title}
-                `}
-              >
-                {title}
-              </h2>
+                `}>
+                  {title}
+                </h2>
 
-              {/* Description */}
-              {description && (
-                <p
-                  className={`
-                    mt-5
-                    max-w-xl
+                {description && (
+                  <p className={`
+                    mt-5 max-w-xl
                     text-sm leading-7
                     sm:text-base sm:leading-8
                     ${styles.description}
-                  `}
-                >
-                  {description}
-                </p>
-              )}
-            </div>
+                  `}>
+                    {description}
+                  </p>
+                )}
 
-            {/* --------------------------------
-                Actions
-            -------------------------------- */}
+              </div>
 
-            <div
-              className="
-                flex shrink-0
-                flex-col gap-3
-                sm:flex-row sm:flex-wrap
-                sm:gap-4
-              "
-            >
-              {primaryLabel && (
-                <CTAButton
-                  to={primaryTo}
-                  variant="primary"
-                >
-                  {primaryLabel}
-                </CTAButton>
-              )}
+              {/* Actions */}
+              <div className="
+                flex shrink-0 flex-col
+                gap-3 sm:flex-row sm:flex-wrap
+                lg:flex-col lg:items-stretch
+              ">
 
-              {secondaryLabelIsVisible && secondaryLabel &&  (
-                <CTAButton
-                  to={secondaryTo}
-                  variant="secondary"
-                >
-                  {secondaryLabel}
-                </CTAButton>
-              )}
+                {primaryLabel && (
+                  <CTAButton
+                    to={primaryTo}
+                    variant="primary"
+                  >
+                    {primaryLabel}
+                  </CTAButton>
+                )}
+
+                {secondaryLabelIsVisible && secondaryLabel && (
+                  <CTAButton
+                    to={secondaryTo}
+                    variant="secondary"
+                  >
+                    {secondaryLabel}
+                  </CTAButton>
+                )}
+
+              </div>
+
             </div>
           </div>
         </FadeIn>

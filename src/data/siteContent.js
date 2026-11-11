@@ -9,10 +9,7 @@ import {
   Users,
   TrendingUp,
   LucideUser,
-  MessageCircle,
   Briefcase,
-  LucideUser2,
-  LucideUsers,
   MessagesSquare,
   Sprout,
 } from "lucide-react";
@@ -21,7 +18,7 @@ export const navLinks = [
   { label: "About", to: "/about" },
   { label: "Courses", to: "/courses" },
   { label: "Trainers", to: "/trainers" },
-  { label: "Programs", to: "/services" },
+  { label: "Programs", to: "/programs" },
   { label: "Workshops", to: "/workshops" },
   { label: "Contact", to: "/contact" },
   {

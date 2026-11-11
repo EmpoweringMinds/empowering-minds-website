@@ -1,5 +1,5 @@
 
-import { ArrowUpRight, Check } from "lucide-react";
+import { Check } from "lucide-react";
 import CTAButton from "../ui/CTAButton";
 
 const surfaceStyles = [
@@ -9,12 +9,6 @@ const surfaceStyles = [
 ];
 
 export default function ProgramCard({ program, index = 0, onEnquire }) {
-  const {
-    title,
-    description,
-    modules = [],
-    ctaLabel = "Explore this service",
-  } = program;
 
   const surface = surfaceStyles[index % surfaceStyles.length];
 
@@ -72,7 +66,7 @@ export default function ProgramCard({ program, index = 0, onEnquire }) {
           text-[var(--color-primary)]
           sm:text-3xl
         ">
-          {title}
+          {program.heading}
         </h3>
 
         <p className="
@@ -80,12 +74,12 @@ export default function ProgramCard({ program, index = 0, onEnquire }) {
           leading-7 text-[var(--color-text-secondary)]
           sm:text-base sm:leading-8
         ">
-          {description}
+          {program.description}
         </p>
       </div>
 
       {/* Selected development areas */}
-      {modules.length > 0 && (
+      {program.modules.length > 0 && (
         <div className="relative mt-7">
           <p className="
             text-[10px] font-bold uppercase
@@ -96,7 +90,7 @@ export default function ProgramCard({ program, index = 0, onEnquire }) {
           </p>
 
           <div className="mt-3 flex flex-wrap gap-2">
-            {modules.slice(0, 3).map((module) => (
+            {program.modules.slice(0, 3).map((module) => (
               <span
                 key={module}
                 className="
@@ -116,13 +110,13 @@ export default function ProgramCard({ program, index = 0, onEnquire }) {
               </span>
             ))}
 
-            {modules.length > 3 && (
+            {program.modules.length > 3 && (
               <span className="
                 rounded-full px-3 py-2
                 text-xs font-semibold
                 text-[var(--color-secondary)]
               ">
-                +{modules.length - 3} more
+                +{program.modules.length - 3} more
               </span>
             )}
           </div>
@@ -146,7 +140,7 @@ export default function ProgramCard({ program, index = 0, onEnquire }) {
           "
           showArrow = {true}
         >
-          {ctaLabel}
+          {program.ctaLabel || "Enquire Now"} 
         </CTAButton>
       </div>
     </article>
