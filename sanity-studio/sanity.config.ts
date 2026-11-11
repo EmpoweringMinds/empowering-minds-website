@@ -37,6 +37,13 @@ export default defineConfig({
                     .schemaType('aboutPage')
                     .documentId('aboutPage')
                 ),
+                S.listItem()
+                .title('Programs Page')
+                .child(
+                  S.document()
+                    .schemaType('programsPage')
+                    .documentId('programsPage')
+                ),
               ])
             ),
           S.divider(),
