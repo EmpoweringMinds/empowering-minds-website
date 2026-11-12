@@ -1,21 +1,20 @@
+
 import FadeIn from "./FadeIn";
 
 const propStyles = {
   underline: `
-    h-[var(--decorative-line-height)]
-    w-[var(--decorative-line-width)]
+    h-[5px]
+    w-20
     rounded-full
   `,
-
   dot: `
-    h-[var(--decorative-dot-size)]
-    w-[var(--decorative-dot-size)]
+    h-3.5
+    w-3.5
     rounded-full
   `,
-
   rule: `
-    h-px
-    w-16
+    h-[2px]
+    w-24
   `,
 };
 
@@ -29,32 +28,14 @@ export default function SectionHeader({
   eyebrow,
   title,
   description,
-
   align = "left",
-
-  /*
-   * Decorative accent.
-   * underline is the default.
-   */
   prop = "underline",
-
-  /*
-   * Controls the position of the decorative accent
-   * independently from text alignment.
-   */
   accentAlign,
-
   titleClassName = "",
-
   light = false,
 }) {
   const centered = align === "center";
 
-  /*
-   * If accentAlign isn't provided:
-   * - centered text → centered accent
-   * - otherwise → left accent
-   */
   const resolvedAccentAlign =
     accentAlign ?? (centered ? "center" : "left");
 
@@ -67,7 +48,7 @@ export default function SectionHeader({
     : "text-[var(--color-primary)]";
 
   const descriptionColor = light
-    ? "text-white/70"
+    ? "text-white/80"
     : "text-[var(--color-text-secondary)]";
 
   const propColor = light
@@ -77,33 +58,51 @@ export default function SectionHeader({
   return (
     <FadeIn
       className={`
-        max-w-3xl
+        w-full max-w-3xl
         ${centered ? "mx-auto text-center" : ""}
       `}
     >
       {/* Eyebrow */}
       {eyebrow && (
-        <p
+        <div
           className={`
             mb-4
-            text-xs font-semibold uppercase
-            tracking-[0.24em]
-            sm:text-sm sm:tracking-[0.3em]
-            ${eyebrowColor}
+            flex items-center gap-2.5
+            ${centered ? "justify-center" : ""}
           `}
         >
-          {eyebrow}
-        </p>
+          <span
+            aria-hidden="true"
+            className={`
+              h-2 w-2 shrink-0 rounded-full
+              ${light
+                ? "bg-[var(--color-soft-accent)]"
+                : "bg-[var(--color-primary)]"}
+            `}
+          />
+
+          <p
+            className={`
+              text-xs font-bold uppercase
+              tracking-[0.18em]
+              sm:text-sm sm:tracking-[0.22em]
+              ${eyebrowColor}
+            `}
+          >
+            {eyebrow}
+          </p>
+        </div>
       )}
 
       {/* Heading */}
       <h2
         className={`
-          text-2xl font-bold
-          leading-tight
-          tracking-[-0.025em]
-          sm:text-3xl
-          lg:text-4xl
+          font-heading
+          text-3xl font-bold
+          leading-[1.1]
+          tracking-[-0.04em]
+          sm:text-4xl
+          lg:text-[2.85rem]
           ${headingColor}
           ${titleClassName}
         `}
@@ -116,7 +115,7 @@ export default function SectionHeader({
         <div
           aria-hidden="true"
           className={`
-            mt-5
+            mt-6
             ${propStyles[prop]}
             ${propColor}
             ${accentAlignments[resolvedAccentAlign]}
@@ -128,11 +127,11 @@ export default function SectionHeader({
       {description && (
         <p
           className={`
-            mt-5
+            mt-5 max-w-2xl
             text-sm leading-7
             sm:text-base sm:leading-8
-            lg:text-lg
             ${descriptionColor}
+            ${centered ? "mx-auto" : ""}
           `}
         >
           {description}

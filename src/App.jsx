@@ -3,7 +3,8 @@ import ScrollToTop from "./components/common/ScrollToTop";
 import Footer from "./components/common/Footer";
 import Navbar from "./components/common/Navbar";
 import WhatsAppFloat from "./components/common/WhatsAppFloat";
-import Contact from "./pages/Contact";
+//import Contact from "./pages/Contact";
+import TestContact from "./pages/TestContact.jsx";
 import About from "./pages/About.jsx";
 import Programs from "./pages/Programs";
 //import Trainers from "./pages/Trainers";
@@ -24,7 +25,7 @@ function App() {
         <Route path="/about" element={<About />} />
         <Route path="/programs" element={<Programs />} />
         <Route path="/trainers" element={<Trainer />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/contact" element={<TestContact />} />
         <Route path="/workshops" element={<Workshops />} />
         <Route path="/workshops/:slug" element={<WorkshopDetails />} />
         <Route path="/workshops/:slug/register" element={<WorkshopRegistration />}/>
