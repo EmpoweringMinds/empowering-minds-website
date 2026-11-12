@@ -1,41 +1,35 @@
-import { NavLink, Link } from "react-router-dom";
+
+import { Link, NavLink } from "react-router-dom";
 import { Mail, MapPin, Phone, ArrowUpRight } from "lucide-react";
-import {
-  FaFacebookF,
-  FaInstagram,
-  FaLinkedinIn,
-} from "react-icons/fa";
 
 import { contactDetails, navLinks } from "../../data/siteContent";
 
-function NavigationLink({ link, onClick }) {
-  const linkClasses = `
-    group flex items-center gap-1
-    text-sm font-medium
+function FooterNavigationLink({ link }) {
+  const classes = `
+    group inline-flex items-center gap-1
+    text-sm
     text-[var(--color-text-secondary)]
-    transition-colors
-    duration-[var(--transition-fast)]
-    hover:text-[var(--color-secondary)]
+    transition-colors duration-200
+    hover:text-[var(--color-primary)]
   `;
 
   if (link.external) {
     return (
       <a
         href={link.href}
-        onClick={onClick}
-        className={linkClasses}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={classes}
       >
-        <span>{link.label}</span>
-
+        {link.label}
         <ArrowUpRight
           size={13}
           aria-hidden="true"
           className="
             opacity-0
-            transition-all
-            duration-[var(--transition-fast)]
-            group-hover:-translate-y-0.5
+            transition-all duration-200
             group-hover:translate-x-0.5
+            group-hover:-translate-y-0.5
             group-hover:opacity-100
           "
         />
@@ -46,249 +40,225 @@ function NavigationLink({ link, onClick }) {
   return (
     <NavLink
       to={link.to}
-      onClick={onClick}
       className={({ isActive }) => `
-        ${linkClasses}
-
-        ${
-          isActive
-            ? "text-[var(--color-secondary)]"
-            : "text-[var(--color-text-secondary)]"
-        }
+        ${classes}
+        ${isActive ? "font-semibold text-[var(--color-primary)]" : ""}
       `}
     >
-      <span>{link.label}</span>
+      {link.label}
     </NavLink>
   );
 }
 
 export default function Footer() {
   return (
-    <footer
-      className="
-        border-t
-        border-[var(--color-border)]
-        bg-[var(--color-surface-warm)]
-      "
-    >
+    <footer className="academy-theme bg-[var(--color-surface-warm)]">
       <div
         className="
           mx-auto max-w-7xl
-          px-4 py-16
-          sm:px-6 sm:py-20
-          lg:px-8 lg:py-24
+          px-4 py-12
+          sm:px-6 sm:py-16
+          lg:px-8 lg:py-20
         "
       >
-        {/* --------------------------------
-            Main footer
-        -------------------------------- */}
+        {/* Main Footer */}
 
         <div
           className="
-            grid gap-12
-            md:grid-cols-2
-            lg:grid-cols-[1.4fr_0.7fr_1fr]
-            lg:gap-16
+            grid gap-10
+            lg:grid-cols-[1.2fr_0.7fr_1fr]
+            lg:gap-12
           "
         >
-          {/* --------------------------------
-              Brand
-          -------------------------------- */}
+          {/* Brand Panel */}
 
-          <div>
-            <Link
-              to="/"
-              className="
-                inline-block
-                text-2xl font-bold
-                tracking-[-0.025em]
-                text-[var(--color-secondary)]
-                transition-colors
-                duration-[var(--transition-fast)]
-                hover:text-[var(--color-primary)]
-                sm:text-3xl
-              "
-            >
-              Empowering Minds
-            </Link>
+          <div
+            className="
+              relative isolate overflow-hidden
+              rounded-[var(--radius-lg)]
+              bg-[var(--color-secondary)]
+              p-7 sm:p-9
+            "
+          >
+            {/* Decorative elements */}
 
             <div
               aria-hidden="true"
               className="
-                mt-4
-                h-[var(--decorative-line-height)]
-                w-[var(--decorative-line-width)]
-                rounded-full
-                bg-[var(--color-primary)]
+                pointer-events-none absolute
+                -right-12 -top-12
+                h-40 w-40 rounded-full
+                border border-white/10
               "
             />
 
-            <p
+            <div
+              aria-hidden="true"
               className="
-                mt-5
-                max-w-md
-                text-sm leading-7
-                text-[var(--color-text-secondary)]
-                sm:text-base sm:leading-8
+                pointer-events-none absolute
+                -bottom-16 -right-5
+                h-36 w-36 rounded-full
+                bg-[var(--color-primary)]/20
+                blur-2xl
               "
-            >
-              Learning experiences built to strengthen leadership,
-              develop people, and create measurable transformation
-              across institutions and teams.
-            </p>
+            />
 
-            {/* Social */}
-            <div className="mt-7 flex items-center gap-3">
-              <a
-                href="https://facebook.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook"
+            <div className="relative z-10">
+              <Link
+                to="/"
                 className="
-                  flex h-10 w-10
-                  items-center justify-center
-                  rounded-full
-                  border
-                  border-[var(--color-border)]
-                  bg-[var(--color-surface)]
-                  text-[var(--color-secondary)]
-                  transition-all
-                  duration-[var(--transition-fast)]
-                  hover:-translate-y-0.5
-                  hover:border-[var(--color-primary)]/30
-                  hover:bg-[var(--color-soft-accent)]
-                  hover:text-[var(--color-primary)]
+                  inline-flex items-center gap-3
+                  text-white
+                  transition-opacity hover:opacity-80
                 "
               >
-                <FaFacebookF size={15} />
-              </a>
+                <img
+                  src="/images/logo-EM.png"
+                  alt=""
+                  className="h-11 w-11 object-contain"
+                />
 
-              <a
-                href="https://instagram.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Instagram"
+                <span
+                  className="
+                    text-xl font-bold
+                    tracking-[-0.035em]
+                  "
+                >
+                  Empowering Minds
+                </span>
+              </Link>
+
+              <div
+                aria-hidden="true"
                 className="
-                  flex h-10 w-10
-                  items-center justify-center
+                  mt-6 h-1 w-12
                   rounded-full
-                  border
-                  border-[var(--color-border)]
-                  bg-[var(--color-surface)]
-                  text-[var(--color-secondary)]
-                  transition-all
-                  duration-[var(--transition-fast)]
-                  hover:-translate-y-0.5
-                  hover:border-[var(--color-primary)]/30
-                  hover:bg-[var(--color-soft-accent)]
-                  hover:text-[var(--color-primary)]
+                  bg-[var(--color-primary)]
+                "
+              />
+
+              <p
+                className="
+                  mt-6 max-w-sm
+                  text-sm leading-7
+                  text-white/75
+                  sm:text-base sm:leading-8
                 "
               >
-                <FaInstagram size={15} />
-              </a>
+                Learning experiences built to strengthen leadership,
+                develop people, and create measurable transformation
+                across institutions and teams.
+              </p>
 
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="LinkedIn"
+              <p
                 className="
-                  flex h-10 w-10
-                  items-center justify-center
-                  rounded-full
-                  border
-                  border-[var(--color-border)]
-                  bg-[var(--color-surface)]
-                  text-[var(--color-secondary)]
-                  transition-all
-                  duration-[var(--transition-fast)]
-                  hover:-translate-y-0.5
-                  hover:border-[var(--color-primary)]/30
-                  hover:bg-[var(--color-soft-accent)]
-                  hover:text-[var(--color-primary)]
+                  mt-8
+                  text-xs font-semibold uppercase
+                  tracking-[0.2em]
+                  text-white/60
                 "
               >
-                <FaLinkedinIn size={15} />
-              </a>
+                People. Capability. Transformation.
+              </p>
             </div>
           </div>
 
-          {/* --------------------------------
-              Navigation
-          -------------------------------- */}
+          {/* Navigation */}
 
-          <div>
-            <p
-              className="
-                mb-5
-                text-xs font-semibold uppercase
-                tracking-[0.24em]
-                text-[var(--color-primary)]
-              "
-            >
-              Navigate
-            </p>
-
-            <nav className="space-y-3">
-            {navLinks.map((link) => (
-              <NavigationLink
-                key={link.label}
-                link={link}
+          <div className="pt-2">
+            <div className="mb-6 flex items-center gap-3">
+              <span
+                className="
+                  h-2 w-2 rounded-full
+                  bg-[var(--color-primary)]
+                "
               />
-            ))}
+
+              <h3
+                className="
+                  text-xs font-bold uppercase
+                  tracking-[0.2em]
+                  text-[var(--color-secondary)]
+                "
+              >
+                Explore
+              </h3>
+            </div>
+
+            <nav
+              aria-label="Footer navigation"
+              className="flex flex-col items-start gap-4"
+            >
+              {navLinks.map((link) => (
+                <FooterNavigationLink
+                  key={link.label}
+                  link={link}
+                />
+              ))}
             </nav>
           </div>
 
-          {/* --------------------------------
-              Contact
-          -------------------------------- */}
+          {/* Contact */}
 
-          <div>
-            <p
-              className="
-                mb-5
-                text-xs font-semibold uppercase
-                tracking-[0.24em]
-                text-[var(--color-primary)]
-              "
-            >
-              Contact
-            </p>
+          <div className="pt-2">
+            <div className="mb-6 flex items-center gap-3">
+              <span
+                className="
+                  h-2 w-2 rounded-full
+                  bg-[var(--color-primary)]
+                "
+              />
+
+              <h3
+                className="
+                  text-xs font-bold uppercase
+                  tracking-[0.2em]
+                  text-[var(--color-secondary)]
+                "
+              >
+                Find Us
+              </h3>
+            </div>
 
             <div
               className="
-                space-y-4
-                text-sm leading-6
+                space-y-5
+                text-sm leading-7
                 text-[var(--color-text-secondary)]
               "
             >
+              {/* Email */}
+
               <a
                 href={`mailto:${contactDetails.email}`}
                 className="
-                  flex items-start gap-3
+                  group flex items-start gap-3
                   transition-colors
-                  duration-[var(--transition-fast)]
-                  hover:text-[var(--color-secondary)]
+                  hover:text-[var(--color-primary)]
                 "
               >
                 <Mail
-                  size={17}
+                  size={18}
+                  aria-hidden="true"
                   className="
-                    mt-0.5 shrink-0
+                    mt-1 shrink-0
                     text-[var(--color-primary)]
                   "
                 />
 
-                <span className="break-words">
+                <span className="break-all">
                   {contactDetails.email}
                 </span>
               </a>
 
+              {/* Phone */}
+
               <div className="flex items-start gap-3">
                 <Phone
-                  size={17}
+                  size={18}
+                  aria-hidden="true"
                   className="
-                    mt-0.5 shrink-0
+                    mt-1 shrink-0
                     text-[var(--color-primary)]
                   "
                 />
@@ -299,10 +269,9 @@ export default function Footer() {
                       key={phone}
                       href={`tel:${phone.replace(/\s/g, "")}`}
                       className="
-                        block break-words
+                        block
                         transition-colors
-                        duration-[var(--transition-fast)]
-                        hover:text-[var(--color-secondary)]
+                        hover:text-[var(--color-primary)]
                       "
                     >
                       {phone}
@@ -311,41 +280,39 @@ export default function Footer() {
                 </div>
               </div>
 
+              {/* Address */}
+
               <div className="flex items-start gap-3">
                 <MapPin
-                  size={17}
+                  size={18}
+                  aria-hidden="true"
                   className="
-                    mt-0.5 shrink-0
+                    mt-1 shrink-0
                     text-[var(--color-primary)]
                   "
                 />
 
-                <div className="break-words leading-7">
+                <address className="not-italic">
                   {contactDetails.address.map((line) => (
                     <div key={line}>{line}</div>
                   ))}
-                </div>
+                </address>
               </div>
             </div>
           </div>
         </div>
 
-        {/* --------------------------------
-            Bottom bar
-        -------------------------------- */}
+        {/* Bottom Bar */}
 
         <div
           className="
-            mt-14
-            flex flex-col gap-3
-            border-t
-            border-[var(--color-border)]
+            mt-12 flex flex-col gap-3
+            border-t border-[var(--color-border)]
             pt-6
             text-xs
             text-[var(--color-text-secondary)]
             sm:mt-16
-            sm:flex-row
-            sm:items-center
+            sm:flex-row sm:items-center
             sm:justify-between
           "
         >
@@ -354,9 +321,17 @@ export default function Footer() {
             All rights reserved.
           </p>
 
-          <p className="text-[var(--color-text-secondary)]/70">
-            People. Capability. Transformation.
-          </p>
+          <Link
+            to="/"
+            className="
+              inline-flex items-center gap-1
+              transition-colors
+              hover:text-[var(--color-primary)]
+            "
+          >
+            Back to home
+            <ArrowUpRight size={13} aria-hidden="true" />
+          </Link>
         </div>
       </div>
     </footer>

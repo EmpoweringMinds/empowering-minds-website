@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
@@ -5,37 +6,57 @@ import { navLinks } from "../../data/siteContent";
 import CTAButton from "../ui/CTAButton";
 
 function NavigationLink({ link, mobile = false, onClick }) {
+  const baseClasses = mobile
+    ? `
+        block rounded-xl px-4 py-3.5
+        text-base font-medium
+        transition-all duration-200
+      `
+    : `
+        relative py-2
+        text-sm font-medium
+        transition-colors duration-200
+        xl:text-[15px]
+        after:absolute after:bottom-0
+        after:left-0 after:h-[2px]
+        after:w-0 after:rounded-full
+        after:bg-[var(--color-primary)]
+        after:transition-all after:duration-300
+      `;
+
+  const mobileActive = `
+    bg-[var(--color-soft-accent)]/50
+    text-[var(--color-secondary)]
+  `;
+
+  const mobileInactive = `
+    text-[var(--color-text-secondary)]
+    hover:bg-[var(--color-surface-warm)]
+    hover:text-[var(--color-secondary)]
+  `;
+
+  const desktopInactive = `
+    text-[var(--color-text-secondary)]
+    hover:text-[var(--color-secondary)]
+    hover:after:w-1/2
+  `;
+
   if (link.external) {
     return (
       <a
         href={link.href}
         onClick={onClick}
-        className={
-          mobile
-            ? `
-              block
-              rounded-[var(--radius-md)]
-              px-4 py-3
-              text-base font-medium
-              text-[var(--color-text-secondary)]
-              transition-colors
-              duration-[var(--transition-fast)]
-              hover:bg-[var(--color-surface-warm)]
-              hover:text-[var(--color-secondary)]
-            `
-            : `
-              relative
-              py-2
-              text-sm font-medium
-              text-[var(--color-text-secondary)]
-              transition-colors
-              duration-[var(--transition-fast)]
-              hover:text-[var(--color-secondary)]
-              xl:text-[15px]
-            `
-        }
+        className={`
+          ${baseClasses}
+          ${mobile ? mobileInactive : desktopInactive}
+        `}
       >
-        {link.label}
+        <span>{link.label}</span>
+        {mobile && (
+          <span className="ml-1 text-xs text-[var(--color-primary)]">
+            ↗
+          </span>
+        )}
       </a>
     );
   }
@@ -44,61 +65,21 @@ function NavigationLink({ link, mobile = false, onClick }) {
     <NavLink
       to={link.to}
       onClick={onClick}
-      className={({ isActive }) =>
-        mobile
-          ? `
-            block
-            rounded-[var(--radius-md)]
-            px-4 py-3
-            text-base font-medium
-            transition-colors
-            duration-[var(--transition-fast)]
-
-            ${
-              isActive
-                ? `
-                  bg-[var(--color-soft-accent)]/50
-                  text-[var(--color-secondary)]
-                `
-                : `
-                  text-[var(--color-text-secondary)]
-                  hover:bg-[var(--color-surface-warm)]
-                  hover:text-[var(--color-secondary)]
-                `
-            }
-          `
-          : `
-            relative
-            py-2
-            text-sm font-medium
-            transition-colors
-            duration-[var(--transition-fast)]
-            xl:text-[15px]
-
-            ${
-              isActive
-                ? "text-[var(--color-secondary)]"
-                : "text-[var(--color-text-secondary)] hover:text-[var(--color-secondary)]"
-            }
-
-            after:absolute
-            after:bottom-0
-            after:left-1/2
-            after:h-0.5
-            after:w-0
-            after:-translate-x-1/2
-            after:rounded-full
-            after:bg-[var(--color-primary)]
-            after:transition-all
-            after:duration-[var(--transition-fast)]
-
-            ${
-              isActive
-                ? "after:w-5"
-                : "hover:after:w-3"
-            }
-          `
-      }
+      className={({ isActive }) => `
+        ${baseClasses}
+        ${
+          mobile
+            ? isActive
+              ? mobileActive
+              : mobileInactive
+            : isActive
+              ? `
+                text-[var(--color-secondary)]
+                after:w-full
+              `
+              : desktopInactive
+        }
+      `}
     >
       {link.label}
     </NavLink>
@@ -108,70 +89,67 @@ function NavigationLink({ link, mobile = false, onClick }) {
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
+  const closeMobileMenu = () => setMobileOpen(false);
+
   return (
     <header
       className="
         fixed inset-x-0 top-0 z-50
         border-b border-[var(--color-border-soft)]
-        bg-[var(--color-background)]/90
-        backdrop-blur-md
+        bg-[var(--color-background)]/95
+        backdrop-blur-xl
+        shadow-[0_2px_20px_rgba(70,45,30,0.04)]
+        academy-theme
       "
     >
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <nav
+          aria-label="Main navigation"
           className="
-            flex min-h-[76px]
+            flex min-h-[82px]
             items-center justify-between
-            gap-6
+            gap-5
           "
         >
-          {/* --------------------------------
-              Brand
-          -------------------------------- */}
+          {/* Brand */}
 
           <Link
             to="/"
+            onClick={closeMobileMenu}
             className="
-              flex
-              items-center
-              gap-3
-              shrink-0
-              text-lg font-bold
-              tracking-[-0.025em]
+              group flex shrink-0 items-center gap-3
               text-[var(--color-secondary)]
-              transition-colors
-              duration-[var(--transition-fast)]
+              transition-colors duration-200
               hover:text-[var(--color-primary)]
-              sm:text-xl
             "
           >
             <img
               src="/images/logo-EM.png"
-              alt="Empowering Minds"
-              className="h-10 w-10 object-contain sm:h-11 sm:w-11"
+              alt=""
+              className="
+                h-10 w-10 object-contain
+                sm:h-11 sm:w-11
+              "
             />
-              <span
+
+            <span
               className="
                 text-lg font-bold
-                tracking-[-0.025em]
-                text-[var(--color-secondary)]
+                tracking-[-0.035em]
                 sm:text-xl
-               "
-              >
-                 Empowering Minds
-              </span>
+              "
+            >
+              Empowering Minds
+            </span>
           </Link>
 
-          {/* --------------------------------
-              Desktop navigation
-          -------------------------------- */}
+          {/* Desktop Navigation */}
 
           <div
             className="
-              hidden
-              items-center
-              gap-7
-              lg:flex
+              hidden xl:flex
+              items-center gap-5
+              2xl:gap-7
             "
           >
             {navLinks.map((link) => (
@@ -183,31 +161,31 @@ export default function Navbar() {
 
             <CTAButton
               href="tel:+917003055263"
-              className="ml-1 px-5 py-2.5"
+              className="
+                ml-1 shrink-0
+                px-5 py-2.5
+              "
             >
               Talk to us
             </CTAButton>
           </div>
 
-          {/* --------------------------------
-              Mobile menu button
-          -------------------------------- */}
+          {/* Mobile Menu Toggle */}
 
           <button
             type="button"
             onClick={() => setMobileOpen((value) => !value)}
             className="
-              flex h-10 w-10
+              flex h-11 w-11 shrink-0
               items-center justify-center
               rounded-full
               border border-[var(--color-border)]
               bg-[var(--color-surface)]
               text-[var(--color-secondary)]
-              transition
-              duration-[var(--transition-fast)]
+              transition-all duration-200
               hover:border-[var(--color-primary)]/40
-              hover:text-[var(--color-primary)]
-              lg:hidden
+              hover:bg-[var(--color-soft-accent)]/40
+              xl:hidden
             "
             aria-label={
               mobileOpen
@@ -215,46 +193,61 @@ export default function Navbar() {
                 : "Open navigation menu"
             }
             aria-expanded={mobileOpen}
+            aria-controls="mobile-navigation"
           >
             {mobileOpen ? (
-              <X size={20} strokeWidth={1.8} />
+              <X size={21} strokeWidth={1.8} />
             ) : (
-              <Menu size={20} strokeWidth={1.8} />
+              <Menu size={21} strokeWidth={1.8} />
             )}
           </button>
         </nav>
 
-        {/* --------------------------------
-            Mobile navigation
-        -------------------------------- */}
+        {/* Mobile Navigation */}
 
         {mobileOpen && (
           <div
+            id="mobile-navigation"
             className="
-              border-t
-              border-[var(--color-border-soft)]
+              border-t border-[var(--color-border-soft)]
               pb-6 pt-5
-              lg:hidden
+              xl:hidden
             "
           >
-            <div className="space-y-1">
+            <nav
+              aria-label="Mobile navigation"
+              className="space-y-1"
+            >
               {navLinks.map((link) => (
                 <NavigationLink
                   key={link.label}
                   link={link}
                   mobile
-                  onClick={() => setMobileOpen(false)}
+                  onClick={closeMobileMenu}
                 />
               ))}
+            </nav>
 
-              <div className="pt-4">
-                <CTAButton
-                  href="tel:+917003055263"
-                  className="w-full"
-                >
-                  Talk to us
-                </CTAButton>
-              </div>
+            {/* Mobile CTA */}
+
+            <div className="mt-5 border-t border-[var(--color-border-soft)] pt-5">
+              <CTAButton
+                href="tel:+917003055263"
+                className="w-full"
+                onClick={closeMobileMenu}
+              >
+                Talk to us
+              </CTAButton>
+
+              <p
+                className="
+                  mt-3 text-center
+                  text-xs
+                  text-[var(--color-text-secondary)]
+                "
+              >
+                We'd be happy to hear from you.
+              </p>
             </div>
           </div>
         )}
