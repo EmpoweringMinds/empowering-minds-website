@@ -18,7 +18,7 @@ const { aboutPage, loading, error } = useAboutPage();
     return (
         <main className="academy-theme min-h-screen flex items-center justify-center">
         <p className="text-[var(--color-text-secondary)]">
-            Loading About Page...
+            Loading About...
         </p>
         </main>
     );
@@ -28,7 +28,7 @@ const { aboutPage, loading, error } = useAboutPage();
     return (
         <main className="academy-theme min-h-screen flex items-center justify-center px-6">
         <p className="text-[var(--color-error)]">
-            Unable to Page. Please try again later.
+            Unable to load Page. Please try again later.
         </p>
         </main>
     );

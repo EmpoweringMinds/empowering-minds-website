@@ -13,7 +13,7 @@ export default function Programs() {
     return (
       <main className="academy-theme min-h-screen flex items-center justify-center">
         <p className="text-[var(--color-text-secondary)]">
-          Loading programs...
+          Loading Programs...
         </p>
       </main>
     );
@@ -23,7 +23,7 @@ export default function Programs() {
     return (
       <main className="academy-theme min-h-screen flex items-center justify-center px-6">
         <p className="text-[var(--color-error)]">
-          Unable to load programs. Please try again later.
+          Unable to load Programs. Please try again later.
         </p>
       </main>
     );

@@ -13,7 +13,10 @@ const layouts = [
 
 const tones = ["cream", "blush", "olive", "brown"];
 
-export default function TrainersGrid({ trainers = [] }) {
+export default function TrainersGrid({
+  trainers = [],
+  section,
+}) {
   const [expandedId, setExpandedId] = useState(null);
 
   const toggleExpanded = (id) => {
@@ -36,9 +39,9 @@ export default function TrainersGrid({ trainers = [] }) {
         <FadeIn>
           <div className="mb-10 max-w-3xl sm:mb-14">
             <SectionHeader
-              eyebrow="The People Behind the Learning"
-              title="Different perspectives. Shared purpose."
-              description="Meet the professionals who bring their experience, knowledge and perspectives into our learning experiences."
+              eyebrow={section?.eyebrow}
+              title={section?.heading}
+              description={section?.description}
               align="left"
             />
           </div>

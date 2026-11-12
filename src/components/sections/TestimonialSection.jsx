@@ -4,7 +4,7 @@ import { useReducedMotion } from "framer-motion";
 import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 
 import FadeIn from "../ui/FadeIn";
-import { testimonials } from "../../data/siteContent";
+import { useTestimonials } from "../../cms/useTestimonials";
 
 const classroomPhotos = [
   "/images/classroom-photo-1.jpg",
@@ -13,15 +13,25 @@ const classroomPhotos = [
 ];
 
 export default function TestimonialSection() {
+  const { testimonials: sections, loading } = useTestimonials();
+
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
 
   const prefersReducedMotion = useReducedMotion();
 
+  const section = sections[0];
+
+  const testimonials = section?.testimonial ?? [];
   const total = testimonials.length;
 
   const activeTestimonial = testimonials[activeIndex];
-  const activePhoto = classroomPhotos[activeIndex % classroomPhotos.length];
+
+  const activePhoto = section?.carouselImages?.length
+    ? section.carouselImages[
+        activeIndex % section.carouselImages.length
+      ]
+    : classroomPhotos[activeIndex % classroomPhotos.length];
 
   // Preserve existing desktop-only automatic rotation.
   useEffect(() => {
@@ -37,6 +47,8 @@ export default function TestimonialSection() {
 
     return () => clearInterval(interval);
   }, [total, isPaused, prefersReducedMotion]);
+
+  if (loading || !section || !total) return null;
 
   const showPrevious = () => {
     setActiveIndex((current) => (current - 1 + total) % total);
@@ -88,7 +100,7 @@ export default function TestimonialSection() {
                 tracking-[0.22em]
                 text-[var(--color-primary)]
               ">
-                Learner Perspectives
+                {section.eyebrow}
               </p>
             </div>
 
@@ -99,9 +111,9 @@ export default function TestimonialSection() {
               text-[var(--color-secondary)]
               sm:text-4xl lg:text-5xl
             ">
-              The experiences that
+              {section.heading}
               <span className="text-[var(--color-primary)]">
-                {" "}stay with people.
+                {" "}{section.accentHeading}
               </span>
             </h2>
 
@@ -111,8 +123,7 @@ export default function TestimonialSection() {
               text-[var(--color-text-secondary)]
               sm:text-base sm:leading-8
             ">
-              Every learning experience leaves a different impression.
-              Here's what participants have shared about theirs.
+              {section.description}
             </p>
           </div>
         </FadeIn>
@@ -256,7 +267,7 @@ export default function TestimonialSection() {
                   </p>
                 )}
 
-                {activeTestimonial.programme && (
+                {activeTestimonial.program && (
                   <span className="
                     mt-5 inline-flex max-w-full
                     rounded-full border border-white/20
@@ -265,7 +276,7 @@ export default function TestimonialSection() {
                     tracking-[0.14em]
                     text-[var(--color-background)]
                   ">
-                    {activeTestimonial.programme}
+                    {activeTestimonial.program}
                   </span>
                 )}
 

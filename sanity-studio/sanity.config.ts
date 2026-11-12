@@ -44,6 +44,13 @@ export default defineConfig({
                     .schemaType('programsPage')
                     .documentId('programsPage')
                 ),
+                S.listItem()
+                .title('Trainers Page')
+                .child(
+                  S.document()
+                    .schemaType('trainersPage')
+                    .documentId('trainersPage')
+                ),
               ])
             ),
           S.divider(),
@@ -56,6 +63,8 @@ export default defineConfig({
             .title('Workshops'),
           S.documentTypeListItem('trainer')
             .title('Trainers'),
+          S.documentTypeListItem('testimonials')
+            .title('Testimonials'),
         ]),
   }), 
   visionTool()

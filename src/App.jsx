@@ -7,7 +7,7 @@ import Contact from "./pages/Contact";
 import About from "./pages/About.jsx";
 import Programs from "./pages/Programs";
 //import Trainers from "./pages/Trainers";
-import TestTrainer from "./pages/TestTrainers.jsx";
+import Trainer from "./pages/Trainers.jsx";
 import Workshops from "./pages/Workshops";
 import WorkshopDetails from "./components/sections/WorkshopDetails";
 import WorkshopRegistration from "./pages/WorkshopRegistration";
@@ -23,7 +23,7 @@ function App() {
         <Route path="/" element={<AcademyHomepage />} />
         <Route path="/about" element={<About />} />
         <Route path="/programs" element={<Programs />} />
-        <Route path="/trainers" element={<TestTrainer />} />
+        <Route path="/trainers" element={<Trainer />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/workshops" element={<Workshops />} />
         <Route path="/workshops/:slug" element={<WorkshopDetails />} />

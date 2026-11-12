@@ -1,6 +1,6 @@
 import { imageUrl } from "./imageURL";
 
-export function normalizeImage(image, width = 900, height = 600) {
+export function normalizeImage(image, width, height) {
   if (!image) return null;
 
   return imageUrl(image)

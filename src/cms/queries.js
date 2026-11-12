@@ -25,6 +25,28 @@ export const workshopsQuery = `
   }
 `;
 
+export const testimonialsQuery = `
+  *[
+    _type == "testimonials"
+  ]
+ {
+    _id,
+    title,
+    eyebrow,
+    heading,
+    accentHeading,
+    description,
+    carouselImages,
+    testimonial[] {
+      quote,
+      name,
+      role,
+      organisation,
+      program
+    }
+  }
+`;
+
 
 export const coursesQuery = `
   *[
@@ -321,3 +343,48 @@ export const programsPageQuery = `
     }
   }
 `;
+
+export const trainersPageQuery = `
+  *[
+    _type == "trainersPage"
+    && _id == "trainersPage"
+  ][0] {
+    _id,
+
+    hero {
+      eyebrow,
+      heading,
+      description,
+      heroImage,
+      primaryCTA,
+      secondaryCTA
+    },
+    fromFounder {
+      eyebrow,
+      founderName,
+      founderRole,
+      founderImage,
+      fullDescription,
+      quote
+    },
+    directorySection {
+      eyebrow,
+      heading,
+      description,
+    },
+    finalCTA {
+      heading,
+      description,
+      primaryCTA,
+      secondaryCTA
+    },
+
+    seo {
+      metaTitle,
+      metaDescription,
+      ogImage,
+      noIndex
+    }
+  }
+`;
+

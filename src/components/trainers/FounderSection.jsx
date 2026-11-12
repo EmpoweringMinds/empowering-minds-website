@@ -1,8 +1,7 @@
 
 import FadeIn from "../ui/FadeIn";
-import { aboutContent } from "../../data/siteContent";
 
-export default function FounderSection() {
+export default function FounderSection({data}) {
   return (
     <section className="bg-[var(--color-background)] py-14 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -55,7 +54,7 @@ export default function FounderSection() {
               />
 
               <img
-                src="/images/trainers/ira-saha.jpg"
+                src={data.founderImage}
                 alt="Ira Saha, Founder of Empowering Minds"
                 loading="lazy"
                 className="
@@ -91,7 +90,7 @@ export default function FounderSection() {
                 tracking-[0.22em]
                 text-[var(--color-primary)]
               ">
-                {aboutContent.founderShortTitle}
+                {data.eyebrow}
               </p>
 
               <h2 className="
@@ -101,7 +100,7 @@ export default function FounderSection() {
                 text-[var(--color-background)]
                 sm:text-4xl lg:text-5xl
               ">
-                {aboutContent.founderName}
+                {data.founderName}
               </h2>
 
               <p className="
@@ -109,7 +108,7 @@ export default function FounderSection() {
                 text-[var(--color-primary)]
                 sm:text-base
               ">
-                {aboutContent.founderRole}
+                {data.founderRole}
               </p>
 
               <div className="
@@ -123,7 +122,7 @@ export default function FounderSection() {
                 text-[var(--color-background)]/80
                 sm:text-base sm:leading-8
               ">
-                {aboutContent.founderShortNote}
+                {data.fullDescription}
               </p>
 
               <p className="
@@ -132,7 +131,7 @@ export default function FounderSection() {
                 text-[var(--color-primary)]
                 sm:text-lg sm:leading-8
               ">
-                {aboutContent.founderShortClosing}
+                {data.quote}
               </p>
 
             </div>

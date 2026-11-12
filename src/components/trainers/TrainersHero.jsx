@@ -1,7 +1,7 @@
 
 import PageHero from "../ui/PageHero";
 
-export default function TrainersHero() {
+export default function TrainersHero({data}) {
   const visual = (
     <div className="
       relative mx-auto
@@ -57,13 +57,14 @@ export default function TrainersHero() {
 
       {/* Trainer portrait */}
       <img
-        src="/images/trainers-hero.png"
+        src={data.image}
         alt=""
         fetchPriority="high"
         className="
           relative z-10
           h-full w-full
-          object-cover object-bottom
+          object-fit object-bottom
+          scale-145
         "
       />
     </div>
@@ -71,15 +72,15 @@ export default function TrainersHero() {
 
   return (
     <PageHero
-      eyebrow="Our Trainers"
-      title="Meet the people behind the learning."
-      description="Experienced professionals, passionate educators and facilitators who bring practical knowledge and fresh perspectives into every learning experience."
+      eyebrow={data.eyebrow}
+      title={data.heading}
+      description={data.description}
       primaryCta={{
-        label: "Meet Our Trainers",
+        label: data.primaryCTA,
         to: "#trainers",
       }}
       secondaryCta={{
-        label: "Talk to an Advisor",
+        label: data.secondaryCTA,
         to: "/contact",
       }}
       visual={visual}
