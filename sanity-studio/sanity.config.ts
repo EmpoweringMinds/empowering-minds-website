@@ -51,6 +51,20 @@ export default defineConfig({
                     .schemaType('trainersPage')
                     .documentId('trainersPage')
                 ),
+                S.listItem()
+                .title('Contact Page')
+                .child(
+                  S.document()
+                    .schemaType('contactPage')
+                    .documentId('contactPage')
+                ),
+                S.listItem()
+                .title('Homepage Content')
+                .child(
+                  S.document()
+                    .schemaType('homePage')
+                    .documentId('homePage')
+                ),
               ])
             ),
           S.divider(),

@@ -89,6 +89,7 @@ function normalizeAboutPage(page) {
       ).map((pathway) => ({
         number: pathway.number || "",
         title: pathway.title || "",
+        eyebrow:pathway.eyebrow || "",
         description: pathway.description || "",
         iconName: pathway.iconName || "",
         symbol: pathway.symbol ||"",        

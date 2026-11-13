@@ -4,7 +4,7 @@ import Footer from "./components/common/Footer";
 import Navbar from "./components/common/Navbar";
 import WhatsAppFloat from "./components/common/WhatsAppFloat";
 //import Contact from "./pages/Contact";
-import TestContact from "./pages/TestContact.jsx";
+import Contact from "./pages/Contact.jsx";
 import About from "./pages/About.jsx";
 import Programs from "./pages/Programs";
 //import Trainers from "./pages/Trainers";
@@ -12,7 +12,7 @@ import Trainer from "./pages/Trainers.jsx";
 import Workshops from "./pages/Workshops";
 import WorkshopDetails from "./components/sections/WorkshopDetails";
 import WorkshopRegistration from "./pages/WorkshopRegistration";
-import AcademyHomepage from "./pages/AcademyHomepage";
+import Home from "./pages/Home";
 import Courses from "./pages/Courses";
 
 function App() {
@@ -21,11 +21,11 @@ function App() {
       <Navbar />
       <ScrollToTop />
       <Routes>
-        <Route path="/" element={<AcademyHomepage />} />
+        <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/programs" element={<Programs />} />
         <Route path="/trainers" element={<Trainer />} />
-        <Route path="/contact" element={<TestContact />} />
+        <Route path="/contact" element={<Contact />} />
         <Route path="/workshops" element={<Workshops />} />
         <Route path="/workshops/:slug" element={<WorkshopDetails />} />
         <Route path="/workshops/:slug/register" element={<WorkshopRegistration />}/>

@@ -1,6 +1,6 @@
 import PageHero from "../ui/PageHero";
 
-export default function ContactHero() {
+export default function ContactHero({data}) {
   const visual = (
     <div
       className="
@@ -72,17 +72,17 @@ export default function ContactHero() {
 
   return (
     <PageHero
-      eyebrow="Let's Start a Conversation"
-      title="Let's find the right fit for your goals."
-      description="Whether you're exploring a course, planning a development programme for your organisation, or simply looking for guidance, we're here to help you take the next step."
+      eyebrow={data.eyebrow}
+      title={data.heading}
+      description={data.description}
       primaryCta={{
-        label: "Talk to an Advisor",
+        label: data.primaryCTA,
         href: "https://wa.me/917908466757?text=Hello%20Empowering%20Minds%2C%20I'd%20like%20to%20know%20more%20about%20your%20programs.",
         target: "_blank",
         rel: "noopener noreferrer",
       }}
       secondaryCta={{
-        label: "Send an Enquiry",
+        label: data.secondaryCTA,
         to: "#form",
       }}
       visual={visual}

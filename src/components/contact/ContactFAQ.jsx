@@ -4,7 +4,7 @@ import { ChevronDown } from "lucide-react";
 import { faqs } from "../../data/siteContent";
 import FadeIn from "../ui/FadeIn";
 
-export default function ContactFAQs() {
+export default function ContactFAQs({data}) {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
@@ -16,19 +16,18 @@ export default function ContactFAQs() {
           <FadeIn>
             <div className="lg:sticky lg:top-28">
               <p className="text-sm font-bold uppercase tracking-[0.2em] text-[var(--color-secondary)]">
-                A few things you may be wondering
+                {data.eyebrow}
               </p>
 
               <h2 className="mt-5 max-w-md text-3xl font-bold leading-tight text-[var(--color-primary)] sm:text-4xl lg:text-5xl">
-                Good questions.
+                {data.accent}
                 <span className="block text-[var(--color-secondary)]">
-                  Clear answers.
+                  {data.heading}
                 </span>
               </h2>
 
               <p className="mt-5 max-w-md text-base leading-7 text-[var(--color-text-secondary)]">
-                Getting started with something new often comes with a few
-                questions. Here are some things people commonly ask us.
+                {data.description}
               </p>
 
               <div className="mt-8 flex items-center gap-3">
@@ -41,7 +40,7 @@ export default function ContactFAQs() {
 
           {/* FAQ accordion */}
           <div className="border-t border-[var(--color-primary)]/20">
-            {faqs.map((faq, index) => {
+            {data.faqObject.map((faq, index) => {
               const isOpen = activeIndex === index;
 
               return (

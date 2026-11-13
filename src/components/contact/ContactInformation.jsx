@@ -1,32 +1,31 @@
 
 import { Mail, MapPin, Phone } from "lucide-react";
-import { contactDetails } from "../../data/siteContent";
 
-const contactMethods = [
+
+export default function ContactInformation({data}) {
+  const contactMethods = [
   {
     label: "Call us",
     icon: Phone,
     tone: "bg-[var(--color-soft-accent)] text-[var(--color-primary)]",
-    content: contactDetails.phones,
+    content: data.phoneNumber ?? [],
     type: "phone",
   },
   {
     label: "Email us",
     icon: Mail,
     tone: "bg-[var(--color-olive)]/25 text-white",
-    content: [contactDetails.email],
+    content: data.email ?? [],
     type: "email",
   },
   {
     label: "Visit us",
     icon: MapPin,
     tone: "bg-[var(--color-primary)]/70 text-white",
-    content: contactDetails.address,
+    content: data.address ? [data.address] : [],
     type: "address",
   },
 ];
-
-export default function ContactInformation() {
   return (
     <section className="relative overflow-hidden bg-[var(--color-background)] py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -35,17 +34,15 @@ export default function ContactInformation() {
           {/* Introduction */}
           <div className="max-w-lg">
             <p className="text-sm font-bold uppercase tracking-[0.2em] text-[var(--color-secondary)]">
-              Get in touch
+              {data.eyebrow}
             </p>
 
             <h2 className="mt-4 text-3xl font-bold leading-tight text-[var(--color-primary)] sm:text-4xl">
-              We're here to help you take the next step.
+              {data.heading}
             </h2>
 
             <p className="mt-5 text-base leading-7 text-[var(--color-text-secondary)]">
-              Whether you're exploring a course for yourself or looking for
-              a development program for your organisation, we're here to help
-              you find the right fit.
+              {data.description}
             </p>
 
             <div className="mt-8 h-1 w-16 rounded-full bg-[var(--color-secondary)]" />

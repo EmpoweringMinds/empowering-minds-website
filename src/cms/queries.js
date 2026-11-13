@@ -244,6 +244,7 @@ export const aboutPageQuery = `
       description,
       developmentPathwayCards[] {
         number,
+        eyebrow,
         title,
         description,
         iconName,
@@ -388,3 +389,114 @@ export const trainersPageQuery = `
   }
 `;
 
+export const contactPageQuery = `
+  *[
+    _type == "contactPage"
+    && _id == "contactPage"
+  ][0] {
+    _id,
+
+    hero {
+      eyebrow,
+      heading,
+      description,
+      heroImage,
+      primaryCTA,
+      secondaryCTA
+    },
+    contactInformation {
+      eyebrow,
+      heading,
+      description,
+      phoneNumber,
+      email,
+      address
+    },
+    faqs {
+      eyebrow,
+      heading,
+      accent,
+      description,
+      faqObject []{
+      question,
+      answer
+      }
+    },
+    finalCTA {
+      heading,
+      description,
+      primaryCTA,
+      secondaryCTA
+    },
+    seo {
+      metaTitle,
+      metaDescription,
+      ogImage,
+      noIndex
+    }
+  }
+`;
+
+
+export const homePageQuery = `
+  *[
+    _type == "homePage"
+    && _id == "homePage"
+  ][0] {
+    _id,
+
+    hero {
+      eyebrow,
+      heading,
+      description,
+      heroImage,
+      primaryCTA,
+      secondaryCTA
+    },
+
+    aboutPreview {
+      eyebrow,
+      heading,
+      description,
+      supportingText,
+      ctaLabel
+    },
+
+    coursePreview {
+      eyebrow,
+      heading,
+      description
+    },
+
+    academyPhilosophy {
+      eyebrow,
+      heading,
+      description,
+      featureCards[] {
+        number,
+        title,
+        description
+      }
+    },
+
+    workshopPreview {
+      eyebrow,
+      heading,
+      description
+    },
+
+    finalCTA {
+      heading,
+      description,
+      primaryCTA,
+      secondaryCTA
+    },
+
+    seo {
+      metaTitle,
+      metaDescription,
+      ogImage,
+      noIndex
+    }
+  }
+`;
