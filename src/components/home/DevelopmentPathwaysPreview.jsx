@@ -7,6 +7,7 @@ import {
   Sprout,
   Users,
 } from "lucide-react";
+import SectionHeader from "../ui/SectionHeader";
 
 const DEFAULT_CONTENT = {
   eyebrow: "OUR WORK",
@@ -162,25 +163,17 @@ export default function DevelopmentPathwaysPreview({ data }) {
     <section className="academy-theme relative overflow-hidden bg-[var(--color-background)] py-20 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
         {/* Section introduction */}
-        <div className="mb-12 max-w-3xl sm:mb-16">
-          <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-[var(--color-primary)]">
-            <span className="h-2 w-2 rounded-full bg-[var(--color-primary)]" />
-            {content.eyebrow}
-          </span>
-
-          <h2 className="mt-5 font-heading text-4xl font-extrabold leading-[1.08] tracking-tight text-[var(--color-primary)] sm:text-5xl lg:text-6xl">
-            {content.heading}
-          </h2>
-
-          {content.description && (
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-[var(--color-text-secondary)] sm:text-lg">
-              {content.description}
-            </p>
-          )}
-        </div>
+          <SectionHeader 
+            variant="split"
+            size="small"
+            theme="dark"
+            eyebrow={content.eyebrow}
+            title={content.heading}
+            description={content.description}
+          />
 
         {/* Pathway panels */}
-        <div className="grid gap-5 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+        <div className="mt-12 grid gap-5 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
           {cards.map((card, index) => (
             <PathwayCard
               key={card.number || card.title || index}

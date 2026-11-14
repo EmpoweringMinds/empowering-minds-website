@@ -29,7 +29,6 @@ export const testimonials = defineType({
             name: "accentHeading",
             title: "Heading Accent",
             type: "string",
-            validation: (rule) => rule.required(),
         }),
         defineField({
             name: "description",

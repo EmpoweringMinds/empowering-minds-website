@@ -115,6 +115,25 @@ function normalizeCoursesPage(page, allCourses, allModules) {
       ),
     },
 
+    //alternate Learning Modules
+    alternateLearningModules: {
+      eyebrow:page.alternateLearningModules?.eyebrow || "",
+      heading:page.alternateLearningModules?.heading || "",
+      description:page.alternateLearningModules?.description || "",
+      learningFormats: (page.alternateLearningModules?.learningFormats || []).map(
+        (module) => ({
+          eyebrow:module.eyebrow || "",
+          heading:module.heading || "",
+          description:module.description || "",
+          duration: module.duration || "",
+          format: module.format || [],
+          minimumModules: module.minimumModules || "",
+          specializations: module.specializations || [],
+          extraInfo:module.extraInfo || "",
+        })
+      ),
+    },
+
     // Final CTA
     finalCTA: {
       heading: page.finalCTA?.heading || "",

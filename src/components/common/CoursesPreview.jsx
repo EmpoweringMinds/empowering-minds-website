@@ -38,20 +38,14 @@ export default function CoursePreview() {
 
         {/* Section introduction */}
         <div className="mb-12 grid gap-8 md:mb-16 md:grid-cols-[0.8fr_1.2fr] md:items-end">
-          <div>
             <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-[var(--color-primary)]">
               <span className="h-2 w-2 rounded-full bg-[var(--color-primary)]" />
               Explore Courses
             </span>
 
-            <p className="mt-5 max-w-xs text-sm leading-relaxed text-[var(--color-text-secondary)]">
-              Practical learning for the person you are becoming.
-            </p>
-          </div>
-
           <div className="max-w-3xl md:ml-auto">
-            <h2 className="font-heading text-4xl font-extrabold leading-[1.08] tracking-tight text-[var(--color-primary)] sm:text-5xl lg:text-6xl">
-              Find a course that moves you <span className="text-[var(--color-olive)]">forward.</span>
+            <h2 className="font-heading text-4xl font-extrabold leading-[1.08] tracking-tight text-[var(--color-secondary)] sm:text-5xl lg:text-6xl">
+              Find a course that moves you <span className="text-[var(--color-primary)]">forward.</span>
             </h2>
 
             <p className="mt-5 max-w-2xl text-base leading-relaxed text-[var(--color-text-secondary)] sm:text-lg">
@@ -109,11 +103,19 @@ export default function CoursePreview() {
                       md:flex-auto
                       ${isFeatured
                         ? "bg-[var(--color-primary)] text-white md:col-span-6 md:flex-row"
-                        : "border border-[var(--color-border)] bg-[var(--color-surface)] text-[var(--color-primary)] md:col-span-2"
+                        : "border border-[var(--color-border)] bg-[var(--color-soft-accent)]/40 text-[var(--color-primary)] md:col-span-2"
                       }
                       ${isHidden ? "md:hidden" : ""}
                     `}
                   >
+                    <div
+                      aria-hidden="true"
+                      className="
+                        pointer-events-none absolute -right-20 -top-20
+                        h-64 w-64 rounded-full border-[32px]
+                        border-white/10
+                        sm:h-85 sm:w-85"
+                    />
                     {/* Course image */}
                     {course.image && (
                       <div

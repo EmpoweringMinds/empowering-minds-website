@@ -44,28 +44,28 @@ export default function AcademyPhilosophy({ data }) {
 
   return (
     <section className="academy-theme bg-[var(--color-background)] px-5 py-20 sm:px-8 sm:py-24 lg:px-12 lg:py-32">
-      <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-[var(--color-secondary)] text-white">
+      <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-[var(--color-soft-accent)] text-white">
         <div className="grid lg:grid-cols-[0.85fr_1.15fr]">
 
           {/* Main statement */}
           <div className="relative flex flex-col justify-between overflow-hidden p-8 sm:p-12 lg:min-h-[680px] lg:p-16">
             <div className="relative z-10">
-              <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-[var(--color-soft-accent)]">
-                <span className="h-2 w-2 rounded-full bg-[var(--color-soft-accent)]" />
+              <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-[var(--color-primary)]">
+                <span className="h-2 w-2 rounded-full bg-[var(--color-primary)]" />
                 {content.eyebrow}
               </span>
 
-              <h2 className="mt-8 max-w-xl font-heading text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
+              <h2 className="mt-8 max-w-xl font-heading text-4xl font-extrabold text-[var(--color-secondary)] leading-[1.08] tracking-tight sm:text-5xl lg:text-6xl">
                 {content.heading}
               </h2>
 
-              <p className="mt-7 max-w-md text-base leading-relaxed text-white/65 sm:text-lg">
+              <p className="mt-7 max-w-md text-base leading-relaxed text-[var(--color-secondary)]/65 sm:text-lg">
                 {content.description}
               </p>
             </div>
 
             <div className="relative z-10 mt-16">
-              <span className="font-heading text-7xl font-extrabold tracking-tighter text-[var(--color-soft-accent)]/25 sm:text-8xl">
+              <span className="font-heading text-7xl font-extrabold tracking-tighter text-white/25 sm:text-8xl">
                 GROW.
               </span>
             </div>
@@ -73,7 +73,7 @@ export default function AcademyPhilosophy({ data }) {
             {/* Decorative shapes */}
             <div
               aria-hidden="true"
-              className="pointer-events-none absolute -right-24 bottom-20 h-72 w-72 rounded-full border-[36px] border-white/[0.06]"
+              className="pointer-events-none absolute -right-24 bottom-20 h-72 w-72 rounded-full border-[36px] border-[var(--color-secondary)]/[0.06]"
             />
             <div
               aria-hidden="true"

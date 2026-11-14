@@ -9,9 +9,12 @@ import AudienceSection from "../components/courses/AudienceSection";
 import DevelopmentApproach from "../components/courses/DevelopmentApproach";
 import LearningFormats from "../components/courses/LearningFormats";
 import CoursesCTA from "../components/courses/CoursesCTA";
+import FlexibleLearningOptions from "../components/courses/FlexibleLearningOptions";
 
 export default function Courses() {
   const { coursesPage, loading, error } = useCoursesPage();
+
+  console.log("Courses Page data:", coursesPage);
 
   if (loading) {
     return (
@@ -48,11 +51,12 @@ export default function Courses() {
       <CoursesHero data={coursesPage.hero} />
       <CoursesIntroduction data={coursesPage.introduction} />
       <DevelopmentAreas data={coursesPage.developmentAreas} />
-      <CourseDirectory courses={coursesPage.courses} />
-      <AdditionalModules modules={coursesPage.additionalModules} />
       <AudienceSection data={coursesPage.audience} />
-      <DevelopmentApproach data={coursesPage.developmentApproach} />
+      <CourseDirectory courses={coursesPage.courses} />
+      <FlexibleLearningOptions data={coursesPage.alternateLearningModules} />
+      <AdditionalModules modules={coursesPage.additionalModules} />
       <LearningFormats data={coursesPage.learningFormats} />
+      <DevelopmentApproach data={coursesPage.developmentApproach} />
       <CoursesCTA data={coursesPage.finalCTA} />
     </main>
   );

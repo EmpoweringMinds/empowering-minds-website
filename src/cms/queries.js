@@ -163,6 +163,22 @@ export const coursesPageQuery = `
       }
     },
 
+    alternateLearningModules {
+      eyebrow,
+      heading,
+      description,
+      learningFormats [] {
+        eyebrow,
+        heading,
+        description,
+        duration,
+        format,
+        minimumModules,
+        specializations,
+        extraInfo
+      }
+    },
+
     finalCTA {
       heading,
       description,

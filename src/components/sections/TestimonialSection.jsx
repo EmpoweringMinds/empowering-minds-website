@@ -5,6 +5,7 @@ import { ChevronLeft, ChevronRight, Quote } from "lucide-react";
 
 import FadeIn from "../ui/FadeIn";
 import { useTestimonials } from "../../cms/useTestimonials";
+import SectionHeader from "../ui/SectionHeader";
 
 const classroomPhotos = [
   "/images/classroom-photo-1.jpg",
@@ -81,52 +82,14 @@ export default function TestimonialSection() {
       />
 
       <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
-        {/* Editorial section heading */}
-        <FadeIn>
-          <div className="max-w-3xl">
-
-            <div className="flex items-center gap-3">
-              <span
-                aria-hidden="true"
-                className="
-                  h-[3px] w-10 rounded-full
-                  bg-[var(--color-primary)]
-                "
-              />
-
-              <p className="
-                text-xs font-bold uppercase
-                tracking-[0.22em]
-                text-[var(--color-primary)]
-              ">
-                {section.eyebrow}
-              </p>
-            </div>
-
-            <h2 className="
-              mt-5 font-heading
-              text-3xl font-bold
-              leading-tight tracking-tight
-              text-[var(--color-secondary)]
-              sm:text-4xl lg:text-5xl
-            ">
-              {section.heading}
-              <span className="text-[var(--color-primary)]">
-                {" "}{section.accentHeading}
-              </span>
-            </h2>
-
-            <p className="
-              mt-5 max-w-xl
-              text-sm leading-7
-              text-[var(--color-text-secondary)]
-              sm:text-base sm:leading-8
-            ">
-              {section.description}
-            </p>
-          </div>
-        </FadeIn>
+        <SectionHeader 
+          variant="split"
+          size="small"
+          theme="orange"
+          eyebrow={section.eyebrow}
+          title={section.heading}
+          description={section.description}
+        />
 
         {/* Carousel */}
         <div

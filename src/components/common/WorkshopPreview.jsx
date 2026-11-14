@@ -4,6 +4,7 @@ import { useWorkshops } from "../../cms/useWorkshops";
 import { getWorkshopDateState } from "../../utils/workshopDates";
 import CTAButton from "../ui/CTAButton";
 import { ArrowUpRight, CalendarDays, Clock3, Tag } from "lucide-react";
+import SectionHeader from "../ui/SectionHeader";
 
 function formatWorkshopDate(date) {
   if (!date) return "Date to be announced";
@@ -118,7 +119,7 @@ function WorkshopCard({ workshop, dateState, featured = false }) {
         transition-all duration-300 hover:-translate-y-1
         ${
           featured
-            ? "bg-[var(--color-primary)] text-white"
+            ? "bg-[var(--color-olive)] text-white"
             : "border border-[var(--color-border)] bg-[var(--color-surface-warm)] text-[var(--color-primary)]"
         }
       `}
@@ -298,23 +299,15 @@ export default function WorkshopPreview() {
     <section className="academy-theme relative overflow-hidden bg-[var(--color-surface-warm)] py-20 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
         {/* Section heading */}
-        <div className="mb-12 flex flex-col gap-8 md:mb-16 md:flex-row md:items-end md:justify-between">
-          <div className="max-w-3xl">
-            <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-[var(--color-primary)]">
-              <div className=" h-1 w-10 rounded-full bg-[var(--color-primary)]" />
-              Structured Workshops
-            </span>
-
-            <h2 className="mt-5 font-heading text-4xl font-extrabold leading-[1.08] tracking-tight text-[var(--color-primary)] sm:text-5xl lg:text-6xl">
-              Make room for a little more <span className="text-[var(--color-olive)]">growth.</span>
-            </h2>
-
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-[var(--color-text-secondary)] sm:text-lg">
-              Practical learning experiences designed to help you build skills,
-              turn insight into action, and make meaningful progress.
-            </p>
-          </div>
-
+        <div className="mb-12 flex flex-col gap-8 md:mb-16 md:items-end md:justify-between">
+          <SectionHeader 
+            variant="split"
+            size="small"
+            theme="dark"
+            eyebrow="Structured Workshops"
+            title="Make room for a little more growth."
+            description="Practical learning experiences designed to help you build skills, turn insight into action, and make meaningful progress."
+            />
           <div className="shrink-0">
             <CTAButton to="/workshops">Explore All Workshops</CTAButton>
           </div>

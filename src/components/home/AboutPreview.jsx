@@ -37,7 +37,7 @@ export default function AboutPreview({ data }) {
             </div>
 
             <div className="relative z-10 mt-12 flex items-end justify-between">
-              <p className="max-w-xs text-sm font-medium leading-relaxed text-[var(--color-secondary)]/75">
+              <p className="max-w-xs text-sm font-medium font-semibold leading-relaxed text-[var(--color-secondary)]/75">
                 Practical. Personal. Outcome-focused.
               </p>
 
@@ -59,7 +59,7 @@ export default function AboutPreview({ data }) {
 
           {/* Supporting introduction */}
           <div className="relative flex flex-col justify-center bg-[var(--color-surface-warm)] p-8 sm:p-12 lg:p-16">
-            <span className="mb-6 text-sm font-semibold uppercase tracking-[0.14em] text-[var(--color-olive)]">
+            <span className="mb-6 text-sm font-bold uppercase tracking-[0.14em] text-[var(--color-olive)]">
               More than what you know
             </span>
 

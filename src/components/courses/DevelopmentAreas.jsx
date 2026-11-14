@@ -8,6 +8,7 @@ import {
 } from "framer-motion";
 
 import FadeIn from "../ui/FadeIn";
+import SectionHeader from "../ui/SectionHeader";
 
 
 /* --------------------------------
@@ -205,129 +206,16 @@ export default function DevelopmentAreas({ data }) {
           Section introduction
       -------------------------------- */}
 
-      <div className="
-        relative mx-auto max-w-7xl
-        px-4 sm:px-6 lg:px-8
-      ">
-
-        <FadeIn>
-          <div className="
-            relative grid items-stretch
-            gap-6 md:grid-cols-[1fr_0.85fr]
-            lg:gap-10
-          ">
-
-            {/* Heading */}
-            <div className="
-              relative flex flex-col justify-center
-              overflow-hidden rounded-[2rem]
-              bg-[var(--color-background)]
-              p-8 sm:p-10 lg:p-12
-            ">
-
-              <div
-                aria-hidden="true"
-                className="
-                  absolute -bottom-20 -right-16
-                  h-56 w-56 rounded-full
-                  border-[28px]
-                  border-[var(--color-primary)]/10
-                "
-              />
-
-              <div className="
-                relative z-10 mb-7 flex items-center gap-3
-              ">
-                <span className="
-                  h-[3px] w-10 rounded-full
-                  bg-[var(--color-primary)]
-                " />
-
-                <span className="
-                  text-xs font-bold uppercase
-                  tracking-[0.18em]
-                  text-[var(--color-primary)]
-                ">
-                  The foundation of growth
-                </span>
-              </div>
-
-              <h2 className="
-                relative z-10 max-w-xl
-                text-4xl font-extrabold
-                leading-[1.12] tracking-tight
-                text-[var(--color-secondary)]
-                sm:text-5xl lg:text-6xl
-                [text-wrap:balance]
-              ">
-                {data.heading}
-              </h2>
-
-            </div>
-
-            {/* Description */}
-            <div className="
-              relative flex flex-col justify-between
-              overflow-hidden rounded-[2rem]
-              bg-[var(--color-primary)]
-              p-8 sm:p-10 lg:p-12
-            ">
-
-              <div
-                aria-hidden="true"
-                className="
-                  absolute -right-16 -top-16
-                  h-60 w-60 rounded-full
-                  border-[32px] border-white/10
-                "
-              />
-
-              <div className="relative z-10">
-
-                <span className="
-                  text-xs font-bold uppercase
-                  tracking-[0.18em]
-                  text-white/80
-                ">
-                  Discover your potential
-                </span>
-
-                <div className="
-                  mt-8 text-5xl font-extrabold
-                  leading-none text-white/60
-                " aria-hidden="true">
-                  “
-                </div>
-
-                <p className="
-                  mt-2 text-base font-medium
-                  leading-8 text-white
-                  sm:text-lg sm:leading-9
-                ">
-                  {data.description}
-                </p>
-
-              </div>
-
-              <div className="
-                relative z-10 mt-8
-                border-t border-white/30 pt-5
-              ">
-                <span className="
-                  text-xs font-bold uppercase
-                  tracking-[0.16em] text-white/80
-                ">
-                  Learn · Practise · Evolve
-                </span>
-              </div>
-
-            </div>
-
-          </div>
-        </FadeIn>
-
-      </div>
-
+      <SectionHeader 
+      variant="split"
+      size="large"
+      theme="orange"
+      eyebrow="The foundation of growth"
+      title={data.heading}
+      description={data.description}
+      panelEyebrow = "Discover your potential"
+      closingLabel = "Learn · Practise · Evolve"
+      />
 
       {/* --------------------------------
           Mobile scroll-driven stack
@@ -427,7 +315,7 @@ export default function DevelopmentAreas({ data }) {
                     tracking-[0.16em]
                     ${variant.label}
                   `}>
-                    AREA {String(index + 1).padStart(2, "0")}
+                    {String(index + 1).padStart(2, "0")}
                   </span>
 
                   <h3 className={`
@@ -568,7 +456,7 @@ export default function DevelopmentAreas({ data }) {
                     tracking-[0.14em]
                     ${variant.label}
                   `}>
-                    Area {String(index + 1).padStart(2, "0")}
+                    {String(index + 1).padStart(2, "0")}
                   </span>
 
                   <span className={`

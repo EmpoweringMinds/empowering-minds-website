@@ -302,6 +302,98 @@ export const coursesPage = defineType({
             ],
         }),
         defineField({
+            name:"alternateLearningModules",
+            title: "Alternate Learning Modules",
+            type: "object",
+            fields: [
+                defineField({
+                    name: "eyebrow",
+                    title: "Eyebrow",
+                    type: "string",
+                    validation: (rule) => rule.required(),
+                }),
+                defineField ({
+                    name: "heading",
+                    title: "Heading",
+                    type: "string",
+                    validation: (rule) => rule.required(),
+                }),
+                defineField({
+                    name: "description",
+                    title: "Subheading",
+                    type: "text",
+                    validation: (rule) => rule.required(),
+                }),
+                defineField({
+                    name: "learningFormats",
+                    title: "Learning Formats",
+                    type: "array",
+                    of: [
+                        defineArrayMember({
+                            type: "object",
+                            fields: [
+                                defineField({
+                                    name: "eyebrow",
+                                    title: "Eyebrow",
+                                    type: "string",
+                                    validation: (rule) => rule.required(),
+                                }),
+                                defineField ({
+                                    name: "heading",
+                                    title: "Heading",
+                                    type: "string",
+                                    validation: (rule) => rule.required(),
+                                }),
+                                defineField({
+                                    name: "description",
+                                    title: "Subheading",
+                                    type: "text",
+                                    validation: (rule) => rule.required(),
+                                }),
+                                defineField({
+                                    name: "duration",
+                                    title: "Duration",
+                                    type: "string",
+                                }),
+                                defineField({
+                                    name: "format",
+                                    title: "Format",
+                                    type: "array",
+                                    of: [
+                                        defineArrayMember({
+                                            type: "string",
+                                            options: {
+                                                list: [
+                                                    {title: "Online", value: "online"},
+                                                    {title: "Offline", value: "offline"},
+                                                ],
+                                            },
+                                        }),
+                                    ],
+                                }),
+                                defineField({
+                                    name: "minimumModules",
+                                    title: "Minimum Modules",
+                                    type: "string",
+                                }),
+                                defineField({
+                                    name: "specializations",
+                                    title: "Specializations",
+                                    type: "array",
+                                    of: [{type: "string"}]
+                                }),
+                                defineField({
+                                    name: "extraInfo",
+                                    title: "Extra Information",
+                                    type: "text",
+                                }),
+                            ],
+                        }),
+                    ],
+                }),
+            ],
+        }),
+        defineField({
             name: "finalCTA",
             title: "Final CTA",
             type: "object",

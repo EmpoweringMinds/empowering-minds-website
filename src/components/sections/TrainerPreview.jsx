@@ -5,6 +5,7 @@ import { ArrowUpRight } from "lucide-react";
 import TrainerCard from "../trainers/TrainerCard";
 import FadeIn from "../ui/FadeIn";
 import { useTrainers } from "../../cms/useTrainers";
+import SectionHeader from "../ui/SectionHeader";
 
 const trainerTones = ["cream", "blush", "olive"];
 
@@ -34,57 +35,20 @@ export default function TrainerPreview() {
       py-16 sm:py-20 lg:py-24
     ">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-
         {/* Editorial introduction */}
         <FadeIn>
           <div className="
             flex flex-col gap-6
-            sm:flex-row sm:items-end sm:justify-between
+            sm:items-end sm:justify-between
           ">
-            <div className="max-w-2xl">
-
-              <div className="flex items-center gap-3">
-                <span
-                  aria-hidden="true"
-                  className="
-                    h-[3px] w-10 rounded-full
-                    bg-[var(--color-primary)]
-                  "
-                />
-
-                <p className="
-                  text-xs font-bold uppercase
-                  tracking-[0.22em]
-                  text-[var(--color-primary)]
-                ">
-                  The People Behind the Learning
-                </p>
-              </div>
-
-              <h2 className="
-                mt-5 font-heading
-                text-3xl font-bold
-                leading-tight tracking-tight
-                text-[var(--color-secondary)]
-                sm:text-4xl lg:text-5xl
-              ">
-                Experience, perspective
-                <span className="text-[var(--color-primary)]">
-                  {" "}and a passion for growth.
-                </span>
-              </h2>
-
-              <p className="
-                mt-5 max-w-xl
-                text-sm leading-7
-                text-[var(--color-text-secondary)]
-                sm:text-base sm:leading-8
-              ">
-                Meet the professionals who bring practical knowledge,
-                fresh perspectives and meaningful learning experiences
-                to individuals and organisations.
-              </p>
-            </div>
+            <SectionHeader 
+            variant="split"
+            size="small"
+            theme="dark"
+            eyebrow="The People Behind the Learning"
+            title="Experience, perspective and a passion for growth."
+            description="Meet the professionals who bring practical knowledge, fresh perspectives and meaningful learning experiences to individuals and organisations."
+            />
 
             {/* Desktop CTA */}
             <Link
