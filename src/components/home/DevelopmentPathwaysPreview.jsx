@@ -8,39 +8,7 @@ import {
   Users,
 } from "lucide-react";
 import SectionHeader from "../ui/SectionHeader";
-
-const DEFAULT_CONTENT = {
-  eyebrow: "OUR WORK",
-  heading: "One philosophy. Two avenues of development.",
-  description:
-    "Whether you're developing yourself or strengthening an organisation, meaningful growth starts with people.",
-  cards: [
-    {
-      number: "01",
-      eyebrow: "FOR INDIVIDUALS",
-      title: "Personality & Performance Development Academy",
-      description:
-        "Knowledge and skills are important. But confidence, communication, behaviour and personal presence help you put your potential into practice.",
-      ctaLabel: "Explore the Academy",
-      iconName: "GraduationCap",
-      symbol: "Sprout",
-      theme: "academy",
-      linkTo: "/courses",
-    },
-    {
-      number: "02",
-      eyebrow: "FOR ORGANISATIONS",
-      title: "Human Capital Development Programmes",
-      description:
-        "Structured developmental interventions that strengthen people, behavioural capabilities and performance across educational institutions and organisations.",
-      ctaLabel: "Explore Our Programmes",
-      iconName: "Building2",
-      symbol: "Users",
-      theme: "human",
-      linkTo: "/services",
-    },
-  ],
-};
+import FadeIn from "../ui/FadeIn";
 
 const ICONS = {
   GraduationCap,
@@ -54,17 +22,20 @@ function PathwayCard({ card, featured = false }) {
   const Symbol = ICONS[card.symbol] || (featured ? Sprout : Users);
 
   return (
+    
     <article
       className={`
-        group relative flex min-h-[440px] flex-col justify-between
-        overflow-hidden rounded-[2rem] p-7 sm:p-9 lg:p-11
+        group relative flex flex-col justify-between
+        overflow-hidden rounded-[1.75rem] p-6
         transition-transform duration-500 hover:-translate-y-1
+        sm:rounded-[2rem] sm:p-9 lg:p-11
         ${featured
-          ? "bg-[var(--color-primary)] text-white lg:min-h-[540px]"
-          : "bg-[var(--color-olive)] text-white lg:min-h-[460px]"
+          ? "min-h-[360px] bg-[var(--color-primary)] text-white sm:min-h-[420px] lg:min-h-[540px]"
+          : "min-h-[280px] bg-[var(--color-olive)] text-white sm:min-h-[340px] lg:min-h-[460px]"
         }
       `}
     >
+
       {/* Background decoration */}
       <div
         aria-hidden="true"
@@ -103,13 +74,13 @@ function PathwayCard({ card, featured = false }) {
       </div>
 
       {/* Card content */}
-      <div className="relative z-10 mt-12 max-w-2xl">
+      <div className="relative z-10 mt-8 max-w-2xl sm:mt-12">
         <h3
           className={`
             max-w-xl font-heading font-bold leading-[1.08]
             ${featured
               ? "text-3xl sm:text-4xl lg:text-5xl"
-              : "text-3xl sm:text-4xl"
+              : "text-2xl sm:text-4xl"
             }
           `}
         >
@@ -151,13 +122,10 @@ function PathwayCard({ card, featured = false }) {
 
 export default function DevelopmentPathwaysPreview({ data }) {
   const content = {
-    ...DEFAULT_CONTENT,
     ...data,
   };
 
-  const cards = content.cards?.length
-    ? content.cards.slice(0, 2)
-    : DEFAULT_CONTENT.cards;
+  const cards = content.developmentPathwayCards?.slice(0, 2) || [];
 
   return (
     <section className="academy-theme relative overflow-hidden bg-[var(--color-background)] py-20 sm:py-24 lg:py-32">
@@ -173,13 +141,19 @@ export default function DevelopmentPathwaysPreview({ data }) {
           />
 
         {/* Pathway panels */}
-        <div className="mt-12 grid gap-5 lg:grid-cols-[1.2fr_0.8fr] lg:items-center">
+        <div className="
+          mt-10 grid grid-cols-1 gap-4
+          sm:gap-5
+          lg:grid-cols-[1.2fr_0.8fr] lg:items-center
+        ">
           {cards.map((card, index) => (
-            <PathwayCard
-              key={card.number || card.title || index}
-              card={card}
-              featured={index === 0}
-            />
+            <FadeIn>
+              <PathwayCard
+                key={card.number || card.title || index}
+                card={card}
+                featured={index === 0}
+              />
+            </FadeIn>
           ))}
         </div>
       </div>

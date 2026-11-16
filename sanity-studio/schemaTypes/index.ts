@@ -9,9 +9,10 @@ import { testimonials } from "./testimonials";
 import { trainersPage } from "./trainersPage";
 import { contactPage } from "./contactPage";
 import { homePage } from "./homePage";
+import { siteSettings } from "./siteSettings";
 
 
 export const schemaTypes = [
-    trainerType,workshop,courses,developmentModule,coursesPage,aboutPage,programsPage,testimonials,trainersPage,contactPage,homePage
+    trainerType,workshop,courses,developmentModule,coursesPage,aboutPage,programsPage,testimonials,trainersPage,contactPage,homePage,siteSettings
 ];
 

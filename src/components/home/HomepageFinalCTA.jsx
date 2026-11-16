@@ -1,19 +1,11 @@
 
-import { ArrowUpRight, MessageCircle } from "lucide-react";
-
-const DEFAULT_CONTENT = {
-  heading: "Your journey towards growth begins here.",
-  description: "Find the programme that fits your goals.",
-  primaryCTA: "Talk to an Advisor",
-  secondaryCTA: "Explore Courses",
-};
+import { ArrowUpRight, Laptop2, MessageCircle } from "lucide-react";
 
 const WHATSAPP_URL =
   "https://wa.me/917908466757?text=Hello%20Empowering%20Minds%2C%20I%27d%20like%20help%20choosing%20a%20course.";
 
 export default function HomepageFinalCTA({ data }) {
   const content = {
-    ...DEFAULT_CONTENT,
     ...data,
   };
 
@@ -29,6 +21,19 @@ export default function HomepageFinalCTA({ data }) {
         <div
           aria-hidden="true"
           className="pointer-events-none absolute -bottom-28 -left-20 h-72 w-72 rounded-full bg-[var(--color-secondary)]/25"
+        />
+
+        <div
+          aria-hidden="true"
+          className="
+            pointer-events-none absolute
+            left-35 top-1/2
+            hidden h-[420px] w-[420px]
+            -translate-y-1/2
+            rounded-full border
+            border-[var(--color-background)]/20
+            lg:block
+              "
         />
 
         <div className="relative z-10 grid gap-12 p-8 sm:p-12 lg:grid-cols-[1fr_auto] lg:items-end lg:gap-16 lg:p-20">
@@ -63,6 +68,7 @@ export default function HomepageFinalCTA({ data }) {
               href="#courses"
               className="inline-flex min-h-14 items-center justify-center gap-3 rounded-full border border-white/35 px-6 py-4 text-sm font-bold text-white transition-all duration-300 hover:bg-white/10"
             >
+              <Laptop2 size={18} />
               {content.secondaryCTA}
               <ArrowUpRight size={17} />
             </a>

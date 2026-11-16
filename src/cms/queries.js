@@ -516,3 +516,57 @@ export const homePageQuery = `
     }
   }
 `;
+
+
+export const siteSettingsQuery = `
+  *[
+    _type == "siteSettings"
+    && _id == "siteSettings"
+  ][0] {
+    _id,
+
+    identity {
+      siteName,
+      logo
+    },
+
+    navbar {
+      links[] {
+        label,
+        linkType,
+        internalPath,
+        externalUrl,
+        isVisible,
+        openInNewTab
+      },
+      cta {
+        label,
+        href
+      },
+      mobileDescription
+    },
+
+    footer {
+      brandDescription,
+      tagline,
+      navigationHeading,
+      navigationLinks[] {
+        label,
+        linkType,
+        internalPath,
+        externalUrl,
+        isVisible,
+        openInNewTab
+      },
+      contactHeading,
+      copyrightText,
+      showBackToHome
+    },
+
+    contact {
+      email,
+      phoneNumber,
+      address
+    }
+  }
+`;

@@ -2,7 +2,6 @@
 import { Link, NavLink } from "react-router-dom";
 import { Mail, MapPin, Phone, ArrowUpRight } from "lucide-react";
 
-import { contactDetails, navLinks } from "../../data/siteContent";
 
 function FooterNavigationLink({ link }) {
   const classes = `
@@ -13,29 +12,30 @@ function FooterNavigationLink({ link }) {
     hover:text-[var(--color-primary)]
   `;
 
-  if (link.external) {
-    return (
-      <a
-        href={link.href}
-        target="_blank"
-        rel="noopener noreferrer"
-        className={classes}
-      >
-        {link.label}
-        <ArrowUpRight
-          size={13}
-          aria-hidden="true"
-          className="
-            opacity-0
-            transition-all duration-200
-            group-hover:translate-x-0.5
-            group-hover:-translate-y-0.5
-            group-hover:opacity-100
-          "
-        />
-      </a>
-    );
-  }
+ if (link.external) {
+  return (
+    <a
+      href={link.href}
+      target={link.openInNewTab ? "_blank" : undefined}
+      rel={link.openInNewTab ? "noopener noreferrer" : undefined}
+      className={classes}
+    >
+      {link.label}
+
+      <ArrowUpRight
+        size={13}
+        aria-hidden="true"
+        className="
+          opacity-0
+          transition-all duration-200
+          group-hover:translate-x-0.5
+          group-hover:-translate-y-0.5
+          group-hover:opacity-100
+        "
+      />
+    </a>
+  );
+}
 
   return (
     <NavLink
@@ -50,7 +50,15 @@ function FooterNavigationLink({ link }) {
   );
 }
 
-export default function Footer() {
+export default function Footer({ data }) {
+  const footer = data?.footer;
+  const identity = data?.identity;
+  const contact = data?.contact;
+
+  const navLinks = footer?.navigationLinks ?? [];
+  const emails = contact?.email ?? [];
+  const phones = contact?.phoneNumber ?? [];
+  const addresses = contact?.address ?? [];
   return (
     <footer className="academy-theme bg-[var(--color-surface-warm)]">
       <div
@@ -113,18 +121,13 @@ export default function Footer() {
                 "
               >
                 <img
-                  src="/images/logo-EM.png"
+                  src={identity?.logo || "/images/logo-EM.png"}
                   alt=""
                   className="h-11 w-11 object-contain"
                 />
 
-                <span
-                  className="
-                    text-xl font-bold
-                    tracking-[-0.035em]
-                  "
-                >
-                  Empowering Minds
+                <span className="text-xl font-bold tracking-[-0.035em]">
+                  {identity?.siteName || "Empowering Minds"}
                 </span>
               </Link>
 
@@ -145,9 +148,7 @@ export default function Footer() {
                   sm:text-base sm:leading-8
                 "
               >
-                Learning experiences built to strengthen leadership,
-                develop people, and create measurable transformation
-                across institutions and teams.
+                {footer?.brandDescription}
               </p>
 
               <p
@@ -158,7 +159,7 @@ export default function Footer() {
                   text-white/60
                 "
               >
-                People. Capability. Transformation.
+                {footer?.tagline}
               </p>
             </div>
           </div>
@@ -216,88 +217,90 @@ export default function Footer() {
                   text-[var(--color-secondary)]
                 "
               >
-                Find Us
+                {footer?.contactHeading || "Find Us"}
               </h3>
             </div>
 
             <div
-              className="
-                space-y-5
-                text-sm leading-7
-                text-[var(--color-text-secondary)]
-              "
+            className="
+              space-y-5
+              text-sm leading-7
+              text-[var(--color-text-secondary)]
+            "
             >
-              {/* Email */}
+              {/* Emails */}
 
-              <a
-                href={`mailto:${contactDetails.email}`}
-                className="
-                  group flex items-start gap-3
-                  transition-colors
-                  hover:text-[var(--color-primary)]
-                "
-              >
-                <Mail
-                  size={18}
-                  aria-hidden="true"
-                  className="
-                    mt-1 shrink-0
-                    text-[var(--color-primary)]
-                  "
-                />
+              {emails.length > 0 && (
+                <div className="flex items-start gap-3">
+                  <Mail
+                    size={18}
+                    aria-hidden="true"
+                    className="mt-1 shrink-0 text-[var(--color-primary)]"
+                  />
 
-                <span className="break-all">
-                  {contactDetails.email}
-                </span>
-              </a>
-
-              {/* Phone */}
-
-              <div className="flex items-start gap-3">
-                <Phone
-                  size={18}
-                  aria-hidden="true"
-                  className="
-                    mt-1 shrink-0
-                    text-[var(--color-primary)]
-                  "
-                />
-
-                <div className="space-y-1">
-                  {contactDetails.phones.map((phone) => (
-                    <a
-                      key={phone}
-                      href={`tel:${phone.replace(/\s/g, "")}`}
-                      className="
-                        block
-                        transition-colors
-                        hover:text-[var(--color-primary)]
-                      "
-                    >
-                      {phone}
-                    </a>
-                  ))}
+                  <div className="space-y-1">
+                    {emails.map((email) => (
+                      <a
+                        key={email}
+                        href={`mailto:${email}`}
+                        className="
+                          block break-all
+                          transition-colors
+                          hover:text-[var(--color-primary)]
+                        "
+                      >
+                        {email}
+                      </a>
+                    ))}
+                  </div>
                 </div>
-              </div>
+              )}
+
+              {/* Phone numbers */}
+
+              {phones.length > 0 && (
+                <div className="flex items-start gap-3">
+                  <Phone
+                    size={18}
+                    aria-hidden="true"
+                    className="mt-1 shrink-0 text-[var(--color-primary)]"
+                  />
+
+                  <div className="space-y-1">
+                    {phones.map((phone) => (
+                      <a
+                        key={phone}
+                        href={`tel:${phone.replace(/[^\d+]/g, "")}`}
+                        className="
+                          block
+                          transition-colors
+                          hover:text-[var(--color-primary)]
+                        "
+                      >
+                        {phone}
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              )}
 
               {/* Address */}
 
-              <div className="flex items-start gap-3">
-                <MapPin
-                  size={18}
-                  aria-hidden="true"
-                  className="
-                    mt-1 shrink-0
-                    text-[var(--color-primary)]
-                  "
-                />
+              {addresses.length > 0 && (
+                <div className="flex items-start gap-3">
+                  <MapPin
+                    size={18}
+                    aria-hidden="true"
+                    className="mt-1 shrink-0 text-[var(--color-primary)]"
+                  />
 
-                <address className="not-italic">
-                  {contactDetails.address.map((line) => (
-                    <div key={line}>{line}</div>
-                  ))}
-                </address>
-              </div>
+                  <address className="not-italic">
+                    {addresses.map((line, index) => (
+                      <div key={`${line}-${index}`}>{line}</div>
+                    ))}
+                  </address>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -317,21 +320,24 @@ export default function Footer() {
           "
         >
           <p>
-            © {new Date().getFullYear()} Empowering Minds.
-            All rights reserved.
+            © {new Date().getFullYear()}{" "}
+            {identity?.siteName || "Empowering Minds"}.{" "}
+            {footer?.copyrightText || "All rights reserved."}
           </p>
 
-          <Link
-            to="/"
-            className="
-              inline-flex items-center gap-1
-              transition-colors
-              hover:text-[var(--color-primary)]
-            "
-          >
-            Back to home
-            <ArrowUpRight size={13} aria-hidden="true" />
-          </Link>
+          {footer?.showBackToHome !== false && (
+            <Link
+              to="/"
+              className="
+                inline-flex items-center gap-1
+                transition-colors
+                hover:text-[var(--color-primary)]
+              "
+            >
+              Back to home
+              <ArrowUpRight size={13} aria-hidden="true" />
+            </Link>
+          )}
         </div>
       </div>
     </footer>

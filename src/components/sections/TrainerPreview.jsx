@@ -174,6 +174,13 @@ export default function TrainerPreview() {
             </span>
           </Link>
         </div>
+        <div className="mt-3 flex items-center justify-center gap-3 md:hidden">
+                <span className="h-px w-8 bg-[var(--color-border)]" />
+                <p className="text-[10px] font-bold uppercase tracking-[0.16em] text-[var(--color-text-muted)]">
+                  Swipe to explore
+                </p>
+                <span className="h-px w-8 bg-[var(--color-border)]" />
+          </div>
 
       </div>
     </section>

@@ -9,7 +9,7 @@ import { useSearchParams } from "react-router-dom";
 import { serviceGroups } from "../data/siteContent";
 import { useContactPage } from "../cms/useContactPage";
 
-export default function Contact() {
+export default function Contact({siteSettings}) {
       const { contactPage, loading: pageLoading, error: pageError } = useContactPage();
       const [serviceGroupIdOverride, setServiceGroupId] = useState(null);
       const [serviceIdOverride, setServiceId] = useState(null);
@@ -240,7 +240,7 @@ export default function Contact() {
     return (
         <main className="academy-theme">
             <ContactHero data={contactPage.hero}/>
-            <ContactInformation data={contactPage.contactInformation}/>
+            <ContactInformation data={contactPage.contactInformation} contact={siteSettings?.contact}/>
             <ContactForm
                 form={{
                     interestType,

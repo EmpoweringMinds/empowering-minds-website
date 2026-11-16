@@ -67,6 +67,14 @@ export default defineConfig({
                 ),
               ])
             ),
+          S.listItem()
+            .title('Site Settings')
+            .id('siteSettings')
+            .child(
+              S.document()
+                .schemaType('siteSettings')
+                .documentId('siteSettings')
+          ),
           S.divider(),
 
           S.documentTypeListItem('course')

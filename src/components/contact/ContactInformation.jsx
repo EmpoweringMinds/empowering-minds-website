@@ -1,31 +1,31 @@
 
 import { Mail, MapPin, Phone } from "lucide-react";
 
-
-export default function ContactInformation({data}) {
+export default function ContactInformation({ data, contact }) {
   const contactMethods = [
-  {
-    label: "Call us",
-    icon: Phone,
-    tone: "bg-[var(--color-soft-accent)] text-[var(--color-primary)]",
-    content: data.phoneNumber ?? [],
-    type: "phone",
-  },
-  {
-    label: "Email us",
-    icon: Mail,
-    tone: "bg-[var(--color-olive)]/25 text-white",
-    content: data.email ?? [],
-    type: "email",
-  },
-  {
-    label: "Visit us",
-    icon: MapPin,
-    tone: "bg-[var(--color-primary)]/70 text-white",
-    content: data.address ? [data.address] : [],
-    type: "address",
-  },
-];
+    {
+      label: "Call us",
+      icon: Phone,
+      tone: "bg-[var(--color-soft-accent)] text-[var(--color-primary)]",
+      content: contact?.phoneNumber ?? [],
+      type: "phone",
+    },
+    {
+      label: "Email us",
+      icon: Mail,
+      tone: "bg-[var(--color-olive)]/25 text-white",
+      content: contact?.email ?? [],
+      type: "email",
+    },
+    {
+      label: "Visit us",
+      icon: MapPin,
+      tone: "bg-[var(--color-primary)]/70 text-white",
+      content: contact?.address ?? [],
+      type: "address",
+    },
+  ];
+
   return (
     <section className="relative overflow-hidden bg-[var(--color-background)] py-16 sm:py-20 lg:py-24">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -34,15 +34,15 @@ export default function ContactInformation({data}) {
           {/* Introduction */}
           <div className="max-w-lg">
             <p className="text-sm font-bold uppercase tracking-[0.2em] text-[var(--color-secondary)]">
-              {data.eyebrow}
+              {data?.eyebrow}
             </p>
 
             <h2 className="mt-4 text-3xl font-bold leading-tight text-[var(--color-primary)] sm:text-4xl">
-              {data.heading}
+              {data?.heading}
             </h2>
 
             <p className="mt-5 text-base leading-7 text-[var(--color-text-secondary)]">
-              {data.description}
+              {data?.description}
             </p>
 
             <div className="mt-8 h-1 w-16 rounded-full bg-[var(--color-secondary)]" />
@@ -57,14 +57,18 @@ export default function ContactInformation({data}) {
 
             <div className="relative grid gap-9 sm:grid-cols-2">
 
-              {contactMethods.map((method, index) => {
+              {contactMethods.map((method) => {
                 const Icon = method.icon;
+
+                if (!method.content.length) return null;
 
                 return (
                   <div
                     key={method.type}
                     className={`
-                      ${index === 2 ? "sm:col-span-2 sm:border-t sm:border-white/15 sm:pt-8" : ""}
+                      ${method.type === "address"
+                        ? "sm:col-span-2 sm:border-t sm:border-white/15 sm:pt-8"
+                        : ""}
                     `}
                   >
                     <div className={`flex h-12 w-12 items-center justify-center rounded-2xl ${method.tone}`}>
@@ -76,12 +80,12 @@ export default function ContactInformation({data}) {
                     </p>
 
                     <div className="mt-3 space-y-2">
-                      {method.content.map((item) => {
+                      {method.content.map((item, index) => {
                         if (method.type === "phone") {
                           return (
                             <a
-                              key={item}
-                              href={`tel:${item.replace(/\s/g, "")}`}
+                              key={`${item}-${index}`}
+                              href={`tel:${item.replace(/[^\d+]/g, "")}`}
                               className="block text-lg font-semibold text-white transition hover:text-white/70"
                             >
                               {item}
@@ -92,7 +96,7 @@ export default function ContactInformation({data}) {
                         if (method.type === "email") {
                           return (
                             <a
-                              key={item}
+                              key={`${item}-${index}`}
                               href={`mailto:${item}`}
                               className="block break-words text-lg font-semibold text-white transition hover:text-white/70"
                             >
@@ -103,7 +107,7 @@ export default function ContactInformation({data}) {
 
                         return (
                           <p
-                            key={item}
+                            key={`${item}-${index}`}
                             className="text-base font-medium leading-7 text-white/90"
                           >
                             {item}

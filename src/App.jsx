@@ -14,25 +14,31 @@ import WorkshopDetails from "./components/sections/WorkshopDetails";
 import WorkshopRegistration from "./pages/WorkshopRegistration";
 import Home from "./pages/Home";
 import Courses from "./pages/Courses";
+import { useSiteSettings } from "./cms/useSiteSettings";
 
 function App() {
+  const { siteSettings, error } = useSiteSettings();
+
+  if (error) {
+    console.error("Could not load global site settings:", error);
+  }
   return (
     <div className="min-h-screen bg-[var(--color-background)] text-[var(--color-text-primary)]">
-      <Navbar />
+      <Navbar data={siteSettings}/>
       <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/about" element={<About />} />
         <Route path="/programs" element={<Programs />} />
         <Route path="/trainers" element={<Trainer />} />
-        <Route path="/contact" element={<Contact />} />
+        <Route path="/contact" element={<Contact siteSettings={siteSettings}/>} />
         <Route path="/workshops" element={<Workshops />} />
         <Route path="/workshops/:slug" element={<WorkshopDetails />} />
         <Route path="/workshops/:slug/register" element={<WorkshopRegistration />}/>
         <Route path="/courses" element={<Courses />} />
       </Routes>
       <WhatsAppFloat />
-      <Footer />
+      <Footer data={siteSettings}/>
     </div>
   );
 }

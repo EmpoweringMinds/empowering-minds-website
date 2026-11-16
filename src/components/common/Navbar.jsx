@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 import { Link, NavLink } from "react-router-dom";
-import { navLinks } from "../../data/siteContent";
 import CTAButton from "../ui/CTAButton";
 
 function NavigationLink({ link, mobile = false, onClick }) {
@@ -42,24 +41,27 @@ function NavigationLink({ link, mobile = false, onClick }) {
   `;
 
   if (link.external) {
-    return (
-      <a
-        href={link.href}
-        onClick={onClick}
-        className={`
-          ${baseClasses}
-          ${mobile ? mobileInactive : desktopInactive}
-        `}
-      >
-        <span>{link.label}</span>
-        {mobile && (
-          <span className="ml-1 text-xs text-[var(--color-primary)]">
-            ↗
-          </span>
-        )}
-      </a>
-    );
-  }
+  return (
+    <a
+      href={link.href}
+      target={link.openInNewTab ? "_blank" : undefined}
+      rel={link.openInNewTab ? "noopener noreferrer" : undefined}
+      onClick={onClick}
+      className={`
+        ${baseClasses}
+        ${mobile ? mobileInactive : desktopInactive}
+      `}
+    >
+      <span>{link.label}</span>
+
+      {mobile && (
+        <span className="ml-1 text-xs text-[var(--color-primary)]">
+          ↗
+        </span>
+      )}
+    </a>
+  );
+}
 
   return (
     <NavLink
@@ -86,10 +88,12 @@ function NavigationLink({ link, mobile = false, onClick }) {
   );
 }
 
-export default function Navbar() {
+export default function Navbar({data}) {
   const [mobileOpen, setMobileOpen] = useState(false);
-
   const closeMobileMenu = () => setMobileOpen(false);
+  const navLinks = data?.navbar?.links ?? [];
+  const cta = data?.navbar?.cta;
+  const mobileDescription = data?.navbar?.mobileDescription;
 
   return (
     <header
@@ -124,22 +128,17 @@ export default function Navbar() {
             "
           >
             <img
-              src="/images/logo-EM.png"
+              src={data?.identity?.logo || "/images/logo-EM.png"}
               alt=""
-              className="
-                h-10 w-10 object-contain
-                sm:h-11 sm:w-11
-              "
+              className="h-10 w-10 object-contain sm:h-11 sm:w-11"
             />
 
-            <span
-              className="
-                text-lg font-bold
-                tracking-[-0.035em]
-                sm:text-xl
-              "
-            >
-              Empowering Minds
+            <span className="
+              text-lg font-bold
+              tracking-[-0.035em]
+              sm:text-xl
+            ">
+              {data?.identity?.siteName || "Empowering Minds"}
             </span>
           </Link>
 
@@ -159,15 +158,14 @@ export default function Navbar() {
               />
             ))}
 
-            <CTAButton
-              href="tel:+917003055263"
-              className="
-                ml-1 shrink-0
-                px-5 py-2.5
-              "
-            >
-              Talk to us
-            </CTAButton>
+            {cta?.label && cta?.href && (
+              <CTAButton
+                href={cta.href}
+                className="ml-1 shrink-0 px-5 py-2.5"
+              >
+                {cta.label}
+              </CTAButton>
+            )}
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -231,14 +229,25 @@ export default function Navbar() {
             {/* Mobile CTA */}
 
             <div className="mt-5 border-t border-[var(--color-border-soft)] pt-5">
-              <CTAButton
-                href="tel:+917003055263"
-                className="w-full"
-                onClick={closeMobileMenu}
-              >
-                Talk to us
-              </CTAButton>
+              {cta?.label && cta?.href && (
+                <CTAButton
+                  href={cta.href}
+                  className="w-full"
+                  onClick={closeMobileMenu}
+                >
+                  {cta.label}
+                </CTAButton>
+              )}
 
+              {mobileDescription && (
+                <p className="
+                  mt-3 text-center
+                  text-xs
+                  text-[var(--color-text-secondary)]
+                ">
+                  {mobileDescription}
+                </p>
+              )}
               <p
                 className="
                   mt-3 text-center

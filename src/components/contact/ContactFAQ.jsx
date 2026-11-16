@@ -1,7 +1,6 @@
 
 import { useState } from "react";
 import { ChevronDown } from "lucide-react";
-import { faqs } from "../../data/siteContent";
 import FadeIn from "../ui/FadeIn";
 
 export default function ContactFAQs({data}) {

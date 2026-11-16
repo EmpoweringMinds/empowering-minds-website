@@ -308,9 +308,15 @@ export default function WorkshopPreview() {
             title="Make room for a little more growth."
             description="Practical learning experiences designed to help you build skills, turn insight into action, and make meaningful progress."
             />
+          {upcomingWorkshops.length === 0 
+          ? (
+            <div className="h-5 w-5 rounded-full bg-[var(--color-primary)]" />
+          )
+          : (
           <div className="shrink-0">
             <CTAButton to="/workshops">Explore All Workshops</CTAButton>
           </div>
+          )}
         </div>
 
         {/* Loading state */}

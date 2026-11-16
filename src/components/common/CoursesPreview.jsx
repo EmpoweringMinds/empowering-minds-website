@@ -1,4 +1,9 @@
 import { useState } from "react";
+import {
+  motion,
+  useReducedMotion,
+} from "framer-motion";
+
 import { useCourses } from "../../cms/useCourses";
 import CTAButton from "../ui/CTAButton";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +19,7 @@ export default function CoursePreview() {
   const { courses, loading, error } = useCourses();
   const navigate = useNavigate();
   const [showAllCourses, setShowAllCourses] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
 
   function getCourseTarget(course) {
     return course.slug || course.id;
@@ -37,23 +43,72 @@ export default function CoursePreview() {
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
 
         {/* Section introduction */}
-        <div className="mb-12 grid gap-8 md:mb-16 md:grid-cols-[0.8fr_1.2fr] md:items-end">
-            <span className="inline-flex items-center gap-3 text-xs font-bold uppercase tracking-[0.18em] text-[var(--color-primary)]">
-              <span className="h-2 w-2 rounded-full bg-[var(--color-primary)]" />
-              Explore Courses
-            </span>
+        <motion.div
+          className="
+            mb-12 grid gap-8
+            md:mb-16
+            md:grid-cols-[0.8fr_1.2fr]
+            md:items-end
+          "
+          initial={shouldReduceMotion ? false : "hidden"}
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+          variants={{
+            hidden: {},
+            visible: {
+              transition: {
+                staggerChildren: shouldReduceMotion ? 0 : 0.15,
+              },
+            },
+          }}
+        >
+          <motion.span
+            variants={{
+              hidden: { opacity: 0, y: 15 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            transition={{ duration: 0.6 }}
+            className="
+              inline-flex items-center gap-3
+              text-xs font-bold uppercase
+              tracking-[0.18em]
+              text-[var(--color-primary)]
+            "
+          >
+            <span className="h-2 w-2 rounded-full bg-[var(--color-primary)]" />
+            EXPLORE YOUR POSSIBILITIES
+          </motion.span>
 
-          <div className="max-w-3xl md:ml-auto">
-            <h2 className="font-heading text-4xl font-extrabold leading-[1.08] tracking-tight text-[var(--color-secondary)] sm:text-5xl lg:text-6xl">
-              Find a course that moves you <span className="text-[var(--color-primary)]">forward.</span>
+          <motion.div
+            className="max-w-3xl md:ml-auto"
+            variants={{
+              hidden: { opacity: 0, y: 30 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            transition={{ duration: 0.75, ease: "easeOut" }}
+          >
+            <h2 className="
+              font-heading text-4xl font-extrabold
+              leading-[1.08] tracking-tight
+              text-[var(--color-olive)]
+              sm:text-5xl lg:text-6xl
+            ">
+              Find a course that moves you{" "}
+              <span className="text-[var(--color-primary)]">
+                forward.
+              </span>
             </h2>
 
-            <p className="mt-5 max-w-2xl text-base leading-relaxed text-[var(--color-text-secondary)] sm:text-lg">
-              Explore courses designed to help you build confidence, develop
-              useful skills and put what you learn into action.
+            <p className="
+              mt-5 max-w-2xl text-base leading-relaxed
+              text-[var(--color-text-secondary)]
+              sm:text-lg
+            ">
+              Explore courses designed to help you build confidence,
+              develop useful skills and put what you learn into action.
             </p>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
 
         {/* Course content states */}
         {loading ? (
@@ -93,8 +148,35 @@ export default function CoursePreview() {
                 const isHidden = index >= 4 && !showAllCourses;
 
                 return (
-                  <article
+                  <motion.article
                     key={course.id}
+                    initial={
+                      shouldReduceMotion
+                        ? false
+                        : {
+                            opacity: 0,
+                            y: 35,
+                            scale: 0.98,
+                          }
+                    }
+                    whileInView={{
+                      opacity: 1,
+                      y: 0,
+                      scale: 1,
+                    }}
+                    viewport={{
+                      once: true,
+                      amount: 0.15,
+                    }}
+                    transition={{
+                      duration: 0.7,
+                      delay: shouldReduceMotion
+                        ? 0
+                        : isFeatured
+                          ? 0
+                          : Math.min((index - 1) * 0.12, 0.36),
+                      ease: [0.22, 1, 0.36, 1],
+                    }}
                     className={`
                       group relative flex min-w-0 flex-[0_0_86%]
                       snap-start flex-col overflow-hidden rounded-[1.75rem]
@@ -103,19 +185,50 @@ export default function CoursePreview() {
                       md:flex-auto
                       ${isFeatured
                         ? "bg-[var(--color-primary)] text-white md:col-span-6 md:flex-row"
-                        : "border border-[var(--color-border)] bg-[var(--color-soft-accent)]/40 text-[var(--color-primary)] md:col-span-2"
+                        : "border border-[var(--color-border)] bg-[var(--color-olive)]/40 text-[var(--color-secondary)] md:col-span-2"
                       }
                       ${isHidden ? "md:hidden" : ""}
                     `}
                   >
+                  {/*Decorative elements */}
+                    <div
+                    aria-hidden="true"
+                    className={`
+                      pointer-events-none absolute
+                      -right-24 -top-28
+                      rounded-full
+                      ${isFeatured
+                        ? "h-72 w-72 bg-[var(--color-soft-accent)]/25"
+                        : "h-60 w-60 bg-[var(--color-olive)]/10"
+                      }
+                    `}
+                  />
+                  {isFeatured && (
+                    <div>
+                      <div
+                      aria-hidden="true"
+                      className="
+                        pointer-events-none absolute
+                        -bottom-32 right-[18%]
+                        h-64 w-64
+                        rounded-full
+                        bg-[var(--color-secondary)]/15
+                      "
+                    />
                     <div
                       aria-hidden="true"
                       className="
-                        pointer-events-none absolute -right-20 -top-20
-                        h-64 w-64 rounded-full border-[32px]
-                        border-white/10
-                        sm:h-85 sm:w-85"
+                        pointer-events-none absolute
+                        -right-10 top-1/2
+                        hidden h-[420px] w-[420px]
+                        -translate-y-1/2
+                        rounded-full border
+                        border-[var(--color-background)]/20
+                        lg:block
+                      "
                     />
+                  </div>
+                  )}
                     {/* Course image */}
                     {course.image && (
                       <div
@@ -196,7 +309,7 @@ export default function CoursePreview() {
                         )}
 
                         {!isFeatured && (
-                          <span className="mb-4 block font-heading text-3xl font-bold text-[var(--color-primary)]/20">
+                          <span className="mb-4 block font-heading text-3xl font-bold text-[var(--color-olive)]/20">
                             {String(index + 1).padStart(2, "0")}
                           </span>
                         )}
@@ -206,7 +319,7 @@ export default function CoursePreview() {
                             font-heading font-bold leading-tight
                             ${isFeatured
                               ? "max-w-xl text-3xl text-white sm:text-4xl lg:text-5xl"
-                              : "text-xl text-[var(--color-primary)] sm:text-2xl"
+                              : "text-xl text-[var(--color-secondary)] sm:text-2xl"
                             }
                           `}
                         >
@@ -236,7 +349,7 @@ export default function CoursePreview() {
                       >
                         <CTAButton
                           onClick={() => handleExploreCourse(course)}
-                          variant={isFeatured ? "secondary" : "primary"}
+                          variant={isFeatured ? "ghost" : "secondary"}
                           className="w-full sm:flex-1"
                         >
                           Explore course
@@ -252,7 +365,7 @@ export default function CoursePreview() {
                             sm:w-auto sm:flex-1
                             ${isFeatured
                               ? "text-white/90 hover:bg-white/10"
-                              : "text-[var(--color-primary)] hover:bg-[var(--color-soft-accent)]"
+                              : "text-[var(--color-olive)] hover:bg-[var(--color-olive)]/40 text-[var(--color-secondary)]/90"
                             }
                           `}
                         >
@@ -261,7 +374,7 @@ export default function CoursePreview() {
                         </button>
                       </div>
                     </div>
-                  </article>
+                  </motion.article>
                 );
               })}
             </div>
