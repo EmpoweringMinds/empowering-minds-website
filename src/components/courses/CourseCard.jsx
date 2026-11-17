@@ -70,6 +70,7 @@ export default function CourseCard({
       );
     }
     const detailsId = `course-details-${course.slug || course.id}`;
+    const hasImage = Boolean(course.image);
 
   return (
     <article
@@ -93,68 +94,110 @@ export default function CourseCard({
         aria-expanded={isOpen}
         aria-controls={detailsId}
         className={`
-          flex w-full items-center gap-3
-          p-4 text-left transition-colors duration-300
+          relative isolate flex w-full items-center gap-3
+          overflow-hidden p-4 text-left transition-colors duration-300
           sm:gap-6 sm:p-7
           ${
             isOpen
               ? "bg-[var(--color-secondary)]"
-              : "bg-[var(--color-surface)]"
+              : hasImage
+                ? "bg-transparent"
+                : "bg-[var(--color-surface)]"
           }
         `}
       >
+        {/* Background image — collapsed state only */}
+        {!isOpen && hasImage && (
+          <>
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 -z-10 bg-cover bg-center"
+              style={{
+                backgroundImage: `url("${course.image}")`,
+              }}
+            />
+
+            {/* Dark gradient overlay */}
+            <div
+              aria-hidden="true"
+              className="
+                absolute inset-0 -z-10
+                bg-gradient-to-r
+                from-[#31231D]/95
+                via-[#31231D]/75
+                to-[#31231D]/35
+              "
+            />
+          </>
+        )}
+
         {/* Course number */}
-        <span className={`
-          shrink-0 font-heading
-          text-xl font-bold sm:text-3xl
-          ${
-            isOpen
-              ? "text-[var(--color-soft-accent)]"
-              : "text-[var(--color-primary)]"
-          }
-        `}>
+        <span
+          className={`
+            relative z-10 shrink-0 font-heading
+            text-xl font-bold sm:text-3xl
+            ${
+              isOpen || hasImage
+                ? "text-white"
+                : "text-[var(--color-primary)]"
+            }
+          `}
+        >
           {String(index + 1).padStart(2, "0")}
         </span>
 
         {/* Course information */}
-        <div className="min-w-0 flex-1">
+        <div className="relative z-10 min-w-0 flex-1">
+
+          {/* Duration */}
           {course.duration && (
-            <span className={`
-              inline-flex rounded-full
-              px-3 py-1 text-[10px] font-semibold
-              tracking-wide sm:text-xs
-              ${
-                isOpen
-                  ? "bg-white/10 text-white/80"
-                  : "bg-[var(--color-surface-warm)] text-[var(--color-text-secondary)]"
-              }
-            `}>
+            <span
+              className={`
+                inline-flex rounded-full
+                px-3 py-1 text-[10px] font-semibold
+                tracking-wide sm:text-xs
+                ${
+                  isOpen
+                    ? "bg-white/10 text-white/80"
+                    : hasImage
+                      ? "border border-white/20 bg-black/20 text-white/90 backdrop-blur-sm"
+                      : "bg-[var(--color-surface-warm)] text-[var(--color-text-secondary)]"
+                }
+              `}
+            >
               {course.duration}
             </span>
           )}
 
-          <h3 className={`
-            mt-2 font-heading
-            text-lg font-bold leading-snug
-            sm:text-xl lg:text-2xl
-            ${
-              isOpen
-                ? "text-white"
-                : "text-[var(--color-secondary)]"
-            }
-          `}>
+          {/* Course title */}
+          <h3
+            className={`
+              mt-2 font-heading text-lg font-bold
+              leading-snug sm:text-xl lg:text-2xl
+              ${
+                isOpen || hasImage
+                  ? "text-white"
+                  : "text-[var(--color-secondary)]"
+              }
+            `}
+          >
             {course.title}
           </h3>
 
-          <p className={`
-            mt-1.5 line-clamp-2
-            text-xs leading-6 sm:text-sm
-            ${
-              isOpen
-                ? "text-white/75"
-                : "text-[var(--color-text-secondary)]"
-            }
-          `}>
+          {/* Short description */}
+          <p
+            className={`
+              mt-1.5 line-clamp-2
+              text-xs leading-6 sm:text-sm
+              ${
+                isOpen
+                  ? "text-white/75"
+                  : hasImage
+                    ? "text-white/85"
+                    : "text-[var(--color-text-secondary)]"
+              }
+            `}
+          >
             {course.description}
           </p>
 
@@ -165,10 +208,10 @@ export default function CourseCard({
                 <span
                   key={`${format}-${formatIndex}`}
                   className={`
-                    text-xs font-medium
+                    relative text-xs font-medium
                     ${
-                      isOpen
-                        ? "text-white/65"
+                      isOpen || hasImage
+                        ? "text-white/75"
                         : "text-[var(--color-text-muted)]"
                     }
                   `}
@@ -184,17 +227,21 @@ export default function CourseCard({
         </div>
 
         {/* Expand indicator */}
-        <span className={`
-          flex h-9 w-9 shrink-0
-          items-center justify-center
-          rounded-full transition-colors duration-300
-          sm:h-12 sm:w-12
-          ${
-            isOpen
-              ? "bg-white/15 text-white"
-              : "bg-[var(--color-surface-warm)] text-[var(--color-primary)]"
-          }
-        `}>
+        <span
+          className={`
+            relative z-10 flex h-9 w-9 shrink-0
+            items-center justify-center rounded-full
+            transition-colors duration-300
+            sm:h-12 sm:w-12
+            ${
+              isOpen
+                ? "bg-white/15 text-white"
+                : hasImage
+                  ? "border border-white/25 bg-white/15 text-white backdrop-blur-sm"
+                  : "bg-[var(--color-surface-warm)] text-[var(--color-primary)]"
+            }
+          `}
+        >
           <motion.span
             animate={{ rotate: isOpen ? 180 : 0 }}
             transition={{ duration: 0.3 }}
@@ -204,6 +251,7 @@ export default function CourseCard({
           </motion.span>
         </span>
       </button>
+
 
       {/* Expandable content */}
       <AnimatePresence initial={false}>
