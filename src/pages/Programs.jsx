@@ -5,18 +5,13 @@ import DevelopmentAreas from "../components/programs/DevelopmentAreas";
 import ProgramsByAudience from "../components/programs/ProgramsByAudience";
 import ProgramsCTA from "../components/programs/ProgramsCTA";
 import ProgramsHero from "../components/programs/ProgramsHero";
+import PageLoading from "../components/ui/PageLoading";
 
 export default function Programs() {
   const { programsPage, loading, error } = useProgramsPage();
 
   if (loading) {
-    return (
-      <main className="academy-theme min-h-screen flex items-center justify-center">
-        <p className="text-[var(--color-text-secondary)]">
-          Loading Programs...
-        </p>
-      </main>
-    );
+    return <PageLoading variant="programs" />;
   }
 
   if (error) {

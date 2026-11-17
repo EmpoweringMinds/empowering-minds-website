@@ -9,6 +9,10 @@ import { useTrainersPage } from "../cms/useTrainersPage";
 import TestimonialSection from "../components/sections/TestimonialSection";
 import CTASection from "../components/ui/CTASection";
 
+import PageLoading, {
+  TrainerGridSkeleton,
+} from "../components/ui/PageLoading";
+
 export default function Trainer() {
   // Individual trainer profiles
   const {
@@ -26,14 +30,8 @@ export default function Trainer() {
 
   // Wait for page-level content
   if (pageLoading) {
-    return (
-    <main className="academy-theme min-h-screen flex items-center justify-center">
-        <p className="text-[var(--color-text-secondary)]">
-            Loading Trainers...
-        </p>
-      </main>
-  );
-}
+    return <PageLoading variant="directory" />;
+  }
 
   if (pageError || !trainersPage) {
     return (
@@ -62,12 +60,9 @@ export default function Trainer() {
       <FounderSection data={fromFounder} />
 
       {/* Trainer directory */}
+      
       {trainersLoading ? (
-        <div className="py-16 text-center">
-          <p className="text-[var(--color-text-secondary)]">
-            Loading trainers...
-          </p>
-        </div>
+        <TrainerGridSkeleton />
       ) : trainersError ? (
         <div className="py-16 text-center">
           <p className="text-[var(--color-error)]">

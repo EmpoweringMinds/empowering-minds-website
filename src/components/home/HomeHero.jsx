@@ -370,7 +370,7 @@ export default function HomeHero({ data }) {
       className="
         pointer-events-none absolute
         bottom-0 left-0 z-30
-        h-[70px] w-full
+        h-[90px] w-full
         sm:h-[130px] lg:h-[160px]
       "
     >

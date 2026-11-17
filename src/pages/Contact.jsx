@@ -8,6 +8,7 @@ import { useCourses } from "../cms/useCourses";
 import { useSearchParams } from "react-router-dom";
 import { serviceGroups } from "../data/siteContent";
 import { useContactPage } from "../cms/useContactPage";
+import PageLoading from "../components/ui/PageLoading";
 
 export default function Contact({siteSettings}) {
       const { contactPage, loading: pageLoading, error: pageError } = useContactPage();
@@ -217,14 +218,8 @@ export default function Contact({siteSettings}) {
         }
       };
       
-      if (pageLoading) {
-        return (
-        <main className="academy-theme min-h-screen flex items-center justify-center">
-            <p className="text-[var(--color-text-secondary)]">
-                Loading Contact Page...
-            </p>
-          </main>
-      );
+    if (pageLoading) {
+      return <PageLoading variant="contact" />;
     }
 
     if (pageError || !contactPage) {

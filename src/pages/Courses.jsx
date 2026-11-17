@@ -10,6 +10,7 @@ import DevelopmentApproach from "../components/courses/DevelopmentApproach";
 import LearningFormats from "../components/courses/LearningFormats";
 import CoursesCTA from "../components/courses/CoursesCTA";
 import FlexibleLearningOptions from "../components/courses/FlexibleLearningOptions";
+import PageLoading from "../components/ui/PageLoading";
 
 export default function Courses() {
   const { coursesPage, loading, error } = useCoursesPage();
@@ -17,13 +18,7 @@ export default function Courses() {
   console.log("Courses Page data:", coursesPage);
 
   if (loading) {
-    return (
-      <main className="academy-theme min-h-screen flex items-center justify-center">
-        <p className="text-[var(--color-text-secondary)]">
-          Loading courses...
-        </p>
-      </main>
-    );
+    return <PageLoading variant="courses" />;
   }
 
   if (error) {

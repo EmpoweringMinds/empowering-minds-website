@@ -8,6 +8,7 @@ import DevelopmentPathways from "../components/about/DevelopmentPathways";
 import TestimonialSection from "../components/sections/TestimonialSection";
 import AboutHero from "../components/about/AboutHero";
 import AboutPageCTA from "../components/about/AboutPageCTA";
+import PageLoading from "../components/ui/PageLoading";
 
 
 
@@ -15,13 +16,7 @@ export default function About() {
 const { aboutPage, loading, error } = useAboutPage();
 
     if (loading) {
-    return (
-        <main className="academy-theme min-h-screen flex items-center justify-center">
-        <p className="text-[var(--color-text-secondary)]">
-            Loading About...
-        </p>
-        </main>
-    );
+        return <PageLoading variant="about" />;
     }
 
     if (error) {
