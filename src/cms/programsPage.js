@@ -17,8 +17,8 @@ function normalizeProgramsPage(page) {
       description: page.hero?.description || "",
       image: normalizeImage(
         page.hero?.heroImage,
-        1600,
-        1600
+        1080,
+        1350
       ),
       primaryCTA: page.hero?.primaryCTA || "",
       secondaryCTA: page.hero?.secondaryCTA || "",
@@ -73,8 +73,8 @@ function normalizeProgramsPage(page) {
       description: page.deliveryApproach?.description || "",
       image: normalizeImage(
         page.deliveryApproach?.image,
-        1600,
-        1600
+        1080,
+        1350
       ),
     },
 

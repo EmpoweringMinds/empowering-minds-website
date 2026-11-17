@@ -113,8 +113,8 @@ function normalizeAboutPage(page) {
       metaDescription: page.seo?.metaDescription || "",
       ogImage: normalizeImage(
         page.seo?.ogImage,
-        1200,
-        630
+        1080,
+        1350
       ),
       noIndex: page.seo?.noIndex ?? false,
     },

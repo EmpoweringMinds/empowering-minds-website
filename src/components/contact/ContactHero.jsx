@@ -58,7 +58,7 @@ export default function ContactHero({data}) {
 
       {/* Contact hero photography */}
       <img
-        src="/images/contact-hero.png"
+        src={data.image}
         alt=""
         fetchPriority="high"
         className="

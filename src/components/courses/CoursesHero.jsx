@@ -8,8 +8,7 @@ export default function CoursesHero({ data }) {
     <div className="
       relative mx-auto
       flex aspect-[4/4.2] w-full
-      max-w-[480px] items-center justify-center
-      overflow-visible
+      max-w-[480px] items-center justify-center 
     ">
       {/* Decorative background shapes */}
       <div
@@ -37,7 +36,7 @@ export default function CoursesHero({ data }) {
         aria-hidden="true"
         className="
           absolute bottom-[12%] left-[3%]
-          h-14 w-14 rounded-full
+          h-14 w-14 rounded-full 
           bg-[var(--color-primary)]/80
           sm:h-20 sm:w-20
         "
@@ -49,7 +48,7 @@ export default function CoursesHero({ data }) {
           absolute left-1/2 top-1/2
           h-[92%] w-[92%]
           -translate-x-1/2 -translate-y-1/2
-          rounded-full border
+          rounded-full border 
           border-[var(--color-primary)]/20
         "
       />
@@ -61,7 +60,7 @@ export default function CoursesHero({ data }) {
         fetchPriority="high"
         className="
           relative z-10
-          h-full w-full
+          h-full w-full 
           object-contain object-bottom
         "
       />

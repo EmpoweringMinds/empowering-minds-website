@@ -62,7 +62,7 @@ export default function TrainersHero({data}) {
         fetchPriority="high"
         className="
           relative z-10
-          h-full w-full
+          h-85 w-85
           object-fit object-bottom
           scale-145
         "
