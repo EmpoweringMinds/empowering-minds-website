@@ -128,7 +128,7 @@ export default function Navbar({data}) {
             "
           >
             <img
-              src={data?.identity?.logo || "/images/logo-EM.png"}
+              src={data?.identity?.logo || "/images/logo-EM.webp"}
               alt=""
               className="h-10 w-10 object-contain sm:h-11 sm:w-11"
             />
