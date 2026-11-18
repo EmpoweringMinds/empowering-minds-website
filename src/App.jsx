@@ -25,7 +25,7 @@ const WorkshopRegistration = lazy(
 const Courses = lazy(() => import("./pages/Courses"));
 
 function App() {
-  const { siteSettings, error } = useSiteSettings();
+  const { siteSettings, loading, error } = useSiteSettings();
 
   if (error) {
     console.error("Could not load global site settings:", error);
@@ -72,7 +72,7 @@ function App() {
       </Suspense>
 
       <WhatsAppFloat />
-      <Footer data={siteSettings} />
+      <Footer data={siteSettings} loading={loading} />
     </div>
   );
 }
