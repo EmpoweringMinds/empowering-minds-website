@@ -34,7 +34,12 @@ function normalizeHomePage(page, aboutPage) {
       eyebrow: page.hero?.eyebrow || "",
       heading: page.hero?.heading || "",
       description: page.hero?.description || "",
-      image: normalizeImage(page.hero?.heroImage, 1600, 1600),
+      interactionHeroImages: (page.hero?.interactionHeroImages || []).map((image)=>
+      normalizeImage(image,1600,1600)).filter(Boolean),
+      workshopHeroImages: (page.hero?.workshopHeroImages || []).map((image)=>
+      normalizeImage(image,1600,1600)).filter(Boolean),
+      portraitHeroImages: (page.hero?.portraitHeroImages || []).map((image)=>
+      normalizeImage(image,1600,1600)).filter(Boolean),
       primaryCTA: page.hero?.primaryCTA || "",
       secondaryCTA: page.hero?.secondaryCTA || "",
     },

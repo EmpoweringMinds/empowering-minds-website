@@ -280,7 +280,7 @@ export default function HomeHero({ data }) {
               "
             >
               <TurningImage
-                images={heroImageGroups.main}
+                images={data.workshopHeroImages}
                 alt="Participants learning and developing together"
                 delay={0}
               />
@@ -299,7 +299,7 @@ export default function HomeHero({ data }) {
               "
             >
               <TurningImage
-                images={heroImageGroups.portrait}
+                images={data.portraitHeroImages}
                 alt="People developing their professional confidence"
                 delay={2200}
               />
@@ -318,7 +318,7 @@ export default function HomeHero({ data }) {
               "
             >
               <TurningImage
-                images={heroImageGroups.interaction}
+                images={data.interactionHeroImages}
                 alt="People sharing ideas and learning together"
                 delay={4400}
               />

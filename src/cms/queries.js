@@ -465,7 +465,9 @@ export const homePageQuery = `
       eyebrow,
       heading,
       description,
-      heroImage,
+      interactionHeroImages,
+      workshopHeroImages,
+      portraitHeroImages,
       primaryCTA,
       secondaryCTA
     },

@@ -38,10 +38,22 @@ export const homePage = defineType({
           type: "text",
         }),
         defineField({
-          name: "heroImage",
-          title: "Hero Image",
-          type: "image",
-          options: { hotspot: true },
+          name: "interactionHeroImages",
+          title: "Interaction Hero Images",
+          type: "array",
+          of: [{type:"image"}],
+        }),
+        defineField({
+          name: "workshopHeroImages",
+          title: "Workshop Hero Images",
+          type: "array",
+          of: [{type:"image"}],
+        }),
+        defineField({
+          name: "portraitHeroImages",
+          title: "Portrait Hero Images",
+          type: "array",
+          of: [{type:"image"}],
         }),
         defineField({
           name: "primaryCTA",
