@@ -74,6 +74,7 @@ function TurningImage({
           src={images[index]}
           alt={alt}
           loading="eager"
+          fetchPriority="high"
           decoding="async"
           className="absolute inset-0 h-full w-full object-cover"
           initial={
