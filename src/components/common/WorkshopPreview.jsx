@@ -6,6 +6,115 @@ import CTAButton from "../ui/CTAButton";
 import { ArrowUpRight, CalendarDays, Clock3, Tag } from "lucide-react";
 import SectionHeader from "../ui/SectionHeader";
 
+
+function SkeletonLine({ className = "" }) {
+  return (
+    <div
+      aria-hidden="true"
+      className={`animate-pulse rounded-full bg-[var(--color-border)]/60 ${className}`}
+    />
+  );
+}
+
+function WorkshopCardSkeleton({ featured = false }) {
+  return (
+    <article
+      aria-hidden="true"
+      className={`
+        flex h-full flex-col overflow-hidden rounded-[1.75rem]
+        ${featured
+          ? "bg-[var(--color-olive)]"
+          : "border border-[var(--color-border)] bg-[var(--color-surface-warm)]"
+        }
+      `}
+    >
+      <div className={`flex flex-1 flex-col p-6 sm:p-8 ${featured ? "lg:p-11" : ""}`}>
+        {/* Date and status */}
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <SkeletonLine className={`h-7 w-32 ${featured ? "bg-white/20" : ""}`} />
+          <SkeletonLine className={`h-4 w-28 ${featured ? "bg-white/20" : ""}`} />
+        </div>
+
+        {/* Workshop information */}
+        <div className="mt-8 flex-1">
+          <SkeletonLine className={`h-3 w-32 ${featured ? "bg-white/20" : ""}`} />
+
+          <SkeletonLine
+            className={`
+              mt-4 h-8 w-full rounded-md
+              ${featured ? "sm:h-10 lg:h-12 bg-white/20" : ""}
+            `}
+          />
+
+          {featured && (
+            <SkeletonLine className="mt-3 h-8 w-4/5 rounded-md bg-white/15" />
+          )}
+
+          <div className="mt-5 space-y-3">
+            <SkeletonLine className={`h-3 w-full ${featured ? "bg-white/15" : ""}`} />
+            <SkeletonLine className={`h-3 w-11/12 ${featured ? "bg-white/15" : ""}`} />
+            {featured && (
+              <SkeletonLine className="h-3 w-3/4 bg-white/15" />
+            )}
+          </div>
+
+          <div className={`mt-6 space-y-3 ${featured ? "sm:grid sm:grid-cols-2 sm:gap-3 sm:space-y-0" : ""}`}>
+            {[1, 2, ...(featured ? [3, 4] : [])].map((item) => (
+              <SkeletonLine
+                key={item}
+                className={`h-3 w-full ${featured ? "bg-white/15" : ""}`}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Pricing and action */}
+        <div className={`mt-8 flex flex-col gap-6 border-t pt-6 sm:flex-row sm:items-end sm:justify-between ${
+          featured ? "border-white/20" : "border-[var(--color-border)]"
+        }`}>
+          <div className="space-y-3">
+            <SkeletonLine className={`h-3 w-20 ${featured ? "bg-white/20" : ""}`} />
+            <SkeletonLine className={`h-8 w-28 rounded-md ${featured ? "bg-white/20" : ""}`} />
+            {featured && (
+              <SkeletonLine className="h-3 w-28 bg-white/15" />
+            )}
+          </div>
+
+          <div className="flex flex-col gap-3 sm:min-w-[190px]">
+            <SkeletonLine className={`h-3 w-24 ${featured ? "bg-white/20" : ""}`} />
+            <SkeletonLine className={`h-12 w-full rounded-full ${featured ? "bg-white/20" : ""}`} />
+          </div>
+        </div>
+      </div>
+    </article>
+  );
+}
+
+function WorkshopPreviewSkeleton() {
+  return (
+    <>
+      <div className="grid gap-5 lg:grid-cols-2 lg:items-stretch">
+        <div className="lg:row-span-2">
+          <WorkshopCardSkeleton featured />
+        </div>
+
+        <WorkshopCardSkeleton />
+        <WorkshopCardSkeleton />
+      </div>
+
+      {/* Reserve space for the directory link */}
+      <div
+        aria-hidden="true"
+        className="mt-10 flex flex-col items-center gap-3 border-t border-[var(--color-border)] pt-8 text-center sm:mt-12"
+      >
+        <SkeletonLine className="h-3 w-44" />
+        <SkeletonLine className="h-4 w-40" />
+      </div>
+    </>
+  );
+}
+
+
 function formatWorkshopDate(date) {
   if (!date) return "Date to be announced";
 
@@ -296,7 +405,7 @@ export default function WorkshopPreview() {
     .slice(0, 3);
 
   return (
-    <section className="academy-theme relative overflow-hidden bg-[var(--color-surface-warm)] py-20 sm:py-24 lg:py-32">
+    <section aria-busy={loading} className="academy-theme relative overflow-hidden bg-[var(--color-surface-warm)] py-20 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-12">
         {/* Section heading */}
         <div className="mb-12 flex flex-col gap-8 md:mb-16 md:items-end md:justify-between">
@@ -308,24 +417,23 @@ export default function WorkshopPreview() {
             title="Make room for a little more growth."
             description="Practical learning experiences designed to help you build skills, turn insight into action, and make meaningful progress."
             />
-          {upcomingWorkshops.length === 0 
-          ? (
-            <div className="h-5 w-5 rounded-full bg-[var(--color-primary)]" />
-          )
-          : (
-          <div className="shrink-0">
-            <CTAButton to="/workshops">Explore All Workshops</CTAButton>
-          </div>
-          )}
+            {loading ? (
+              <div
+                aria-hidden="true"
+                className="h-12 w-48 animate-pulse rounded-full bg-[var(--color-border)]/50"
+              />
+            ) : upcomingWorkshops.length === 0 ? (
+              <div className="h-5 w-5 rounded-full bg-[var(--color-primary)]" />
+            ) : (
+              <div className="shrink-0">
+                <CTAButton to="/workshops">Explore All Workshops</CTAButton>
+              </div>
+            )}
         </div>
 
         {/* Loading state */}
         {loading ? (
-          <div className="rounded-[1.75rem] border border-[var(--color-border)] bg-white/60 p-10">
-            <p className="text-sm text-[var(--color-text-secondary)]">
-              Loading workshops...
-            </p>
-          </div>
+            <WorkshopPreviewSkeleton />
         ) : error ? (
           <div className="rounded-[1.75rem] border border-[var(--color-border)] bg-white/60 p-10">
             <p className="text-[var(--color-text-secondary)]">

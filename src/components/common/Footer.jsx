@@ -73,10 +73,10 @@ function FooterSkeleton() {
 
               <SkeletonLine className="mt-6 h-1 w-12 bg-white" />
 
-              <div className="mt-6 max-w-sm space-y-3">
-                <SkeletonLine className="h-3 w-full bg-white" />
-                <SkeletonLine className="h-3 w-[90%] bg-white" />
-                <SkeletonLine className="h-3 w-[65%] bg-white" />
+              <div className="mt-6 max-w-sm space-y-1">
+                <SkeletonLine className="h-7 w-full bg-white" />
+                <SkeletonLine className="h-7 w-[90%] bg-white" />
+                <SkeletonLine className="h-7 w-[65%] bg-white" />
               </div>
 
               <SkeletonLine className="mt-8 h-3 w-32 bg-white" />
@@ -95,7 +95,7 @@ function FooterSkeleton() {
               {Array.from({ length: 6 }).map((_, index) => (
                 <SkeletonLine
                   key={index}
-                  className={`h-4 ${
+                  className={`h-5 ${
                     ["w-20", "w-24", "w-16", "w-28", "w-20", "w-24"][index]
                   } text-[var(--color-text-secondary)]`}
                 />
@@ -115,33 +115,24 @@ function FooterSkeleton() {
 
               {/* Emails */}
 
-              <div className="flex items-start gap-3">
-                <Mail size={18} className="mt-1 shrink-0 opacity-20" />
-                <div className="space-y-2 flex-1">
-                  <SkeletonLine className="h-4 w-[90%]" />
-                  <SkeletonLine className="h-4 w-[75%]" />
-                </div>
+              <div className="flex-1 space-y-1">
+                <SkeletonLine className="h-7 w-[90%]" />
+                <SkeletonLine className="h-7 w-[75%]" />
               </div>
 
               {/* Phone numbers */}
 
-              <div className="flex items-start gap-3">
-                <Phone size={18} className="mt-1 shrink-0 opacity-20" />
-                <div className="space-y-2 flex-1">
-                  <SkeletonLine className="h-4 w-32" />
-                  <SkeletonLine className="h-4 w-32" />
-                </div>
+              <div className="flex-1 space-y-1">
+                <SkeletonLine className="h-7 w-32" />
+                <SkeletonLine className="h-7 w-32" />
               </div>
 
               {/* Address */}
 
-              <div className="flex items-start gap-3">
-                <MapPin size={18} className="mt-1 shrink-0 opacity-20" />
-                <div className="space-y-2 flex-1">
-                  <SkeletonLine className="h-4 w-full" />
-                  <SkeletonLine className="h-4 w-[90%]" />
-                  <SkeletonLine className="h-4 w-[65%]" />
-                </div>
+              <div className="flex-1 space-y-1">
+                <SkeletonLine className="h-7 w-full" />
+                <SkeletonLine className="h-7 w-[90%]" />
+                <SkeletonLine className="h-7 w-[65%]" />
               </div>
             </div>
           </div>
@@ -158,8 +149,8 @@ function FooterSkeleton() {
             sm:justify-between
           "
         >
-          <SkeletonLine className="h-3 w-64 text-[var(--color-text-secondary)]" />
-          <SkeletonLine className="h-3 w-24 text-[var(--color-text-secondary)]" />
+          <SkeletonLine className="h-4 w-64 text-[var(--color-text-secondary)]" />
+          <SkeletonLine className="h-4 w-24 text-[var(--color-text-secondary)]" />
         </div>
       </div>
     </footer>

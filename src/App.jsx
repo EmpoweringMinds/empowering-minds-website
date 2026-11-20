@@ -6,11 +6,11 @@ import ScrollToTop from "./components/common/ScrollToTop";
 import Footer from "./components/common/Footer";
 import Navbar from "./components/common/Navbar";
 import WhatsAppFloat from "./components/common/WhatsAppFloat";
+import Home from "./pages/Home";
 
 import { useSiteSettings } from "./cms/useSiteSettings";
 
 // Lazy-loaded pages
-const Home = lazy(() => import("./pages/Home"));
 const About = lazy(() => import("./pages/About.jsx"));
 const Programs = lazy(() => import("./pages/Programs"));
 const Trainer = lazy(() => import("./pages/Trainers.jsx"));
