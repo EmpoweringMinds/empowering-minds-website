@@ -2,6 +2,7 @@
 import { Link } from "react-router-dom";
 import { ArrowUpRight } from "lucide-react";
 import FadeIn from "../ui/FadeIn";
+import CTAButton from "../ui/CTAButton";
 
 export default function AboutPreview({ data }) {
   if (!data) return null;
@@ -203,30 +204,13 @@ export default function AboutPreview({ data }) {
 
                 {/* CTA */}
                 <div className="mt-10">
-                  <Link
+                  <CTAButton
                     to="/about"
-                    className="
-                      group inline-flex items-center gap-4
-                      rounded-full
-                      bg-[var(--color-primary)]
-                      px-7 py-4
-                      text-sm font-bold text-white
-                      transition-all duration-300
-                      hover:-translate-y-1
-                      hover:shadow-lg
-                    "
+                    variant="primary"
+                    showArrow={true}
                   >
                     {data.ctaLabel}
-
-                    <ArrowUpRight
-                      size={19}
-                      className="
-                        transition-transform duration-300
-                        group-hover:translate-x-1
-                        group-hover:-translate-y-1
-                      "
-                    />
-                  </Link>
+                  </CTAButton>
                 </div>
               </div>
 

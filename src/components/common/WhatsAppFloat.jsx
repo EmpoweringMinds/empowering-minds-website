@@ -1,7 +1,7 @@
 import { FaWhatsapp } from "react-icons/fa";
 
 const whatsappUrl =
-  "https://wa.me/919794278786?text=Hi%20Empowering%20Minds%2C%20I%20would%20like%20to%20know%20more%20about%20your%20training%20programs.";
+  "https://wa.me/917003055263?text=Hi%20Empowering%20Minds%2C%20I%20would%20like%20to%20know%20more%20about%20your%20training%20programs.";
 
 export default function WhatsAppFloat() {
   return (
