@@ -9,7 +9,7 @@ import {
 import FadeIn from "../ui/FadeIn";
 import CTAButton from "../ui/CTAButton";
 
-const WHATSAPP_URL = "";
+const WHATSAPP_URL = "https://wa.me/917003055263?text=Hi%20Empowering%20Minds%2C%20I%20would%20like%20to%20know%20more%20about%20your%20academy%20courses.";
 
 // Local hero photography
 const heroImageGroups = {

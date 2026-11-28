@@ -413,7 +413,7 @@ export default function CoursePreview() {
 
           <button
             type="button"
-            onClick={() => navigate("/contact#form")}
+            onClick={() => navigate("/contact")}
             className="inline-flex items-center gap-2 text-sm font-bold text-[var(--color-primary)] transition-colors hover:text-[var(--color-olive)]"
           >
             Speak with our team
